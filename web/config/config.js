@@ -8,8 +8,8 @@ var config = {
     app: {
       name: 'web'
     },
-    port: 3000,
-    db: 'mongodb://localhost/web-development'
+    port: 3000
+    //db: 'mongodb://epsi:epsi@ds057244.mongolab.com:57244/beacon'
   },
 
   test: {
@@ -18,7 +18,7 @@ var config = {
       name: 'web'
     },
     port: 3000,
-    db: 'mongodb://localhost/web-test'
+    // db: 'mongodb://localhost/web-test'
   },
 
   production: {
@@ -27,7 +27,7 @@ var config = {
       name: 'web'
     },
     port: 3000,
-    db: 'mongodb://localhost/web-production'
+    // db: 'mongodb://localhost/web-production'
   }
 };
 
