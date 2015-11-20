@@ -8,8 +8,8 @@ var config = {
     app: {
       name: 'web'
     },
-    port: 3000
-    //db: 'mongodb://epsi:epsi@ds057244.mongolab.com:57244/beacon'
+    port: 3000,
+    db: 'mongodb://epsi:epsi@martin-choraine.fr:27017/beacon'
   },
 
   test: {
