@@ -13,14 +13,16 @@ var flash    = require('connect-flash');
 var session  = require('express-session');
 
 module.exports = function(app, config) {
+
+  // Si on a pas d'environnement défini on choisit celui de dev
   var env = process.env.NODE_ENV || 'development';
   app.locals.ENV = env;
   app.locals.ENV_DEVELOPMENT = env == 'development';
 
+  // On détermine où son positionné nos vues et quel moteur de template utilisé
   app.set('views', config.root + '/app/views');
   app.set('view engine', 'ejs');
 
-  // app.use(favicon(config.root + '/public/img/favicon.ico'));
   app.use(logger('dev'));
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({
@@ -28,21 +30,26 @@ module.exports = function(app, config) {
   }));
   app.use(cookieParser());
   app.use(compress());
+
+  // On dertemine le chemin des ressources qui doivent être exposé sur le web (js, css)
   app.use(express.static(config.root + '/public'));
   app.use(methodOverride());
 
+  // Le module qui nous permet de gérer l'authentification et la session
   require('./passport')(passport);
-
   app.use(session({ secret: 'MartinIsAwesome' }));
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(flash());
 
+  // On chage toutes nos routes
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
   controllers.forEach(function (controller) {
     require(controller)(app);
   });
 
+
+  // La gestion des erreurs
   app.use(function (req, res, next) {
     var err = new Error('Not Found');
     err.status = 404;

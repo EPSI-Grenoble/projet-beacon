@@ -9,6 +9,7 @@ module.exports = function (app) {
   app.use('/', router);
 };
 
+// Page d'accueil
 router.get('/', isUserLogIn, function (req, res, next) {
   UserModel.find( function(err, usersList) {
       res.render('index', {
@@ -20,6 +21,7 @@ router.get('/', isUserLogIn, function (req, res, next) {
   )
 });
 
+// Page de connexion
 router.get('/login', function (req, res, next) {
   res.render('login', {
     title: 'Login',
@@ -27,4 +29,5 @@ router.get('/login', function (req, res, next) {
   });
 });
 
+// Authentification qu'on délégue au composant passport
 router.post('/login', passport.authenticate('local-login', { successRedirect: '/', failureRedirect: '/login' }));

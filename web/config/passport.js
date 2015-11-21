@@ -1,8 +1,6 @@
 var LocalStrategy = require("passport-local").Strategy;
 var UsersModel = mongoose.model('users');
 
-//sha1 = require("sha1");
-
 module.exports = function(passport) {
   passport.serializeUser(function(user, done) {
     done(null, user);
@@ -12,22 +10,26 @@ module.exports = function(passport) {
   });
   passport.use(
     "local-login",
+    // On donne au module le nom des chans du formulaire correspondant au login et password
     new LocalStrategy({
       usernameField: "user",
       passwordField: "password",
       passReqToCallback: true
     }, function(req, username, password, done) {
-      var mdp;
-      //mdp = sha1(password);
+      //On cherche un utilisateur dans la base qui à ce login
       UsersModel.findOne(
         {username : username},
         function(err, user) {
+          // Si il en existe pas on retourne un message d'erreur
           if(!user){
             return done(null, false, req.flash("loginMessage", "L'utilisateur n'existe pas"));
           }
+          // Si il existe un utilisateur avec le bon mot de passe alors on le connecte
           if(user.password == password){
             return done(null, user);
-          } else {
+          }
+          // Sinon on retourne un message d'erreur
+          else {
             return done(null, false, req.flash("loginMessage", "Le mot de passe est incorrect"));
           }
         }
