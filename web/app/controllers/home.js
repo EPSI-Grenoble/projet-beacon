@@ -1,43 +1,30 @@
 var express = require('express'),
-  router = express.Router();
+  router = express.Router(),
   mongoose = require('mongoose'),
-  users = mongoose.model('users');
+  passport = require('passport'),
+  UserModel = mongoose.model('users'),
+  isUserLogIn = require('../services/utils');
 
 module.exports = function (app) {
   app.use('/', router);
 };
 
-router.get('/', function (req, res, next) {
-    users.find( function(err, users) {
-          console.log(users);
-          res.render('index', {
-             title: 'Index',
-          })
-        }
-    )
+router.get('/', isUserLogIn, function (req, res, next) {
+  UserModel.find( function(err, usersList) {
+      res.render('index', {
+        title: 'Liste des utilisateurs',
+        user : req.user,
+        users : usersList
+      })
+    }
+  )
 });
 
 router.get('/login', function (req, res, next) {
-    res.render('login', {
-        title: 'Login'
-    });
+  res.render('login', {
+    title: 'Login',
+    message: req.flash('loginMessage')
+  });
 });
 
-router.post('/loggedIn', function (req, res) {
-    users.findOne({username : req.body.user, password : req.body.password},
-    function(err, users) {
-        console.log(users);
-        if (users) {
-            res.render('loggedIn', {
-                title: 'Vous êtes connécté',
-                users: users
-            })
-        } else {
-            res.render('notloggedIn', {
-                title: 'Mauvais login ou mot de passe',
-                error: 'NON C\'EST PAS CA !'
-            })
-        }
-        // bite
-    })
-});
+router.post('/login', passport.authenticate('local-login', { successRedirect: '/', failureRedirect: '/login' }));

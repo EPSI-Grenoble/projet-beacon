@@ -1,7 +1,24 @@
-<% include header %>
+<% include inc/header %>
 
-  <h1><%-title %></h1>
 
-  <a href="/login">Se connécter</a>
+<div class="ui grid">
 
-<% include footer %>
+  <div class="three wide column"><p></p></div>
+
+  <div class="twelve wide column">
+
+    <div class="ui blue segment">
+      <h1 class="ui header"><%= title %></h1>
+
+      <div class="ui divided list">
+        <% users.forEach(function(user){ %>
+        <div class="item"><%= user.username %> / <%= user.password %></div>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+
+  <div class="one wide column"><p></p></div>
+</div>
+
+<% include inc//footer %>
