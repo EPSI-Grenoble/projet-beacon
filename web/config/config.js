@@ -9,7 +9,7 @@ var config = {
       name: 'web'
     },
     port: 3000,
-    db: 'mongodb://epsi:epsi@martin-choraine.fr:49153/beacon'
+    db: 'mongodb://epsi:epsi@martin-choraine.fr:10443/beacon'
   },
 
   test: {
