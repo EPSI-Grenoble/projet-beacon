@@ -31,3 +31,9 @@ router.get('/login', function (req, res, next) {
 
 // Authentification qu'on délégue au composant passport
 router.post('/login', passport.authenticate('local-login', { successRedirect: '/', failureRedirect: '/login' }));
+
+// Page de déconnexion
+router.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/login');
+});
