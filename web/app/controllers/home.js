@@ -2,7 +2,6 @@ var express = require('express'),
   router = express.Router(),
   mongoose = require('mongoose'),
   passport = require('passport'),
-  UserModel = mongoose.model('users'),
   isUserLogIn = require('../services/utils');
 
 module.exports = function (app) {
@@ -11,14 +10,10 @@ module.exports = function (app) {
 
 // Page d'accueil
 router.get('/', isUserLogIn, function (req, res, next) {
-  UserModel.find( function(err, usersList) {
-      res.render('index', {
-        title: 'Liste des utilisateurs',
-        user : req.user,
-        users : usersList
-      })
-    }
-  )
+    res.render('index', {
+      title: 'Liste des utilisateurs',
+      user : req.user,
+    })
 });
 
 // Page de connexion
