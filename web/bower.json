@@ -9,6 +9,7 @@
   "dependencies": {
     "semantic": "semantic-ui#~2.1.6",
     "ckeditor": "~4.5.5",
-    "angular": "~1.4.8"
+    "angular": "~1.4.8",
+    "angular-ckeditor": "~1.0.0"
   }
 }

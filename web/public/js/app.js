@@ -1,12 +1,12 @@
-var app = angular.module("beacon", []);
+var app = angular.module("beacon", ["ckeditor"]);
 
 
 app.controller('AddMessageController', function($scope, $http){
-    $scope.name = "Beacon";
-  $http.get("/api/messages").success(function(messages){
+  $http.get("/api/message").success(function(messages){
     $scope.messages = messages;
   })
   $scope.sauvegarder = function(){
+      console.log($scope.message);
     $http.post("/api/message", $scope.message)
   }
 });

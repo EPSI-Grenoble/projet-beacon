@@ -3,6 +3,7 @@ var express = require('express'),
   mongoose = require('mongoose'),
   passport = require('passport'),
   AdminModel = mongoose.model('admins'),
+  MessageModel = mongoose.model('messages'),
   isUserLogIn = require('../services/utils');
 
 module.exports = function (app) {
@@ -11,8 +12,7 @@ module.exports = function (app) {
 
 // route de test des id de connexion smartphone
 router.post('/checkAuth', function (req, res, next) {
-
-AdminModel.findOne(
+    AdminModel.findOne(
         {email : req.body.username, password : req.body.password},
         function(err, user) {
           // S'l n'en existe pas on retourne un message d'erreur
@@ -26,5 +26,13 @@ AdminModel.findOne(
           }
         }
       );
-    }
-  );
+});
+
+router.post('/message', function (req, res, next){
+  var message = new MessageModel({
+      "titre": req.body.titre,
+      "message": req.body.content,
+  });
+  message.save();
+  res.send(200);
+});
