@@ -1,4 +1,4 @@
-var app = angular.module("beacon", ["ckeditor"]);
+var app = angular.module("beacon", ["ckeditor", "ngSanitize"]);
 
 app.controller('AddMessageController', function($scope, $http){
   $http.get("/api/message").success(function(messages){

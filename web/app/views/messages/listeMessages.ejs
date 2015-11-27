@@ -12,16 +12,13 @@
 
       <div class="ui divided list">
         <% messages.forEach(function(message){ %>
-
           <div class="item">
-            <%= message.titre %> /
-            <%= message.message %> /
-            <%= message.groupe %> /
-            <%= message.message %> /
-            <%= message.typeMessage %>
+            <i class="large chat middle aligned icon"></i>
+            <div class="content">
+              <a class="header"><%= message.titre %> </a>
+              <div class="description"><%= message.getPeriod %></div>
+            </div>
           </div>
-
-          </br>
         <% }); %>
       </div>
     </div>

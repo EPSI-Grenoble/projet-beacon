@@ -8,55 +8,56 @@
 
     <div class="ui blue segment">
       <h1 class="ui header"><%= title %></h1>
+      <form ng-submit="sauvegarder()" class="ui form">
+        <div class="field">
+          <label>Objet du message</label>
+          <input type="text" ng-model="message.titre" name="title" value="" placeholder="Entrer un objet">
+        </div>
+        <div class="field">
+          <label>Type de message</label>
+          <select name="type" ng-model="message.type" class="ui fluid dropdown">
+            <option value="">-- Choisir un type de message --</option>
+            <option value="beacon">Beacon</option>
+            <option value="push">Push</option>
+          </select>
+        </div>
+        <div class="field" ng-if="message.type == 'beacon'">
+          <label>Beacons concerné</label>
+          <input type="text" ng-model="message.beacons" name="title" value="" placeholder="Beacons">
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>A partir du</label>
+            <input ng-model="message.fromdate" name="fromdate" class="datepicker" >
+          </div>
+          <div class="field">
+            <label>jusqu'au</label>
+            <input ng-model="message.todate" name="todate" class="datepicker" >
+          </div>
+        </div>
+        <div class="field">
+          <label>Destinataire</label>
+          <input type="text" placeholder="Destinataire">
+        </div>
 
-      <div class="ui divided list">
+        <div class="field">
+          <label>Contenu du message</label>
+          <textarea name="content" ckeditor="{}"  ng-model="message.content"></textarea>
+        </div>
 
-        <form ng-submit="sauvegarder()">
-            A partir de
-            <div class="ui input focus">
-                <input ng-model="message.fromdate" name="fromdate" class="datepicker" >
-            </div>
-            jusqu'a
-            <div class="ui input focus">
-                <input ng-model="message.todate" name="todate" class="datepicker">
-            </div>
-            <br>
-            <br>
-            <div class="ui input focus">
-                <input type="text" ng-model="message.titre" name="title" value="" placeholder="Entrer un objet">
-            </div>
-            <br>
-            <br>
-            <div class="ui input focus">
-                <input type="text" name="title" value="" placeholder="Beacon">
-            </div>
-            <br>
-            <br>
-            <div class="ui input focus">
-                <input type="text" placeholder="Destinataire">
-            </div>
-            <br/>
-            <br/>
-            <textarea name="content" ckeditor="{}"  ng-model="message.content"></textarea>
-            <br/>
-            <input class="ui green button" type="submit" value="Enregistrer">
-        </form>
+        <div class="field">
+          <input class="ui green button" type="submit" value="Enregistrer">
+        </div>
+      </form>
+    </div>
 
-        {{message.titre}}
-        <br/>
-        {{message.content}}
-
-      </div>
+    <div class="ui segment">
+      <h2 class="ui header">Preview</h2>
+      <p class="ui message" ng-bind-html="message.content"></p>
     </div>
   </div>
 
   <div class="one wide column"><p></p></div>
 </div>
-
-<script type="text/javascript">
-    $(function() {
-        $( ".datepicker" ).datepicker();
-    });
-</script>
 
 <% include ../inc/footer %>
