@@ -5,6 +5,7 @@ var express = require('express'),
   AdminModel = mongoose.model('admins'),
   uuid = require('node-uuid'),
   MessageModel = mongoose.model('messages'),
+  BeaconModel = mongoose.model('beacons'),
   isUserLogIn = require('../services/utils');
 var session  = require('express-session');
 var app = express();
@@ -49,4 +50,17 @@ router.post('/message', function (req, res, next){
   });
   message.save();
   res.send(200);
+});
+
+router.post('/beacon', function (req, res, next){
+  var beacon = new BeaconModel({
+      "nom": req.body.nom,
+      "UUID": req.body.uuid,
+  });
+  beacon.save();
+  res.send(200);
+});
+
+router.post('/beacon/get', function (req, res, next){
+
 });
