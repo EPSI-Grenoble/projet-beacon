@@ -24,6 +24,7 @@ router.get('/', isUserLogIn, function (req, res, next) {
 
 // Page de connexion
 router.get('/login', function (req, res, next) {
+  console.log(req.session);
   res.render('login', {
     title: 'Login',
     message: req.flash('loginMessage')
