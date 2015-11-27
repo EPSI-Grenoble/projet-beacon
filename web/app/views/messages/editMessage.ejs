@@ -1,6 +1,6 @@
 <% include ../inc/header %>
 
-<div class="ui grid">
+<div class="ui grid" ng-controller="AddMessageController">
 
   <div class="three wide column"><p></p></div>
 
@@ -10,16 +10,43 @@
       <h1 class="ui header"><%= title %></h1>
 
       <div class="ui divided list">
-        <form class="" action="/messages/edit" method="post">
+
+
+        <form ng-submit="sauvegarder()">
+            A partir de
             <div class="ui input focus">
-                <input type="text" name="title" value="" placeholder="Entrer un titre">
+                <input ng-model="message.fromdate" name="fromdate" class="datepicker" >
+            </div>
+            jusqu'a
+            <div class="ui input focus">
+                <input ng-model="message.todate" name="todate" class="datepicker">
+            </div>
+            <br>
+            <br>
+            <div class="ui input focus">
+                <input type="text" ng-model="message.titre" name="title" value="" placeholder="Entrer un titre">
+            </div>
+            <br>
+            <br>
+            <div class="ui input focus">
+                <input type="text" name="title" value="" placeholder="Beacon">
+            </div>
+            <br>
+            <br>
+            <div class="ui input focus">
+                <input type="text" placeholder="Destinataire">
             </div>
             <br/>
             <br/>
-            <textarea id="messageInput" name="message" rows="8" cols="40"></textarea>
+            <textarea name="content" ckeditor="{}"  ng-model="message.content"></textarea>
             <br/>
-            <input type="submit" value="Envoyer">
+            <input class="ui green button" type="submit" value="Enregistrer">
         </form>
+
+        {{message.titre}}
+        <br/>
+        {{message.content}}
+
       </div>
     </div>
   </div>
@@ -28,7 +55,9 @@
 </div>
 
 <script type="text/javascript">
-  CKEDITOR.replace("messageInput");
+    $(function() {
+        $( ".datepicker" ).datepicker();
+    });
 </script>
 
 <% include ../inc/footer %>

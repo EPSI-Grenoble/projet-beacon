@@ -30,11 +30,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   // Set up the various states which the app can be in.
   // Each state's controller can be found in controllers.js
   $stateProvider
-    .state('home', {
-      url: '/home',
+    .state('login', {
+      url: '/login',
       //abstract: true,
-      templateUrl: 'templates/identification.html',
-      controller: 'DashCtrl'
+      templateUrl: 'templates/login.html',
+      controller: 'LoginCtrl'
     })
 
 
@@ -86,6 +86,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
   
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/home');
+  $urlRouterProvider.otherwise('/login');
 
 });

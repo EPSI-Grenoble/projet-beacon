@@ -6,12 +6,14 @@
   <title><%- title %></title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/components/semantic/dist/semantic.min.css">
+  <script src="/components/jquery/dist/jquery.js"></script>
+  <script src="/components/jquery-ui/jquery-ui.js"></script>
   <% if (ENV_DEVELOPMENT) { %>
   <script src="http://localhost:35729/livereload.js"></script>
   <% } %>
   <script src="/components/ckeditor/ckeditor.js"></script>
 </head>
-<body>
+<body ng-app="beacon">
 
 <div class="ui blue left fixed vertical inverted menu">
   <div class="item">
