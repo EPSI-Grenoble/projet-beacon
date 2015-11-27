@@ -3,6 +3,7 @@ var express = require('express'),
   mongoose = require('mongoose'),
   passport = require('passport'),
   AdminModel = mongoose.model('admins'),
+  MessageModel = mongoose.model('messages'),
   isUserLogIn = require('../services/utils');
 
 module.exports = function (app) {
@@ -44,6 +45,16 @@ router.get('/messages/edit', function (req, res, next) {
         user : req.user
       });
   });
+});
+
+router.post('/messages/edit', function (req, res, next){
+    var message = new MessageModel({
+        "titre": req.body.title,
+        "message": req.body.message
+    });
+    message.save(function(){
+         res.redirect('/messages');
+    });
 });
 
 // Authentification qu'on délégue au composant passport
