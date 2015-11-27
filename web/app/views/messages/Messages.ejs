@@ -1,1 +1,34 @@
-coucou
+<% include ../inc/header %>
+
+
+<div class="ui grid">
+
+  <div class="three wide column"><p></p></div>
+
+  <div class="twelve wide column">
+
+    <div class="ui blue segment">
+      <h1 class="ui header"><%= title %></h1>
+
+      <div class="ui divided list">
+        <% messages.forEach(function(message){ %>
+
+          <div class="item">
+            <%= message.titre %> /
+            <%= message.message %> /
+            <%= message.groupe %> /
+            <%= message.message %> /
+            <%= message.typeMessage %>
+          </div>
+
+          </br>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+
+  <div class="one wide column"><p></p></div>
+</div>
+
+<% include ../inc//footer %>
+
