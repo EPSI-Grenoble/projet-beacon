@@ -31,11 +31,17 @@ router.get('/login', function (req, res, next) {
 });
 
 // Page des messages
+// Page des messages
 router.get('/messages', function (req, res, next) {
-  res.render('messages/Messages', {
-    title: 'les messages',
-  });
+    MessageModel.find( function(err, toutLesMessage) {
+      res.render('messages/Messages', {
+        title: 'les messages',
+        messages : toutLesMessage
+      })
+    })
+
 });
+
 
 // Page de l'edition de message
 router.get('/messages/edit', function (req, res, next) {

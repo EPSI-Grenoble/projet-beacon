@@ -5,7 +5,8 @@ var mongoose = require('mongoose'),
 var MessageSchema = new Schema({
   titre: String,
   message: String,
-  groupe: Array
+  groupe: Array,
+  typeMessage :  String
 });
 
 mongoose.model('messages', MessageSchema);
