@@ -36,10 +36,13 @@ router.get('/messages', function (req, res, next) {
   });
 });
 
-// Page des messages
+// Page de l'edition de message
 router.get('/messages/edit', function (req, res, next) {
-  res.render('messages/editMessage', {
-    title: 'Editer un message',
+  AdminModel.find( function(err, usersList) {
+      res.render('messages/editMessage', {
+        title: 'Editer un message',
+        user : req.user
+      });
   });
 });
 
