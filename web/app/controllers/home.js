@@ -29,6 +29,20 @@ router.get('/login', function (req, res, next) {
   });
 });
 
+// Page des messages
+router.get('/messages', function (req, res, next) {
+  res.render('messages/Messages', {
+    title: 'les messages',
+  });
+});
+
+// Page des messages
+router.get('/messages/edit', function (req, res, next) {
+  res.render('messages/editMessage', {
+    title: 'Editer un message',
+  });
+});
+
 // Authentification qu'on délégue au composant passport
 router.post('/login', passport.authenticate('local-login', { successRedirect: '/', failureRedirect: '/login' }));
 
