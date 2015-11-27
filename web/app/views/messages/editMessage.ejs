@@ -13,25 +13,28 @@
 
 
         <form ng-submit="sauvegarder()">
-            <%# A partir de
+            A partir de
             <div class="ui input focus">
-                <input name="">
+                <input ng-model="message.fromdate" name="fromdate" class="datepicker" >
             </div>
             jusqu'a
             <div class="ui input focus">
-                <input type="text" name="title" value="" placeholder="Entrer un titre">
+                <input ng-model="message.todate" name="todate" class="datepicker">
             </div>
             <br>
+            <br>
             <div class="ui input focus">
-                <input type="text" name="title" value="" placeholder="Entrer un titre">
+                <input type="text" ng-model="message.titre" name="title" value="" placeholder="Entrer un titre">
             </div>
+            <br>
             <br>
             <div class="ui input focus">
                 <input type="text" name="title" value="" placeholder="Beacon">
             </div>
-            <br>%>
+            <br>
+            <br>
             <div class="ui input focus">
-                <input name="titre" ng-model="message.titre" type="text" placeholder="Destinataire">
+                <input type="text" placeholder="Destinataire">
             </div>
             <br/>
             <br/>
@@ -50,5 +53,11 @@
 
   <div class="one wide column"><p></p></div>
 </div>
+
+<script type="text/javascript">
+    $(function() {
+        $( ".datepicker" ).datepicker();
+    });
+</script>
 
 <% include ../inc/footer %>

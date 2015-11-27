@@ -5,6 +5,8 @@ var mongoose = require('mongoose'),
 var MessageSchema = new Schema({
   titre: String,
   message: String,
+  fromDate: Date,
+  toDate: Date,
   groupe: Array,
   typeMessage :  String
 });

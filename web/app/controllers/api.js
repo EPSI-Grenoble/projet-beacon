@@ -32,6 +32,8 @@ router.post('/message', function (req, res, next){
   var message = new MessageModel({
       "titre": req.body.titre,
       "message": req.body.content,
+      "fromDate": req.body.fromdate,
+      "toDate": req.body.todate,
   });
   message.save();
   res.send(200);

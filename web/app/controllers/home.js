@@ -22,14 +22,6 @@ router.get('/', isUserLogIn, function (req, res, next) {
   )
 });
 
-// Page de connexion
-router.get('/login', function (req, res, next) {
-  res.render('login', {
-    title: 'Login',
-    message: req.flash('loginMessage')
-  });
-});
-
 // Page des messages
 router.get('/messages', function (req, res, next) {
     MessageModel.find( function(err, toutLesMessage) {
@@ -51,15 +43,13 @@ router.get('/messages/edit', function (req, res, next) {
   });
 });
 
-// router.post('/messages/edit', function (req, res, next){
-//     var message = new MessageModel({
-//         "titre": req.body.title,
-//         "message": req.body.message
-//     });
-//     message.save(function(){
-//          res.redirect('/messages');
-//     });
-// });
+// Page de connexion
+router.get('/login', function (req, res, next) {
+  res.render('login', {
+    title: 'Login',
+    message: req.flash('loginMessage')
+  });
+});
 
 // Authentification qu'on délégue au composant passport
 router.post('/login', passport.authenticate('local-login', { successRedirect: '/', failureRedirect: '/login' }));
