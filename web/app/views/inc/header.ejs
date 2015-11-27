@@ -9,19 +9,20 @@
   <% if (ENV_DEVELOPMENT) { %>
   <script src="http://localhost:35729/livereload.js"></script>
   <% } %>
+  <script src="/components/ckeditor/ckeditor.js"></script>
 </head>
 <body>
 
 <div class="ui blue left fixed vertical inverted menu">
   <div class="item">
-    <div class="header"><i class="user icon"></i> <%= user.firstName %> <%= user.lastName %></div>
     <div class="menu">
       <a class="item">
         Mon compte
       </a>
       <a href="/logout" class="item">Déconnexion</a>
+      <a href="/messages" class="item">Les messages</a>
+      <a href="/messages/edit" class="item">Créer un messages</a>
     </div>
   </div>
 </div>
 </div>
-

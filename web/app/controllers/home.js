@@ -3,6 +3,7 @@ var express = require('express'),
   mongoose = require('mongoose'),
   passport = require('passport'),
   AdminModel = mongoose.model('admins'),
+  MessageModel = mongoose.model('messages'),
   isUserLogIn = require('../services/utils');
 
 module.exports = function (app) {
@@ -30,17 +31,36 @@ router.get('/login', function (req, res, next) {
 });
 
 // Page des messages
+// Page des messages
 router.get('/messages', function (req, res, next) {
-  res.render('messages/Messages', {
-    title: 'les messages',
+    MessageModel.find( function(err, toutLesMessage) {
+      res.render('messages/Messages', {
+        title: 'les messages',
+        messages : toutLesMessage
+      })
+    })
+
+});
+
+
+// Page de l'edition de message
+router.get('/messages/edit', function (req, res, next) {
+  AdminModel.find( function(err, usersList) {
+      res.render('messages/editMessage', {
+        title: 'Editer un message',
+        user : req.user
+      });
   });
 });
 
-// Page des messages
-router.get('/messages/edit', function (req, res, next) {
-  res.render('messages/editMessage', {
-    title: 'Editer un message',
-  });
+router.post('/messages/edit', function (req, res, next){
+    var message = new MessageModel({
+        "titre": req.body.title,
+        "message": req.body.message
+    });
+    message.save(function(){
+         res.redirect('/messages');
+    });
 });
 
 // Authentification qu'on délégue au composant passport
