@@ -1,18 +1,18 @@
 <% include ../inc/header %>
 
-<div class="ui grid">
+<div class="ui grid" ng-controller="AddMessageController">
 
   <div class="three wide column"><p></p></div>
-
   <div class="twelve wide column">
 
     <div class="ui blue segment">
       <h1 class="ui header"><%= title %></h1>
 
       <div class="ui divided list">
-        <form class="" action="/messages/edit" method="post">
+        {{message.titre}}
+        <form class="" ng-submit="sauvegarder()">
             <div class="ui input focus">
-                <input type="text" name="title" value="" placeholder="Entrer un titre">
+                <input type="text" name="title" value="" placeholder="Entrer un titre" ng-model="message.titre">
             </div>
             <br/>
             <br/>
