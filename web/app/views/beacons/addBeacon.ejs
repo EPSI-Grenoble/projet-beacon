@@ -1,0 +1,48 @@
+<% include ../inc/header %>
+
+<div class="ui grid" ng-controller="AddBeaconController">
+
+  <div class="three wide column"><p></p></div>
+
+  <div class="twelve wide column">
+
+    <div class="ui blue segment">
+      <h1 class="ui header"><%= title %></h1>
+
+      <div class="ui divided list">
+        <form ng-submit="sauvegarder()">
+            <div class="ui input">
+                <input type="text" ng-model="beacon.nom" name="nom" placeholder="Nom du beacon">
+            </div>
+            <div class="ui input">
+                <input type="text" ng-model="beacon.uuid" name="uuid" placeholder="Beacon" placeholder="UUID du beacon">
+            </div>
+            <input class="ui green button" type="submit" value="Enregistrer">
+        </form>
+      </div>
+
+      <table class="ui celled padded table">
+        <THEAD>
+            <tr>
+                <th>Noms</th>
+                <th>UUID</th>
+            </td>
+        </tr>
+        </THEAD>
+        <TBODY>
+        <% beacons.forEach(function(beacon){ %>
+            <tr>
+              <td><%- beacon.nom %></td>
+              <td><%- beacon.UUID %></td>
+            </tr>
+        <% }); %>
+        </TBODY>
+      </table>
+
+    </div>
+  </div>
+
+  <div class="one wide column"><p></p></div>
+</div>
+
+<% include ../inc/footer %>

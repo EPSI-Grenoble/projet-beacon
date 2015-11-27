@@ -4,6 +4,7 @@ var express = require('express'),
   passport = require('passport'),
   AdminModel = mongoose.model('admins'),
   MessageModel = mongoose.model('messages'),
+  BeaconModel = mongoose.model('beacons'),
   isUserLogIn = require('../services/utils');
 
 module.exports = function (app) {
@@ -32,7 +33,6 @@ router.get('/messages', function (req, res, next) {
     })
 });
 
-
 // Page de l'edition de message
 router.get('/messages/edit', function (req, res, next) {
   AdminModel.find( function(err, usersList) {
@@ -49,6 +49,16 @@ router.get('/login', function (req, res, next) {
     title: 'Login',
     message: req.flash('loginMessage')
   });
+});
+
+// Page des beacons
+router.get('/beacons', function (req, res, next) {
+    BeaconModel.find( function(err, toutlesBeacons) {
+      res.render('beacons/addBeacon', {
+        title: 'les beacons',
+        beacons : toutlesBeacons
+      })
+    })
 });
 
 // Authentification qu'on délégue au composant passport
