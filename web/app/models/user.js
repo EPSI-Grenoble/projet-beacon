@@ -9,5 +9,4 @@ var UserSchema = new Schema({
   lastName: String,
   groupes: Array
 });
-//test comit
 mongoose.model('users', UserSchema);
