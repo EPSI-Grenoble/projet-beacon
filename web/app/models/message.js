@@ -9,6 +9,7 @@ var MessageSchema = new Schema({
   toDate: Date,
   groupe: Array,
   typeMessage :  String
+  dateCreation : {type:Date , default :Date.now} 
 });
 
 mongoose.model('messages', MessageSchema);
