@@ -10,7 +10,6 @@ var MessageSchema = new Schema({
   toDate: Date,
   groupe: Array,
   typeMessage :  String
-  dateCreation : {type:Date , default :Date.now} 
 });
 
 MessageSchema.virtual('getPeriod').get(function() {
