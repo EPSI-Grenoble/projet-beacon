@@ -10,6 +10,7 @@
     <div class="ui blue segment">
       <h1 class="ui header"><%= title %></h1>
 
+<<<<<<< HEAD:web/app/views/messages/Messages.ejs
 
         <div class="ui celled list">
           <% messages.forEach(function(message){ %>
@@ -22,6 +23,19 @@
             </div>
           <% }); %>
         </div>
+=======
+      <div class="ui divided list">
+        <% messages.forEach(function(message){ %>
+          <div class="item">
+            <i class="large chat middle aligned icon"></i>
+            <div class="content">
+              <a class="header"><%= message.titre %> </a>
+              <div class="description"><%= message.getPeriod %></div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+>>>>>>> fb9366c34057e57b943ec8475acc652c293565e2:web/app/views/messages/listeMessages.ejs
     </div>
   </div>
 </div>

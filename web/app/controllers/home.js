@@ -26,7 +26,7 @@ router.get('/', isUserLogIn, function (req, res, next) {
 // Page des messages
 router.get('/messages', function (req, res, next) {
     MessageModel.find( function(err, toutLesMessage) {
-      res.render('messages/Messages', {
+      res.render('messages/listeMessages', {
         title: 'les messages',
         messages : toutLesMessage
       })
