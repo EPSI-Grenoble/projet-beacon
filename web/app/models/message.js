@@ -11,7 +11,7 @@ var MessageSchema = new Schema({
   groupe: Array,
   typeMessage :  String
 });
-
+//test
 MessageSchema.virtual('getPeriod').get(function() {
   if(this.fromDate == null && this.toDate == null){
     return "Sans période"
