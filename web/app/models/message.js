@@ -12,7 +12,7 @@ var MessageSchema = new Schema({
   typeMessage :  String
   dateCreation : {type:Date , default :Date.now} 
 });
-//test
+
 MessageSchema.virtual('getPeriod').get(function() {
   if(this.fromDate == null && this.toDate == null){
     return "Sans période"
