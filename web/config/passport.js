@@ -1,5 +1,5 @@
 var LocalStrategy = require("passport-local").Strategy;
-var AdminModel = mongoose.model('admins');
+var UserModel = mongoose.model('users');
 
 module.exports = function(passport) {
   passport.serializeUser(function(user, done) {
@@ -17,7 +17,7 @@ module.exports = function(passport) {
       passReqToCallback: true
     }, function(req, username, password, done) {
       //On cherche un utilisateur dans la base qui à ce login
-      AdminModel.findOne(
+      UserModel.findOne(
         {email : username},
         function(err, user) {
           // Si il en existe pas on retourne un message d'erreur

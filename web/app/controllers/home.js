@@ -2,8 +2,9 @@ var express = require('express'),
   router = express.Router(),
   mongoose = require('mongoose'),
   passport = require('passport'),
-  AdminModel = mongoose.model('admins'),
+  UserModel = mongoose.model('users'),
   MessageModel = mongoose.model('messages'),
+  BeaconModel = mongoose.model('beacons'),
   isUserLogIn = require('../services/utils');
 
 module.exports = function (app) {
@@ -12,7 +13,7 @@ module.exports = function (app) {
 
 // Page d'accueil
 router.get('/', isUserLogIn, function (req, res, next) {
-  AdminModel.find( function(err, usersList) {
+  UserModel.find( function(err, usersList) {
       res.render('index', {
         title: 'Liste des utilisateurs',
         user : req.user,
@@ -23,24 +24,33 @@ router.get('/', isUserLogIn, function (req, res, next) {
 });
 
 // Page des messages
-router.get('/messages', function (req, res, next) {
+router.get('/messages', isUserLogIn, function (req, res, next) {
     MessageModel.find( function(err, toutLesMessage) {
-      res.render('messages/Messages', {
+      res.render('messages/listeMessages', {
         title: 'les messages',
         messages : toutLesMessage
       })
     })
 });
 
-
 // Page de l'edition de message
-router.get('/messages/edit', function (req, res, next) {
-  AdminModel.find( function(err, usersList) {
+router.get('/messages/edit', isUserLogIn, function (req, res, next) {
+  UserModel.find( function(err, usersList) {
       res.render('messages/editMessage', {
         title: 'Editer un message',
         user : req.user
       });
   });
+});
+
+// Page des beacons
+router.get('/beacons', isUserLogIn, function (req, res, next) {
+    BeaconModel.find( function(err, toutlesBeacons) {
+      res.render('beacons/addBeacon', {
+        title: 'les beacons',
+        beacons : toutlesBeacons
+      })
+    })
 });
 
 // Page de connexion

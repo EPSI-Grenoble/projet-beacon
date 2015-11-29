@@ -7,3 +7,5 @@ var GroupeSchema = new Schema({
 });
 
 mongoose.model('groupes', GroupeSchema);
+
+

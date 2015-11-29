@@ -6,8 +6,7 @@
   <title><%- title %></title>
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/components/semantic/dist/semantic.min.css">
-  <script src="/components/jquery/dist/jquery.js"></script>
-  <script src="/components/jquery-ui/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/components/jquery-ui/themes/base/jquery-ui.css">
   <% if (ENV_DEVELOPMENT) { %>
   <script src="http://localhost:35729/livereload.js"></script>
   <% } %>
@@ -17,13 +16,25 @@
 
 <div class="ui blue left fixed vertical inverted menu">
   <div class="item">
+    <div class="header"><i class="user icon"></i>Prenom Nom</div>
     <div class="menu">
       <a class="item">
         Mon compte
       </a>
       <a href="/logout" class="item">Déconnexion</a>
+    </div>
+  </div>
+  <div class="item">
+    <div class="header"><i class="chat icon"></i>Messages</div>
+    <div class="menu">
       <a href="/messages" class="item">Les messages</a>
       <a href="/messages/edit" class="item">Créer un messages</a>
+    </div>
+  </div>
+  <div class="item">
+    <div class="header"><i class="feed icon"></i>Beacons</div>
+    <div class="menu">
+      <a href="/beacons" class="item">Gérer les beacons</a>
     </div>
   </div>
 </div>
