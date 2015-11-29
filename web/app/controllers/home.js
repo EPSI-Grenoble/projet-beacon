@@ -24,7 +24,7 @@ router.get('/', isUserLogIn, function (req, res, next) {
 });
 
 // Page des messages
-router.get('/messages', function (req, res, next) {
+router.get('/messages', isUserLogIn, function (req, res, next) {
     MessageModel.find( function(err, toutLesMessage) {
       res.render('messages/listeMessages', {
         title: 'les messages',
@@ -34,7 +34,7 @@ router.get('/messages', function (req, res, next) {
 });
 
 // Page de l'edition de message
-router.get('/messages/edit', function (req, res, next) {
+router.get('/messages/edit', isUserLogIn, function (req, res, next) {
   UserModel.find( function(err, usersList) {
       res.render('messages/editMessage', {
         title: 'Editer un message',
@@ -43,22 +43,22 @@ router.get('/messages/edit', function (req, res, next) {
   });
 });
 
-// Page de connexion
-router.get('/login', function (req, res, next) {
-  res.render('login', {
-    title: 'Login',
-    message: req.flash('loginMessage')
-  });
-});
-
 // Page des beacons
-router.get('/beacons', function (req, res, next) {
+router.get('/beacons', isUserLogIn, function (req, res, next) {
     BeaconModel.find( function(err, toutlesBeacons) {
       res.render('beacons/addBeacon', {
         title: 'les beacons',
         beacons : toutlesBeacons
       })
     })
+});
+
+// Page de connexion
+router.get('/login', function (req, res, next) {
+  res.render('login', {
+    title: 'Login',
+    message: req.flash('loginMessage')
+  });
 });
 
 // Authentification qu'on délégue au composant passport
