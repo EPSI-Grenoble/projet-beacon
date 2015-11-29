@@ -6,18 +6,14 @@ var express = require('express'),
   uuid = require('node-uuid'),
   MessageModel = mongoose.model('messages'),
   isUserLogIn = require('../services/utils');
-var session  = require('express-session');
-var app = express();
 
 module.exports = function (app) {
   app.use('/api', router);
 };
 
-app.use(session({ secret: "token" }));
 
 // route de test des id de connexion smartphone
 router.post('/checkAuth', function (req, res, next) {
-var sess = req.session;
 AdminModel.findOne(
         {email : req.body.username, password : req.body.password},
         function(err, user) {
@@ -28,13 +24,14 @@ AdminModel.findOne(
           }
           else
           {
-              if (!sess[user.email]){
-                console.log("woup");
+              // Si l'utilisateur a déjà un token, on refresh seulement sa date, sinon on lui en crée un
+              if (user.token == "" || user.token == null){
                 var newtoken = uuid.v4();
                 user.token = newtoken;
-                sess[user.email] = user.token;
-            }
-            res.json({success:true, user: sess[user.email]});
+              }
+              user.date_token = new Date();
+              user.save();
+              res.json({success:true, user: user});
           }
         }
       );
