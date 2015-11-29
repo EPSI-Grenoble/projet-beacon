@@ -9,7 +9,8 @@ var MessageSchema = new Schema({
   fromDate: Date,
   toDate: Date,
   groupe: Array,
-  typeMessage :  String
+  typeMessage :  String,
+  beacons : Array
 });
 
 MessageSchema.virtual('getPeriod').get(function() {

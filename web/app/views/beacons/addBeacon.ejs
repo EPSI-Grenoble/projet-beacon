@@ -30,12 +30,10 @@
         </tr>
         </THEAD>
         <TBODY>
-        <% beacons.forEach(function(beacon){ %>
-            <tr>
-              <td><%- beacon.nom %></td>
-              <td><%- beacon.UUID %></td>
+            <tr ng-repeat="beacon in beacons">
+              <td>{{beacon.nom}}</td>
+              <td>{{beacon.UUID}}</td>
             </tr>
-        <% }); %>
         </TBODY>
       </table>
 

@@ -23,7 +23,9 @@
         </div>
         <div class="field" ng-if="message.type == 'beacon'">
           <label>Beacons concerné</label>
-          <input type="text" ng-model="message.beacons" name="title" value="" placeholder="Beacons">
+          <select type="text" class="ui fluid search dropdown" multiple ng-model="message.beacons" ng-dropdown ng-dropdown-values="beaconList" ng-options="beacon.UUID as beacon.nom for beacon in beaconList">
+            <option value="">Choisir un ou plusieurs beacons</option>
+          </select>
         </div>
         <div class="two fields">
           <div class="field">

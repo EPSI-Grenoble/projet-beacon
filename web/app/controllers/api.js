@@ -47,6 +47,7 @@ router.post('/message', function (req, res, next){
       "message": req.body.content,
       "fromDate": req.body.fromdate,
       "toDate": req.body.todate,
+      "beacons" : req.body.beacons
   });
   message.save();
   res.send(200);
@@ -55,12 +56,15 @@ router.post('/message', function (req, res, next){
 router.post('/beacon', function (req, res, next){
   var beacon = new BeaconModel({
       "nom": req.body.nom,
-      "UUID": req.body.uuid,
+      "UUID": req.body.uuid
   });
   beacon.save();
   res.send(200);
 });
 
-router.post('/beacon/get', function (req, res, next){
 
+router.get('/beacon', function (req, res, next){
+  BeaconModel.find(function(err, beacons){
+    res.json(beacons)
+  });
 });
