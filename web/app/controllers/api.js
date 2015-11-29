@@ -2,7 +2,7 @@ var express = require('express'),
   router = express.Router(),
   mongoose = require('mongoose'),
   passport = require('passport'),
-  AdminModel = mongoose.model('admins'),
+  UserModel = mongoose.model('users'),
   uuid = require('node-uuid'),
   MessageModel = mongoose.model('messages'),
   BeaconModel = mongoose.model('beacons'),
@@ -19,7 +19,7 @@ app.use(session({ secret: "token" }));
 // route de test des id de connexion smartphone
 router.post('/checkAuth', function (req, res, next) {
 var sess = req.session;
-AdminModel.findOne(
+UserModel.findOne(
         {email : req.body.username, password : req.body.password},
         function(err, user) {
           // S'il n'en existe pas on retourne un message d'erreur
@@ -53,6 +53,13 @@ router.post('/message', function (req, res, next){
   res.send(200);
 });
 
+
+router.get('/beacon', function (req, res, next){
+  BeaconModel.find(function(err, beacons){
+    res.json(beacons)
+  });
+});
+
 router.post('/beacon', function (req, res, next){
   var beacon = new BeaconModel({
       "nom": req.body.nom,
@@ -63,8 +70,22 @@ router.post('/beacon', function (req, res, next){
 });
 
 
-router.get('/beacon', function (req, res, next){
-  BeaconModel.find(function(err, beacons){
-    res.json(beacons)
+router.delete('/beacon/:id', function (req, res, next){
+  console.log(req.params.id);
+  BeaconModel.remove({_id : req.params.id}, function(err){
+    res.send(200);
   });
+});
+
+
+router.get("/groupes", function(req, res ,next){
+  UserModel.getGroupes(function (groupesList) {
+    res.json(groupesList);
+  })
+});
+
+router.get("/users", function(req, res ,next){
+  UserModel.find(function (err, users) {
+    res.json(users);
+  })
 });

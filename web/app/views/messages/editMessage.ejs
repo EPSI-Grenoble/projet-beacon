@@ -39,7 +39,28 @@
         </div>
         <div class="field">
           <label>Destinataire</label>
-          <input type="text" placeholder="Destinataire">
+          <div class="inline fields">
+            <div class="ui simple dropdown item">
+              <i class="users circular link icon "></i>
+              <div class="menu">
+                <div class="header ui input" style="margin-left: 0; margin-right: 0; ">
+                  <input type="text" placeholder="Filtrer...">
+                </div>
+                <div class="divider"></div>
+                <div class="header">Liste de diffusions</div>
+                <div class="item" ng-repeat="contact in users">
+                  <div class="ui checkbox">
+                    <input type="checkbox" id="{{contact._id}}" class="hidden" checklist-model="message.destinataires" checklist-value="contact._id" ng-checked="userIsInSelectedGroup(contact.groupes)">
+                    <label for="{{contact._id}}">{{contact.firstName}} {{contact.lastName}}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <select type="text" class="ui fluid search dropdown" multiple ng-model="groupeSelected" ng-dropdown ng-dropdown-values="groupes" ng-options="groupe._id as groupe._id for groupe in groupes" ng-change="selectUsers()">
+              <option value="">Destinataire</option>
+            </select>
+          </div>
+
         </div>
 
         <div class="field">

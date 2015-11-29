@@ -22,19 +22,21 @@
       </div>
 
       <table class="ui celled padded table">
-        <THEAD>
+        <thead>
             <tr>
                 <th>Noms</th>
                 <th>UUID</th>
+                <th>Actions</th>
             </td>
         </tr>
-        </THEAD>
-        <TBODY>
+        </thead>
+        <tbody>
             <tr ng-repeat="beacon in beacons">
               <td>{{beacon.nom}}</td>
               <td>{{beacon.UUID}}</td>
+              <td class="center aligned collapsing"><i class="circle inverted red large remove link icon" ng-click="delete(beacon)"></i></td>
             </tr>
-        </TBODY>
+        </tbody>
       </table>
 
     </div>

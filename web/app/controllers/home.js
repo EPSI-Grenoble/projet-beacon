@@ -2,7 +2,7 @@ var express = require('express'),
   router = express.Router(),
   mongoose = require('mongoose'),
   passport = require('passport'),
-  AdminModel = mongoose.model('admins'),
+  UserModel = mongoose.model('users'),
   MessageModel = mongoose.model('messages'),
   BeaconModel = mongoose.model('beacons'),
   isUserLogIn = require('../services/utils');
@@ -13,7 +13,7 @@ module.exports = function (app) {
 
 // Page d'accueil
 router.get('/', isUserLogIn, function (req, res, next) {
-  AdminModel.find( function(err, usersList) {
+  UserModel.find( function(err, usersList) {
       res.render('index', {
         title: 'Liste des utilisateurs',
         user : req.user,
@@ -35,7 +35,7 @@ router.get('/messages', function (req, res, next) {
 
 // Page de l'edition de message
 router.get('/messages/edit', function (req, res, next) {
-  AdminModel.find( function(err, usersList) {
+  UserModel.find( function(err, usersList) {
       res.render('messages/editMessage', {
         title: 'Editer un message',
         user : req.user
