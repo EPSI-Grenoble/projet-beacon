@@ -47,4 +47,35 @@ angular.module('starter.services', [])
       return null;
     }
   };
-});
+})
+
+
+.factory('RequestsService', ['$http', '$q', '$ionicLoading', function($http, $q, $ionicLoading) {
+
+  var base_url = 'http://localhost:3000';
+
+  function logIn(login, password){
+    var deferred = $q.defer();
+    $ionicLoading.show();
+
+    $http.post(base_url + '/api/auth', {'login': login, 'password' : password})
+      .success(function(response){
+        $ionicLoading.hide();
+        deferred.resolve(response);
+      })
+      .error(function(data){
+        deferred.reject();
+        $ionicLoading.hide();
+      });
+
+
+    return deferred.promise;
+  }
+
+
+  return {
+    logIn: logIn
+  };
+
+
+}]);

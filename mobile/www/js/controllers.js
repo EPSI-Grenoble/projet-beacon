@@ -1,10 +1,19 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope, $state) {
+.controller('LoginCtrl', function($scope, $state, RequestsService) {
   //$state.go('tab.dash');
   $scope.signIn = function(user) {
     console.log('Sign-In', user);
-    $state.go('tab.dash');
+
+    RequestsService.logIn(user.username, user.password).then(function(response){
+      if(response.success){
+        $state.go('tab.dash');
+      } else {
+        $scope.messageError = response.msg
+      }
+    }, function(){
+      $scope.messageError = "Une erreur est survenue."
+    });
   };
 })
 

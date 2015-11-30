@@ -10,6 +10,11 @@
         <input type="password" ng-model="user.password">
       </label>
     </div>
+    <div class="card" ng-if="messageError">
+      <div class="item item-text-wrap">
+        {{messageError}}
+      </div>
+    </div>
     <div class="padding">
       <button class="button button-block button-positive" ng-click="signIn(user)">
         Sign-In
