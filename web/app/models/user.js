@@ -7,6 +7,8 @@ var UserSchema = new Schema({
   password: String,
   lastName: String,
   firstName: String,
+  token: String,
+  date_token: Date,
   groupes: []
 });
 
