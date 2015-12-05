@@ -7,7 +7,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, RequestsService, $ionicLoading) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,6 +20,51 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+    $ionicLoading.show();
+    pushNotification = window.plugins.pushNotification;
+
+
+    window.onNotification = function(e){
+
+      console.log('notification received');
+
+      switch(e.event){
+        case 'registered':
+          if(e.regid.length > 0){
+            $ionicLoading.hide();
+            var device_token = e.regid;
+            console.log(device_token);
+            RequestsService.register(device_token);
+          }
+          break;
+
+        case 'message':
+          break;
+
+        case 'error':
+          break;
+
+      }
+    };
+
+
+    window.errorHandler = function(error){
+      alert('an error occured');
+    }
+
+
+    pushNotification.register(
+      onNotification,
+      errorHandler,
+      {
+        'badge': 'true',
+        'sound': 'true',
+        'alert': 'true',
+        'senderID': '1018662230280',
+        'ecb': 'onNotification'
+      }
+    );
   });
 })
 
@@ -84,7 +129,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
     }
   });
 
-  
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 

@@ -9,6 +9,10 @@ var UserSchema = new Schema({
   firstName: String,
   token: String,
   date_token: Date,
+  device_token: {
+    type: String,
+    unique: true
+  },
   groupes: []
 });
 

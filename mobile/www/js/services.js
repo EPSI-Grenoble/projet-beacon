@@ -50,15 +50,17 @@ angular.module('starter.services', [])
 })
 
 
-.factory('RequestsService', ['$http', '$q', '$ionicLoading', function($http, $q, $ionicLoading) {
+.factory('RequestsService', ['$http', '$q', '$ionicLoading', '$rootScope', function($http, $q, $ionicLoading, $rootScope) {
 
-  var base_url = 'http://localhost:3000';
+  var base_url = 'http://192.168.0.24:3000';
 
   function logIn(login, password){
     var deferred = $q.defer();
     $ionicLoading.show();
 
-    $http.post(base_url + '/api/auth', {'login': login, 'password' : password})
+    console.log($rootScope.device_token);
+
+    $http.post(base_url + '/api/auth', {'login': login, 'password' : password, 'device_token' :  $rootScope.device_token})
       .success(function(response){
         $ionicLoading.hide();
         deferred.resolve(response);
@@ -67,14 +69,17 @@ angular.module('starter.services', [])
         deferred.reject();
         $ionicLoading.hide();
       });
-
-
     return deferred.promise;
+  }
+
+  function register(device_token){
+    $rootScope.device_token = device_token;
   }
 
 
   return {
-    logIn: logIn
+    logIn: logIn,
+    register : register
   };
 
 

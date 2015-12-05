@@ -3,13 +3,14 @@ var express = require('express'),
   mongoose = require('mongoose'),
   passport = require('passport'),
   MessageModel = mongoose.model('messages'),
-  isUserLogIn = require('../services/utils');
+  Utils = require("../services/utils"),
+  SendPush = require("../services/sendPush");
 
 module.exports = function (app) {
   app.use('/api/message', router);
 };
 
-router.post('/', isUserLogIn, function (req, res, next){
+router.post('/', Utils.isAuth, function (req, res, next){
   var message = new MessageModel({
       "titre": req.body.titre,
       "message": req.body.content,
@@ -17,6 +18,10 @@ router.post('/', isUserLogIn, function (req, res, next){
       "toDate": req.body.todate,
       "beacons" : req.body.beacons
   });
-  message.save();
-  res.send(200);
+  message.save(function(err){
+    if(err) res.send(406);
+    var sender = new SendPush(message._id);
+    sender.sendNow();
+-   res.send(message);
+  });
 });

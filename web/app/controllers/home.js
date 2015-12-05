@@ -5,14 +5,14 @@ var express = require('express'),
   UserModel = mongoose.model('users'),
   MessageModel = mongoose.model('messages'),
   BeaconModel = mongoose.model('beacons'),
-  isUserLogIn = require('../services/utils');
+  Utils = require("../services/utils");
 
 module.exports = function (app) {
   app.use('/', router);
 };
 
 // Page d'accueil
-router.get('/', isUserLogIn, function (req, res, next) {
+router.get('/', Utils.isAuth , function (req, res, next) {
   UserModel.find( function(err, usersList) {
       res.render('index', {
         title: 'Liste des utilisateurs',
@@ -24,7 +24,7 @@ router.get('/', isUserLogIn, function (req, res, next) {
 });
 
 // Page des messages
-router.get('/messages', isUserLogIn, function (req, res, next) {
+router.get('/messages', Utils.isAuth, function (req, res, next) {
     MessageModel.find( function(err, toutLesMessage) {
       res.render('messages/listeMessages', {
         title: 'les messages',
@@ -34,7 +34,7 @@ router.get('/messages', isUserLogIn, function (req, res, next) {
 });
 
 // Page de l'edition de message
-router.get('/messages/edit', isUserLogIn, function (req, res, next) {
+router.get('/messages/edit', Utils.isAuth, function (req, res, next) {
   UserModel.find( function(err, usersList) {
       res.render('messages/editMessage', {
         title: 'Editer un message',
@@ -44,7 +44,7 @@ router.get('/messages/edit', isUserLogIn, function (req, res, next) {
 });
 
 // Page des beacons
-router.get('/beacons', isUserLogIn, function (req, res, next) {
+router.get('/beacons', Utils.isAuth, function (req, res, next) {
     BeaconModel.find( function(err, toutlesBeacons) {
       res.render('beacons/addBeacon', {
         title: 'les beacons',
@@ -69,3 +69,12 @@ router.get('/logout', function(req, res){
   req.logout();
   res.redirect('/login');
 });
+
+
+//
+//router.post('/register', function(req, res){
+//  device_token = req.body.device_token;
+//  console.log('device token received');
+//  console.log(device_token);
+//  res.send('ok');
+//});

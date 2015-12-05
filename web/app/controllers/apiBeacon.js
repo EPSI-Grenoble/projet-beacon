@@ -3,19 +3,19 @@ var express = require('express'),
   mongoose = require('mongoose'),
   passport = require('passport'),
   BeaconModel = mongoose.model('beacons'),
-  isUserLogIn = require('../services/utils');
+  Utils = require("../services/utils");
 
 module.exports = function (app) {
   app.use('/api/beacon', router);
 };
 
-router.get('/', isUserLogIn, function (req, res, next){
+router.get('/', Utils.isAuth, function (req, res, next){
   BeaconModel.find(function(err, beacons){
     res.json(beacons)
   });
 });
 
-router.post('/', isUserLogIn , function (req, res, next){
+router.post('/', Utils.isAuth , function (req, res, next){
   var beacon = new BeaconModel({
       "nom": req.body.nom,
       "UUID": req.body.uuid
@@ -25,7 +25,7 @@ router.post('/', isUserLogIn , function (req, res, next){
 });
 
 
-router.delete('/:id', isUserLogIn, function (req, res, next){
+router.delete('/:id', Utils.isAuth, function (req, res, next){
   console.log(req.params.id);
   BeaconModel.remove({_id : req.params.id}, function(err){
     res.send(200);

@@ -12,7 +12,9 @@ app.controller('AddMessageController', function($scope, $http){
   });
 
   $scope.sauvegarder = function(){
-    $http.post("/api/message", $scope.message)
+    $http.post("/api/message", $scope.message).success(function(message){
+      $scope.message = message;
+    })
   };
 
   $scope.message = {
@@ -29,7 +31,8 @@ app.controller('AddMessageController', function($scope, $http){
         });
       }
     });
-  }
+  };
+
 });
 
 app.controller('AddBeaconController', function($scope, $http){
