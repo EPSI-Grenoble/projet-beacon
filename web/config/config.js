@@ -26,8 +26,8 @@ var config = {
     app: {
       name: 'web'
     },
-    port: 3000,
-    // db: 'mongodb://localhost/web-production'
+    port: 3002,
+    db: 'mongodb://epsi:epsi@martin-choraine.fr:10443/beacon'
   }
 };
 
