@@ -7,7 +7,7 @@ angular.module('starter.controllers', [])
 
     RequestsService.logIn(user.username, user.password).then(function(response){
       if(response.success){
-        $state.go('tab.dash');
+        $state.go('messages');
       } else {
         $scope.messageError = response.msg
       }
@@ -17,29 +17,17 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('DashCtrl', function($scope){})
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
+.controller('ListMessageCtrl', function($scope, Messages) {
+
+  $scope.messages = Messages.all();
+  $scope.remove = function(message) {
+    Messages.remove(message);
   };
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
+.controller('MessageDetailCtrl', function($scope, $stateParams, Messages) {
+  $scope.message = Messages.get($stateParams.messageId);
 })
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
-});
