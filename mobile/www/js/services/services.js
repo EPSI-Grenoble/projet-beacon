@@ -74,7 +74,6 @@ angular.module('starter.services', [])
       logIn: logIn
     };
 
-
   }])
 
 

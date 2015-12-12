@@ -7,6 +7,7 @@ angular.module('starter.controllers', [])
 
     RequestsService.logIn(user.username, user.password).then(function(response){
       if(response.success){
+        window.localStorage["api_token"] = response.token;
         $state.go('tab.dash');
       } else {
         $scope.messageError = response.msg
