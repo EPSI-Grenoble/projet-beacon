@@ -1,0 +1,39 @@
+<% include ../inc/header %>
+
+<div class="ui grid" ng-controller="AddUserController">
+
+  <div class="three wide column"><p></p></div>
+
+  <div class="twelve wide column">
+
+    <div class="ui blue segment">
+      <h1 class="ui header"><%= title %></h1>
+      <form ng-submit="sauvegarder()" class="ui form">
+        <div class="field">
+          <label>Nom</label>
+          <input type="text" ng-model="user.lastName" name="title" value="" placeholder="Entrer un nom">
+        </div>
+        <div class="field">
+          <label>Prenom</label>
+          <input type="text" ng-model="user.firstName" name="title" value="" placeholder="Entrer un Prenom">
+        </div>
+        <div class="field">
+          <label>Email</label>
+          <input type="text" ng-model="user.email" name="title" value="" placeholder="Entrer un Email">
+        </div>
+        <div class="field">
+          <label>Mot de passe</label>
+          <input type="password" ng-model="user.password" name="title" value="">
+        </div>
+
+        <div class="field">
+          <input class="ui green button" type="submit" value="Enregistrer">
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="one wide column"><p></p></div>
+</div>
+
+<% include ../inc/footer %>

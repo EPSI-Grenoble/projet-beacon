@@ -1,0 +1,30 @@
+<% include ../inc/header %>
+
+
+<div class="ui grid">
+
+  <div class="three wide column"><p></p></div>
+
+  <div class="twelve wide column">
+
+    <div class="ui blue segment">
+      <h1 class="ui header"><%= title %></h1>
+
+      <div class="ui divided list">
+        <% users.forEach(function(utilisateur){ %>
+          <div class="item">
+            <i class="large user middle aligned icon"></i>
+            <div class="content">
+              <div class="header"><%= utilisateur.prenom %><%= utilisateur.nom %> </a>
+              <div class="description"><%= utilisateur.email %><%= utilisateur.groupes %></div>
+            </div>
+          </div>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+
+  <div class="one wide column"><p></p></div>
+</div>
+
+<% include ../inc//footer %>

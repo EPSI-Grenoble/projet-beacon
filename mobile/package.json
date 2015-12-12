@@ -23,13 +23,10 @@
     "ionic-plugin-keyboard",
     "de.appplant.cordova.plugin.local-notification",
     {
-      "locator": "https://github.com/phonegap-build/PushPlugin",
-      "id": "com.phonegap.plugins.PushPlugin"
-    },
-    {
       "locator": "https://github.com/petermetz/cordova-plugin-ibeacon.git",
       "id": "com.unarin.cordova.beacon"
-    }
+    },
+    "phonegap-plugin-push"
   ],
   "cordovaPlatforms": [
     "ios",
