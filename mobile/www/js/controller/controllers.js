@@ -20,7 +20,7 @@ angular.module('starter.controllers', [])
 
 
 
-.controller('ListMessageCtrl', function($scope, Messages) {
+.controller('ListMessageCtrl', function($scope, Messages, $state) {
 
   Messages.all().then(function(response){
     $scope.messages = response;
@@ -33,7 +33,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('MessageDetailCtrl', function($scope, $stateParams, Messages) {
+.controller('MessageDetailCtrl', function($scope, $stateParams, Messages, $state) {
   Messages.get($stateParams.messageId).then(function(response){
     $scope.message = response;
   }, function(){

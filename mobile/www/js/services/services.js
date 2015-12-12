@@ -68,7 +68,7 @@ angular.module('starter.services', [])
   }])
 
 
-  .factory('NotificationService', ['RequestsService', '$ionicLoading', function(RequestsService, $ionicLoading) {
+  .factory('NotificationService', ['$ionicLoading','$state', function($ionicLoading, $state) {
     function init(){
 
       console.log("Notification service init");
@@ -81,7 +81,7 @@ angular.module('starter.services', [])
         "android": {
           "senderID": "1018662230280"
         },
-        "ios": {"alert": "true", "badge": "true", "sound": "true"},
+        "ios": {"alert": "true", "badge": "true", "sound": "true", "senderID": "1018662230280"},
         "windows": {}
       });
 
@@ -91,8 +91,9 @@ angular.module('starter.services', [])
       });
 
       push.on('notification', function(data) {
-        console.log(JSON.stringify(data));
+        console.log(data);
         push.finish(function () {
+          $state.go('message-detail', {messageId: data.additionalData.messageID});
           console.log('finish successfully called');
         });
       });

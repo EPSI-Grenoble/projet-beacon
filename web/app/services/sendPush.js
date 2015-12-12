@@ -27,9 +27,11 @@ module.exports = class SendPush {
     var device_tokens = [];
     var GCM = new gcm.Message();
     var sender = new gcm.Sender('AIzaSyD93SZYNCzkr_mdTN8A4jwdSGMn5V4Ni1U');
-    MessageModel.findById(this.messageID, function(err, message){
+    var messageID = this.messageID;
+      MessageModel.findById(messageID, function(err, message){
       GCM.addData('title', "EPSI");
       GCM.addData('message', message.titre);
+      GCM.addData("messageID", messageID);
 
       GCM.collapseKey = 'testing';
       GCM.delayWhileIdle = true;
@@ -44,6 +46,7 @@ module.exports = class SendPush {
 
         sender.send(GCM, device_tokens, 4, function(result){
           console.log(result);
+          console.log(GCM);
         });
 
       });
