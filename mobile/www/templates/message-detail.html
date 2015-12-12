@@ -15,9 +15,7 @@
       <div class="item item-divider">
         {{message.titre}}
       </div>
-      <div class="item item-text-wrap">
-        {{message.message}}
-      </div>
+      <div class="item item-text-wrap" ng-bind-html="message.message"></div>
     </div>
   </ion-content>
 </ion-view>

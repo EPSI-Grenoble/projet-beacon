@@ -10,20 +10,28 @@
       <h1 class="ui header"><%= title %></h1>
       <form ng-submit="sauvegarder()" class="ui form">
         <div class="field">
-          <label>Nom</label>
-          <input type="text" ng-model="user.lastName" name="title" value="" placeholder="Entrer un nom">
-        </div>
-        <div class="field">
-          <label>Prenom</label>
-          <input type="text" ng-model="user.firstName" name="title" value="" placeholder="Entrer un Prenom">
-        </div>
-        <div class="field">
           <label>Email</label>
-          <input type="text" ng-model="user.email" name="title" value="" placeholder="Entrer un Email">
+          <input type="text" ng-model="user.email" name="title" value="" placeholder="Entrer un email">
         </div>
         <div class="field">
           <label>Mot de passe</label>
-          <input type="password" ng-model="user.password" name="title" value="">
+          <input type="password" ng-model="user.password" name="title" placeholder="password">
+        </div>
+        <div class="two fields">
+          <div class="field">
+            <label>Nom</label>
+            <input type="text" ng-model="user.lastName" name="title" value="" placeholder="Entrer un nom">
+          </div>
+          <div class="field">
+            <label>Prenom</label>
+            <input type="text" ng-model="user.firstName" name="title" value="" placeholder="Entrer un prenom">
+          </div>
+        </div>
+        <div class="field">
+          <label>Groupes</label>
+          <select type="text" class="ui fluid search dropdown" multiple ng-model="user.groupes" ng-dropdown ng-dropdown-values="groupes" ng-options="groupe._id as groupe._id for groupe in groupes" ng-change="selectUsers()">
+            <option value="">Destinataire</option>
+          </select>
         </div>
 
         <div class="field">

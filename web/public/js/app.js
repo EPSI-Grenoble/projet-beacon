@@ -1,7 +1,7 @@
 var app = angular.module("beacon", ["ckeditor", "ngSanitize", "ngSemantic", "checklist-model"]);
 
 app.controller('AddMessageController', function($scope, $http){
-  $http.get("/api/beacon").success(function(beacons){
+  $http.get("/api/beacons").success(function(beacons){
     $scope.beaconList = beacons;
   });
   $http.get("/api/groupes").success(function(groupes){
@@ -13,7 +13,7 @@ app.controller('AddMessageController', function($scope, $http){
 
   $scope.sauvegarder = function(){
     console.log($scope.message);
-    $http.post("/api/message", $scope.message).success(function(message){
+    $http.post("/api/messages", $scope.message).success(function(message){
       $scope.message = message;
     })
   };
@@ -40,6 +40,10 @@ app.controller('AddMessageController', function($scope, $http){
 
 app.controller('AddUserController', function($scope, $http){
 
+  $http.get("/api/groupes").success(function(groupes){
+    $scope.groupes = groupes;
+  });
+
   $scope.sauvegarder = function(){
     console.log($scope.user);
     $http.post("/api/users", $scope.user).success(function(user){
@@ -52,7 +56,7 @@ app.controller('AddUserController', function($scope, $http){
 app.controller('AddBeaconController', function($scope, $http){
 
   function getBeacons(){
-    $http.get("/api/beacon").success(function(beacons){
+    $http.get("/api/beacons").success(function(beacons){
       $scope.beacons = beacons;
     });
   }
@@ -60,13 +64,13 @@ app.controller('AddBeaconController', function($scope, $http){
   getBeacons();
 
   $scope.sauvegarder = function(){
-    $http.post("/api/beacon", $scope.beacon).then(function(){
+    $http.post("/api/beacons", $scope.beacon).then(function(){
       getBeacons();
     });
   };
 
   $scope.delete = function(beacon){
-    $http.delete("/api/beacon/"+beacon._id).then(function(){
+    $http.delete("/api/beacons/"+beacon._id).then(function(){
       getBeacons();
     });
   }

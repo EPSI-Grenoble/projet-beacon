@@ -7,7 +7,7 @@ var express = require('express'),
   SendPush = require("../services/sendPush");
 
 module.exports = function (app) {
-  app.use('/api/message', router);
+  app.use('/api/messages', router);
 };
 
 router.post('/', Utils.isAuth, function (req, res, next){
@@ -29,9 +29,9 @@ router.post('/', Utils.isAuth, function (req, res, next){
 
 router.get('/user/', function (req, res, next){
   var token = req.session[req.query.token];
-  if(token && token.expire > new Date()){
-    var idUser = req.session[token].user;
-    MessageModel.find({"_id": idUser}, function(err, messages){
+  if(token){
+    var idUser = token.user;
+    MessageModel.find({"destinataires": idUser}, function(err, messages){
       res.json(messages);
     })
   } else {
@@ -41,4 +41,15 @@ router.get('/user/', function (req, res, next){
 });
 
 
+router.get('/user/:idMessage', function (req, res, next){
+  var token = req.session[req.query.token];
+  if(token){
+    MessageModel.findOne({"_id": req.params.idMessage}, function(err, message){
+      res.json(message);
+    })
+  } else {
+    console.log("Non authentifié");
+    res.send(401);
+  }
+});
 
