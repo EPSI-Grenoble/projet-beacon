@@ -6,7 +6,7 @@ var express = require('express'),
   Utils = require("../services/utils");
 
 module.exports = function (app) {
-  app.use('/api/beacon', router);
+  app.use('/api/beacons', router);
 };
 
 router.get('/', Utils.isAuth, function (req, res, next){

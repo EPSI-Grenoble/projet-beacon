@@ -7,7 +7,7 @@ var express = require('express'),
   SendPush = require("../services/sendPush");
 
 module.exports = function (app) {
-  app.use('/api/message', router);
+  app.use('/api/messages', router);
 };
 
 router.post('/', Utils.isAuth, function (req, res, next){
