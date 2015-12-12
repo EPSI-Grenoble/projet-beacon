@@ -37,6 +37,18 @@ app.controller('AddMessageController', function($scope, $http){
 
 });
 
+
+app.controller('AddUserController', function($scope, $http){
+
+  $scope.sauvegarder = function(){
+    console.log($scope.user);
+    $http.post("/api/users", $scope.user).success(function(user){
+      $scope.user = user;
+    })
+  };
+  $scope.user = {};
+});
+
 app.controller('AddBeaconController', function($scope, $http){
 
   function getBeacons(){
