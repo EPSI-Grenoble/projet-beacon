@@ -22,14 +22,23 @@ angular.module('starter.controllers', [])
 
 
 .controller('ListMessageCtrl', function($scope, Messages) {
-
-  $scope.messages = Messages.all();
+  $scope.displayMessages = Messages.all();
+  $scope.allMessages = $scope.displayMessages;
   $scope.remove = function(message) {
     Messages.remove(message);
+  };
+
+  $scope.search = function() {
+
+    $scope.displayMessages = $scope.allMessages.filter(function (message) {
+      var titre = message.titre.toLowerCase();
+      return titre.indexOf($scope.search.query.toLowerCase()) > -1;
+    });
   };
 })
 
 .controller('MessageDetailCtrl', function($scope, $stateParams, Messages) {
   $scope.message = Messages.get($stateParams.messageId);
+
 })
 
