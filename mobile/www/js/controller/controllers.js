@@ -9,7 +9,6 @@ angular.module('starter.controllers', [])
       if(response.success){
         $state.go('messages');
         window.localStorage["api_token"] = response.token;
-        $state.go('tab.dash');
       } else {
         $scope.messageError = response.msg
       }
@@ -23,13 +22,22 @@ angular.module('starter.controllers', [])
 
 .controller('ListMessageCtrl', function($scope, Messages) {
 
-  $scope.messages = Messages.all();
+  Messages.all().then(function(response){
+    $scope.messages = response;
+  }, function(){
+    $state.go('login');
+  });
+
   $scope.remove = function(message) {
     Messages.remove(message);
   };
 })
 
 .controller('MessageDetailCtrl', function($scope, $stateParams, Messages) {
-  $scope.message = Messages.get($stateParams.messageId);
-})
+  Messages.get($stateParams.messageId).then(function(response){
+    $scope.message = response;
+  }, function(){
+    $state.go('login');
+  });
+});
 

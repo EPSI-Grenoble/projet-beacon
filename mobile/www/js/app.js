@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "ngCordovaBeacon"])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "ngCordovaBeacon", "ngSanitize"])
 
 .run(function($ionicPlatform, NotificationService, $ionicLoading, $cordovaBeacon, $rootScope) {
   $ionicPlatform.ready(function() {
@@ -52,7 +52,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "
       controller: 'MessageDetailCtrl'
     })
 
- 
+
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
