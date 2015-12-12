@@ -83,51 +83,37 @@ angular.module('starter.services', [])
 
     function init(){
 
-      console.log("Generate device token");
+      console.log("Notification service init");
+
       if(!window.localStorage['device_token']){
         $ionicLoading.show();
       }
 
-      pushNotification = window.plugins.pushNotification;
+      var push = PushNotification.init({
+        "android": {
+          "senderID": "1018662230280"
+        },
+        "ios": {"alert": "true", "badge": "true", "sound": "true"},
+        "windows": {}
+      });
 
-      window.onNotification = function(e){
+      push.on('registration', function(data) {
+        console.log("registration event");
+        console.log(data);
+        window.localStorage['device_token'] = data.registrationId;
+      });
 
-        switch(e.event){
-          case 'registered':
-            if(e.regid.length > 0){
-              $ionicLoading.hide();
-              var device_token = e.regid;
-              console.log("Token generate "+device_token);
-              window.localStorage['device_token'] = device_token;
-            }
-            break;
+      push.on('notification', function(data) {
+        console.log("notification event");
+        console.log(JSON.stringify(data));
+        push.finish(function () {
+          console.log('finish successfully called');
+        });
+      });
 
-          case 'message':
-            break;
-
-          case 'error':
-            break;
-
-        }
-      };
-
-
-      window.errorHandler = function(error){
-        alert('an error occured');
-      };
-
-
-      pushNotification.register(
-        onNotification,
-        errorHandler,
-        {
-          'badge': 'true',
-          'sound': 'true',
-          'alert': 'true',
-          'senderID': '1018662230280',
-          'ecb': 'onNotification'
-        }
-      );
+      push.on('error', function(e) {
+        console.log("push error");
+      });
 
     }
 
