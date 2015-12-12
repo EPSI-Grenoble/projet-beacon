@@ -21,6 +21,8 @@ angular.module('starter.controllers', [])
 
 
 .controller('ListMessageCtrl', function($scope, Messages, $state) {
+  $scope.displayMessages = Messages.all();
+  $scope.allMessages = $scope.displayMessages;
 
   Messages.all().then(function(response){
     $scope.messages = response;
@@ -31,9 +33,18 @@ angular.module('starter.controllers', [])
   $scope.remove = function(message) {
     Messages.remove(message);
   };
+
+  $scope.search = function() {
+    $scope.displayMessages = $scope.allMessages.filter(function (message) {
+      var titre = message.titre.toLowerCase();
+      return titre.indexOf($scope.search.query.toLowerCase()) > -1;
+    });
+  };
 })
 
 .controller('MessageDetailCtrl', function($scope, $stateParams, Messages, $state) {
+  $scope.message = Messages.get($stateParams.messageId);
+
   Messages.get($stateParams.messageId).then(function(response){
     $scope.message = response;
   }, function(){
