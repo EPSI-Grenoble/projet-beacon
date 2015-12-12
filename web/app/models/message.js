@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
   moment = require('moment');
 
 var MessageSchema = new Schema({
+  sender: String,
   titre: String,
   message: String,
   fromDate: Date,

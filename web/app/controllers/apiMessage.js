@@ -23,6 +23,21 @@ router.post('/', Utils.isAuth, function (req, res, next){
     if(err) res.send(406);
     var sender = new SendPush(message._id);
     sender.sendNow();
--   res.send(message);
+    res.send(message);
   });
 });
+
+router.get('/user/', function (req, res, next){
+  var token = req.session[req.query.token];
+  if(token && token.expire > new Date()){
+    var idUser = req.session[token].user;
+    MessageModel.find({"_id": idUser}, function(err, messages){
+      res.json(messages);
+    })
+  } else {
+    res.status(406)
+  }
+});
+
+
+
