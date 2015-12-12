@@ -21,10 +21,8 @@ angular.module('starter.controllers', [])
 
 
 .controller('ListMessageCtrl', function($scope, Messages) {
-<<<<<<< HEAD
   $scope.displayMessages = Messages.all();
   $scope.allMessages = $scope.displayMessages;
-=======
 
   Messages.all().then(function(response){
     $scope.messages = response;
@@ -32,7 +30,6 @@ angular.module('starter.controllers', [])
     $state.go('login');
   });
 
->>>>>>> e63f650b7979786c25417ad4fe57e0cef92aef57
   $scope.remove = function(message) {
     Messages.remove(message);
   };
@@ -47,16 +44,10 @@ angular.module('starter.controllers', [])
 })
 
 .controller('MessageDetailCtrl', function($scope, $stateParams, Messages) {
-<<<<<<< HEAD
-  $scope.message = Messages.get($stateParams.messageId);
-
-})
-=======
   Messages.get($stateParams.messageId).then(function(response){
     $scope.message = response;
   }, function(){
     $state.go('login');
   });
 });
->>>>>>> e63f650b7979786c25417ad4fe57e0cef92aef57
 
