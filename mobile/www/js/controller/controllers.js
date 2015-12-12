@@ -19,13 +19,11 @@ angular.module('starter.controllers', [])
 })
 
 
-
 .controller('ListMessageCtrl', function($scope, Messages, $state) {
-  $scope.displayMessages = Messages.all();
-  $scope.allMessages = $scope.displayMessages;
+  $scope.displayMessages = $scope.allMessages = [];
 
   Messages.all().then(function(response){
-    $scope.messages = response;
+    $scope.displayMessages = $scope.allMessages = response;
   }, function(){
     $state.go('login');
   });
@@ -35,6 +33,7 @@ angular.module('starter.controllers', [])
   };
 
   $scope.search = function() {
+
     $scope.displayMessages = $scope.allMessages.filter(function (message) {
       var titre = message.titre.toLowerCase();
       return titre.indexOf($scope.search.query.toLowerCase()) > -1;
@@ -42,7 +41,7 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('MessageDetailCtrl', function($scope, $stateParams, Messages, $state) {
+.controller('MessageDetailCtrl', function($scope, $stateParams, Messages) {
   $scope.message = Messages.get($stateParams.messageId);
 
   Messages.get($stateParams.messageId).then(function(response){
@@ -51,4 +50,3 @@ angular.module('starter.controllers', [])
     $state.go('login');
   });
 });
-
