@@ -14,3 +14,15 @@ router.get("/", Utils.isAuth, function(req, res ,next){
     res.json(users);
   })
 });
+
+router.post('/', Utils.isAuth, function (req, res, next){
+  var user = new UserModel({
+    "email": req.body.email,
+    "password": req.body.password,
+    "lastName": req.body.lastName,
+    "firstName": req.body.firstName,
+    "groupes": req.body.groupes
+  });
+  user.save();
+  res.send(200);
+});

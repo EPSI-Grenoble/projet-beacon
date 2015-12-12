@@ -43,6 +43,24 @@ router.get('/messages/edit', Utils.isAuth, function (req, res, next) {
   });
 });
 
+
+// Page des users
+router.get('/users', Utils.isAuth, function (req, res, next) {
+    UserModel.find( function(err, toutLesUser) {
+      res.render('users/listeUsers', {
+        title: 'Les utilisateurs',
+        users : toutLesUser
+      })
+    })
+});
+
+// Page de l'edition de user
+router.get('/users/edit', Utils.isAuth, function (req, res, next) {
+    res.render('users/editUser', {
+      title: 'Editer un utilisateur',
+    });
+});
+
 // Page des beacons
 router.get('/beacons', Utils.isAuth, function (req, res, next) {
     BeaconModel.find( function(err, toutlesBeacons) {
@@ -69,12 +87,3 @@ router.get('/logout', function(req, res){
   req.logout();
   res.redirect('/login');
 });
-
-
-//
-//router.post('/register', function(req, res){
-//  device_token = req.body.device_token;
-//  console.log('device token received');
-//  console.log(device_token);
-//  res.send('ok');
-//});

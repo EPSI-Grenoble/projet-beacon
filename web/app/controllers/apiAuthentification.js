@@ -2,6 +2,7 @@ var express = require('express'),
   router = express.Router(),
   mongoose = require('mongoose'),
   passport = require('passport'),
+  moment = require('moment'),
   UserModel = mongoose.model('users'),
   uuid = require('node-uuid');
 
@@ -11,8 +12,6 @@ module.exports = function (app) {
 
 // route de test des id de connexion smartphone
 router.post('/auth', function (req, res, next) {
-  var sess = req.session;
-  console.log("auth");
   UserModel.findOne(
     {email : req.body.login, password : req.body.password},
     function(err, user) {
@@ -23,16 +22,13 @@ router.post('/auth', function (req, res, next) {
       }
       else
       {
-        if (!sess[user.email]){
-          var newtoken = uuid.v4();
-          user.token = newtoken;
-          sess[user.email] = user.token;
-          console.log(req);
-          console.log(req.body.device_token);
-          user.device_token = req.body.device_token;
-          user.save();
-        }
-        res.json({success:true, user: sess[user.email]});
+        req.session[uuid.v4()] = {
+          user : user._id,
+          expire: moment().add(10, 'days')
+        };
+        user.device_token = req.body.device_token;
+        user.save();
+        res.json({success:true, token: req.session[uuid.v4()]});
       }
     }
   );
