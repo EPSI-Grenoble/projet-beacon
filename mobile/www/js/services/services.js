@@ -1,47 +1,39 @@
 angular.module('starter.services', [])
 
-  .factory('Chats', function() {
+  .factory('Messages', function() {
     // Might use a resource here that returns a JSON array
 
     // Some fake testing data
-    var chats = [{
-      id: 0,
-      name: 'Ben Sparrow',
-      lastText: 'You on your way?',
-      face: 'img/ben.png'
-    }, {
-      id: 1,
-      name: 'Max Lynx',
-      lastText: 'Hey, it\'s me',
-      face: 'img/max.png'
-    }, {
-      id: 2,
-      name: 'Adam Bradleyson',
-      lastText: 'I should buy a boat',
-      face: 'img/adam.jpg'
-    }, {
-      id: 3,
-      name: 'Perry Governor',
-      lastText: 'Look at my mukluks!',
-      face: 'img/perry.png'
-    }, {
-      id: 4,
-      name: 'Mike Harrington',
-      lastText: 'This is wicked good ice cream.',
-      face: 'img/mike.png'
+    var messages = [{
+      id: 'message1',
+      titre: 'J\'aime le sexe',
+      message: 'test 1',
+      nom:"Edgard le grand",
+      fromDate: '10/12/2015',
+      toDate: '11/12/2015',
+      photo: 'img/ben.png',
+    },
+    {id: 'message2',
+      titre: 'J\'aime pas le sexe',
+      message: 'test 2',
+      fromDate: '10/12/2015',
+      toDate: '11/12/2015',
+      photo: 'img/ben.png',
     }];
+
+    
 
     return {
       all: function() {
-        return chats;
+        return messages;
       },
-      remove: function(chat) {
-        chats.splice(chats.indexOf(chat), 1);
+      remove: function(message) {
+        messages.splice(messages.indexOf(message), 1);
       },
-      get: function(chatId) {
-        for (var i = 0; i < chats.length; i++) {
-          if (chats[i].id === parseInt(chatId)) {
-            return chats[i];
+      get: function(messageId) {
+        for (var i = 0; i < messages.length; i++) {
+          if (messages[i].id === messageId) {
+            return messages[i];
           }
         }
         return null;
@@ -56,7 +48,7 @@ angular.module('starter.services', [])
 
     function logIn(login, password){
       var deferred = $q.defer();
-      $ionicLoading.show();
+     // $ionicLoading.show();
 
       $http.post(base_url + '/api/auth', {'login': login, 'password' : password, 'device_token' :  window.localStorage['device_token']})
         .success(function(response){
@@ -85,7 +77,7 @@ angular.module('starter.services', [])
       console.log("Notification service init");
 
       if(!window.localStorage['device_token']){
-        $ionicLoading.show();
+        //$ionicLoading.show();
       }
 
       var push = PushNotification.init({
