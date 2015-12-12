@@ -35,7 +35,8 @@ router.get('/user/', function (req, res, next){
       res.json(messages);
     })
   } else {
-    res.status(406)
+    console.log("Non authentifié");
+    res.send(401);
   }
 });
 
