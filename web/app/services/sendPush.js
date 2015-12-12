@@ -35,14 +35,17 @@ module.exports = class SendPush {
       GCM.delayWhileIdle = true;
       GCM.timeToLive = 3;
 
-      message.destinataires.forEach(function(destinataire){
-        if(destinataire.device_token) {
-          device_tokens.push("APA91bG_clVw0w1D093U2k3yJTKwQKlQ8b7zKP2xbg7-_bIqRuTuX6TCLJVH2yYCSsOsyJwTtQDO4vXBPIuA9PV39U2s-YfRwLoPV2JVulajWVa_xZPNcPlkeQrt9yen381MJHJr3NWf7vG58yvb0Jwpd5kKOLUP7A");
-        }
-      });
+      UserModel.find({ "_id" : { $in : message.destinataires } }, function(err, users){
+        users.forEach(function(user){
+          if(user.device_token) {
+            device_tokens.push(user.device_token);
+          }
+        });
 
-      sender.send(GCM, device_tokens, 4, function(result){
-        console.log(result);
+        sender.send(GCM, device_tokens, 4, function(result){
+          console.log(result);
+        });
+
       });
     });
   }

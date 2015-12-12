@@ -52,7 +52,7 @@ angular.module('starter.services', [])
 
 .factory('RequestsService', ['$http', '$q', '$ionicLoading', '$rootScope', function($http, $q, $ionicLoading, $rootScope) {
 
-  var base_url = 'http://192.168.0.24:3000';
+  var base_url = 'https://beacon.martin-choraine.fr';
 
   function logIn(login, password){
     var deferred = $q.defer();

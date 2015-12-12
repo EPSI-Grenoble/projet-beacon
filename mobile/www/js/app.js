@@ -5,36 +5,48 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "ngCordovaBeacon"])
 
-.run(function($ionicPlatform, RequestsService, $ionicLoading) {
+.run(function($ionicPlatform, RequestsService, $ionicLoading, $cordovaBeacon, $rootScope) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
-
     }
     if (window.StatusBar) {
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
 
-    $ionicLoading.show();
+    if(!window.localStorage['device_token']){
+      $ionicLoading.show();
+    }
+
+    $cordovaBeacon.requestWhenInUseAuthorization();
+
+    $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function(event, pluginResult) {
+      var uniqueBeaconKey, beacons = {};
+      for(var i = 0; i < pluginResult.beacons.length; i++) {
+        uniqueBeaconKey = pluginResult.beacons[i].uuid + ":" + pluginResult.beacons[i].major + ":" + pluginResult.beacons[i].minor;
+        beacons[uniqueBeaconKey] = pluginResult.beacons[i];
+      }
+      console.log(beacons);
+    });
+
+    $cordovaBeacon.startRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("ibeacon", "962ad966-e97f-44af-b069-c89f8d7b3aa2"));
+
     pushNotification = window.plugins.pushNotification;
 
-
     window.onNotification = function(e){
-
-      console.log('notification received');
 
       switch(e.event){
         case 'registered':
           if(e.regid.length > 0){
             $ionicLoading.hide();
             var device_token = e.regid;
-            console.log(device_token);
+            window.localStorage['device_token'] = device_token;
             RequestsService.register(device_token);
           }
           break;
@@ -51,7 +63,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
     window.errorHandler = function(error){
       alert('an error occured');
-    }
+    };
 
 
     pushNotification.register(

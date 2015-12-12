@@ -12,6 +12,7 @@ app.controller('AddMessageController', function($scope, $http){
   });
 
   $scope.sauvegarder = function(){
+    console.log($scope.message);
     $http.post("/api/message", $scope.message).success(function(message){
       $scope.message = message;
     })
@@ -27,6 +28,7 @@ app.controller('AddMessageController', function($scope, $http){
     angular.forEach($scope.groupes, function(groupe){
       if($scope.groupeSelected.indexOf(groupe._id) != -1){
         angular.forEach(groupe.users, function(user){
+          console.log(user);
           $scope.message.destinataires.push(user._id);
         });
       }

@@ -8,7 +8,7 @@ var MessageSchema = new Schema({
   message: String,
   fromDate: Date,
   toDate: Date,
-  groupe: Array,
+  destinataires: Array,
   typeMessage :  String,
   beacons : Array
 });

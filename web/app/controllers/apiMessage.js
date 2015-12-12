@@ -16,7 +16,8 @@ router.post('/', Utils.isAuth, function (req, res, next){
       "message": req.body.content,
       "fromDate": req.body.fromdate,
       "toDate": req.body.todate,
-      "beacons" : req.body.beacons
+      "beacons" : req.body.beacons,
+      "destinataires" : req.body.destinataires
   });
   message.save(function(err){
     if(err) res.send(406);
