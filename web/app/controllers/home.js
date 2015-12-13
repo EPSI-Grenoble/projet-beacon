@@ -48,7 +48,8 @@ router.get('/messages/edit', Utils.isAuth, function (req, res, next) {
 router.get('/users', Utils.isAuth, function (req, res, next) {
     UserModel.find( function(err, toutLesUser) {
       res.render('users/listeUsers', {
-        title: 'Les utilisateurs',
+        title: 'Les Utilisateurs',
+        subtitle: 'Liste des utilisateurs',
         users : toutLesUser
       })
     })
