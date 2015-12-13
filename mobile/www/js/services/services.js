@@ -1,62 +1,53 @@
+var base_url = 'http://192.168.0.24:3000';
+
 angular.module('starter.services', [])
 
-  .factory('Chats', function() {
-    // Might use a resource here that returns a JSON array
+  .factory('Messages', function($http, $q) {
+    function getAll(){
+      var deferred = $q.defer();
 
-    // Some fake testing data
-    var chats = [{
-      id: 0,
-      name: 'Ben Sparrow',
-      lastText: 'You on your way?',
-      face: 'img/ben.png'
-    }, {
-      id: 1,
-      name: 'Max Lynx',
-      lastText: 'Hey, it\'s me',
-      face: 'img/max.png'
-    }, {
-      id: 2,
-      name: 'Adam Bradleyson',
-      lastText: 'I should buy a boat',
-      face: 'img/adam.jpg'
-    }, {
-      id: 3,
-      name: 'Perry Governor',
-      lastText: 'Look at my mukluks!',
-      face: 'img/perry.png'
-    }, {
-      id: 4,
-      name: 'Mike Harrington',
-      lastText: 'This is wicked good ice cream.',
-      face: 'img/mike.png'
-    }];
+      $http.get(base_url+"/api/messages/user?token="+window.localStorage["api_token"])
+        .success(function(response){
+          deferred.resolve(response);
+        })
+        .error(function(data){
+          deferred.reject();
+        });
+
+      return deferred.promise;
+    }
+
+    function get(id){
+      var deferred = $q.defer();
+
+      $http.get(base_url+"/api/messages/user/"+id+"?token="+window.localStorage["api_token"])
+        .success(function(response){
+          deferred.resolve(response);
+        })
+        .error(function(data){
+          deferred.reject();
+        });
+
+      return deferred.promise;
+    }
+
+    function remove(id){
+
+    }
 
     return {
-      all: function() {
-        return chats;
-      },
-      remove: function(chat) {
-        chats.splice(chats.indexOf(chat), 1);
-      },
-      get: function(chatId) {
-        for (var i = 0; i < chats.length; i++) {
-          if (chats[i].id === parseInt(chatId)) {
-            return chats[i];
-          }
-        }
-        return null;
-      }
+      all: getAll,
+      get: get,
+      remove: remove
     };
   })
 
 
-  .factory('RequestsService', ['$http', '$q', '$ionicLoading', '$rootScope', function($http, $q, $ionicLoading, $rootScope) {
-
-    var base_url = 'https://beacon.martin-choraine.fr';
+  .factory('RequestsService', ['$http', '$q', '$ionicLoading', '$rootScope', function($http, $q, $ionicLoading) {
 
     function logIn(login, password){
       var deferred = $q.defer();
-      $ionicLoading.show();
+     // $ionicLoading.show();
 
       $http.post(base_url + '/api/auth', {'login': login, 'password' : password, 'device_token' :  window.localStorage['device_token']})
         .success(function(response){
@@ -74,39 +65,35 @@ angular.module('starter.services', [])
       logIn: logIn
     };
 
-
   }])
 
 
-  .factory('NotificationService', ['RequestsService', '$ionicLoading', function(RequestsService, $ionicLoading) {
-
-
+  .factory('NotificationService', ['$ionicLoading','$state', function($ionicLoading, $state) {
     function init(){
 
       console.log("Notification service init");
 
       if(!window.localStorage['device_token']){
-        $ionicLoading.show();
+        //$ionicLoading.show();
       }
 
       var push = PushNotification.init({
         "android": {
           "senderID": "1018662230280"
         },
-        "ios": {"alert": "true", "badge": "true", "sound": "true"},
+        "ios": {"alert": "true", "badge": "true", "sound": "true", "senderID": "1018662230280"},
         "windows": {}
       });
 
       push.on('registration', function(data) {
-        console.log("registration event");
         console.log(data);
         window.localStorage['device_token'] = data.registrationId;
       });
 
       push.on('notification', function(data) {
-        console.log("notification event");
-        console.log(JSON.stringify(data));
+        console.log(data);
         push.finish(function () {
+          $state.go('message-detail', {messageId: data.additionalData.messageID});
           console.log('finish successfully called');
         });
       });

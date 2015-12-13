@@ -1,4 +1,4 @@
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "ngCordovaBeacon"])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "ngCordovaBeacon", "ngSanitize"])
 
 .run(function($ionicPlatform, NotificationService, $ionicLoading, $cordovaBeacon, $rootScope) {
   $ionicPlatform.ready(function() {
@@ -36,57 +36,22 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "
   $stateProvider
     .state('login', {
       url: '/login',
-      //abstract: true,
       templateUrl: 'templates/login.html',
       controller: 'LoginCtrl'
     })
 
 
-    // setup an abstract state for the tabs directive
-    .state('tab', {
-    url: '/tab',
-    abstract: true,
-    templateUrl: 'templates/tabs.html'
-  })
-
-  .state('tab.dash', {
-    url: '/dash',
-    views: {
-      'tab-dash': {
-        templateUrl: 'templates/tab-dash.html',
-        controller: 'DashCtrl'
-      }
-    }
-  })
-
-  .state('tab.chats', {
-      url: '/chats',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/tab-chats.html',
-          controller: 'ChatsCtrl'
-        }
-      }
+  .state('messages', {
+      url: '/messages',
+      templateUrl: 'templates/list-message.html',
+      controller: 'ListMessageCtrl'
     })
-    .state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
+    .state('message-detail', {
+      url: '/messages/:messageId',
+      templateUrl: 'templates/message-detail.html',
+      controller: 'MessageDetailCtrl'
     })
 
-  .state('tab.account', {
-    url: '/account',
-    views: {
-      'tab-account': {
-        templateUrl: 'templates/tab-account.html',
-        controller: 'AccountCtrl'
-      }
-    }
-  });
 
 
   // if none of the above states are matched, use this as the fallback

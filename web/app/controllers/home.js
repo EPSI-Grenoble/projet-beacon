@@ -88,12 +88,3 @@ router.get('/logout', function(req, res){
   req.logout();
   res.redirect('/login');
 });
-
-
-//
-//router.post('/register', function(req, res){
-//  device_token = req.body.device_token;
-//  console.log('device token received');
-//  console.log(device_token);
-//  res.send('ok');
-//});

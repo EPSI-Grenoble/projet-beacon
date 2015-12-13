@@ -7,7 +7,8 @@ angular.module('starter.controllers', [])
 
     RequestsService.logIn(user.username, user.password).then(function(response){
       if(response.success){
-        $state.go('tab.dash');
+        $state.go('messages');
+        window.localStorage["api_token"] = response.token;
       } else {
         $scope.messageError = response.msg
       }
@@ -17,29 +18,35 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('DashCtrl', function($scope){})
 
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+.controller('ListMessageCtrl', function($scope, Messages, $state) {
+  $scope.displayMessages = $scope.allMessages = [];
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
+  Messages.all().then(function(response){
+    $scope.displayMessages = $scope.allMessages = response;
+  }, function(){
+    $state.go('login');
+  });
+
+  $scope.remove = function(message) {
+    Messages.remove(message);
+  };
+
+  $scope.search = function() {
+
+    $scope.displayMessages = $scope.allMessages.filter(function (message) {
+      var titre = message.titre.toLowerCase();
+      return titre.indexOf($scope.search.query.toLowerCase()) > -1;
+    });
   };
 })
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
+.controller('MessageDetailCtrl', function($scope, $stateParams, Messages) {
+  $scope.message = Messages.get($stateParams.messageId);
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
+  Messages.get($stateParams.messageId).then(function(response){
+    $scope.message = response;
+  }, function(){
+    $state.go('login');
+  });
 });
