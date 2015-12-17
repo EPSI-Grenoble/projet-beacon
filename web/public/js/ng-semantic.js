@@ -16,25 +16,36 @@ app.directive("ngPopup", [
 
 
 app.directive("ngDropdown", [ "$timeout",
-    function($timeout) {
-        return {
-            restrict: "AE",
-            require: 'ngModel',
-            link: function(scope, elem, attr, ngModelCtrl) {
-                var option;
-                attr['ngDropdown'] != "" ?  option =  scope.$eval(attr['ngDropdown']) :  option = {};
-                $timeout(function () {
-                    option.onChange = function (value, text, $choice) {
-                        if(!attr.multiple)
-                            ngModelCtrl.$setViewValue(text);
-                        scope.$parent.$apply();
-                    };
-                    $(elem).dropdown(option);
-                }, 0);
-            }
-        };
-    }
+  function($timeout) {
+    return {
+      restrict: "AE",
+      require: 'ngModel',
+      scope : {
+        ngDropdownChoice : "=",
+        ngDropdown : "="
+      },
+      template : '<option value="{{tag._id}}" ng-repeat="tag in tagsList">{{tag._id}}</option>',
+      link: function(scope, elem, attr) {
+
+        scope.tagsList = ["fuck"];
+
+        if(scope['ngDropdown'] == "")
+          scope['ngDropdown'] = {};
+
+        scope.$watch("ngDropdownChoice", function(value) {
+          scope.tagsList = value;
+          if(scope.tagsList != undefined && scope.tagsList)
+          console.log(scope.tagsList);
+            $timeout(function () {
+              $(elem).dropdown(scope['ngDropdown']);
+            }, 150);
+        }, true);
+
+      }
+    };
+  }
 ]);
+
 
 app.directive("ngOpenModal", [
     function() {

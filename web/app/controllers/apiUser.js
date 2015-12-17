@@ -10,7 +10,7 @@ module.exports = function (app) {
 };
 
 router.get("/", Utils.isAuth, function(req, res ,next){
-  UserModel.find(function (err, users) {
+  UserModel.find().sort({lastName: 1}).exec(function (err, users) {
     res.json(users);
   })
 });

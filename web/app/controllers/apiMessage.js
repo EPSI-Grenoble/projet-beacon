@@ -17,7 +17,8 @@ router.post('/', Utils.isAuth, function (req, res, next){
       "fromDate": req.body.fromdate,
       "toDate": req.body.todate,
       "beacons" : req.body.beacons,
-      "destinataires" : req.body.destinataires
+      "destinataires" : req.body.destinataires,
+      "dateCreation" : new Date()
   });
   message.save(function(err){
     if(err) res.send(406);
@@ -31,7 +32,7 @@ router.get('/user/', function (req, res, next){
   var token = req.session[req.query.token];
   if(token){
     var idUser = token.user;
-    MessageModel.find({"destinataires": idUser}, function(err, messages){
+    MessageModel.find({"destinataires": idUser}).sort({"dateCreation" : -1}).exec(function(err, messages){
       res.json(messages);
     })
   } else {

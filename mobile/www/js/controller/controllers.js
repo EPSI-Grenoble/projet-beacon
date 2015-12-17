@@ -1,6 +1,11 @@
 angular.module('starter.controllers', [])
 
 .controller('LoginCtrl', function($scope, $state, RequestsService) {
+
+  $scope.user = {};
+  $scope.user.username = window.localStorage['login'];
+  $scope.user.password = window.localStorage['password'];
+
   //$state.go('tab.dash');
   $scope.signIn = function(user) {
     console.log('Sign-In', user);

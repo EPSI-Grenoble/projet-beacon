@@ -10,7 +10,7 @@
     </button>
   </div>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="message in displayMessages" type="item-text-wrap" href="#/messages/{{message.id}}">
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="message in displayMessages" type="item-text-wrap" href="#/messages/{{message._id}}">
         <img ng-src="img/user.png">
         <h2>{{message.titre}}</h2>
         <p>{{message.fromDate}} - {{message.toDate}}</p>

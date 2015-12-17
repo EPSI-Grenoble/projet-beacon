@@ -25,7 +25,7 @@ router.get('/', Utils.isAuth , function (req, res, next) {
 
 // Page des messages
 router.get('/messages', Utils.isAuth, function (req, res, next) {
-    MessageModel.find( function(err, toutLesMessage) {
+    MessageModel.find().sort({"dateCreation" : -1}).exec(function(err, toutLesMessage) {
       res.render('messages/listeMessages', {
         title: 'les messages',
         messages : toutLesMessage
@@ -46,7 +46,7 @@ router.get('/messages/edit', Utils.isAuth, function (req, res, next) {
 
 // Page des users
 router.get('/users', Utils.isAuth, function (req, res, next) {
-    UserModel.find( function(err, toutLesUser) {
+    UserModel.find().sort({lastName: 1}).exec(function(err, toutLesUser) {
       res.render('users/listeUsers', {
         title: 'Les Utilisateurs',
         subtitle: 'Liste des utilisateurs',
@@ -59,7 +59,19 @@ router.get('/users', Utils.isAuth, function (req, res, next) {
 router.get('/users/edit', Utils.isAuth, function (req, res, next) {
     res.render('users/editUser', {
       title: 'Editer un utilisateur',
+      user: {}
     });
+});
+
+// Page de l'edition de user
+router.get('/users/edit/:idUser', Utils.isAuth, function (req, res, next) {
+  UserModel.findOne({"_id" : req.params.idUser}, function(err, user){
+    console.log(user);
+    res.render('users/editUser', {
+      title: 'Editer un utilisateur',
+      user: user
+    });
+  });
 });
 
 // Page des beacons

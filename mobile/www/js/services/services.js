@@ -1,4 +1,4 @@
-var base_url = 'http://192.168.0.24:3000';
+var base_url = 'https://beacon.martin-choraine.fr';
 
 angular.module('starter.services', [])
 
@@ -47,10 +47,12 @@ angular.module('starter.services', [])
 
     function logIn(login, password){
       var deferred = $q.defer();
-     // $ionicLoading.show();
+      $ionicLoading.show();
 
       $http.post(base_url + '/api/auth', {'login': login, 'password' : password, 'device_token' :  window.localStorage['device_token']})
         .success(function(response){
+          window.localStorage['login'] = login;
+          window.localStorage['password'] = password;
           $ionicLoading.hide();
           deferred.resolve(response);
         })
@@ -73,10 +75,6 @@ angular.module('starter.services', [])
 
       console.log("Notification service init");
 
-      if(!window.localStorage['device_token']){
-        //$ionicLoading.show();
-      }
-
       var push = PushNotification.init({
         "android": {
           "senderID": "1018662230280"
@@ -85,8 +83,18 @@ angular.module('starter.services', [])
         "windows": {}
       });
 
+      if(!window.localStorage['device_token']){
+        $ionicLoading.show();
+        push.unregister(function(ok){
+          console.log(ok);
+        });
+      } else {
+        console.log(window.localStorage['device_token']);
+      }
+
       push.on('registration', function(data) {
         console.log(data);
+        $ionicLoading.hide();
         window.localStorage['device_token'] = data.registrationId;
       });
 
@@ -99,7 +107,8 @@ angular.module('starter.services', [])
       });
 
       push.on('error', function(e) {
-        console.log("push error");
+        console.error(e);
+        $ionicLoading.hide();
       });
 
     }

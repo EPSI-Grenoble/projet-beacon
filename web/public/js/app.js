@@ -1,20 +1,17 @@
-var app = angular.module("beacon", ["ckeditor", "ngSanitize", "ngSemantic", "checklist-model"]);
+var app = angular.module("beacon", ["ckeditor", "ngSanitize", "ngSemantic", "checklist-model", "ngResource"]);
 
-app.controller('AddMessageController', function($scope, $http){
-  $http.get("/api/beacons").success(function(beacons){
-    $scope.beaconList = beacons;
-  });
-  $http.get("/api/groupes").success(function(groupes){
-    $scope.groupes = groupes;
-  });
-  $http.get("/api/users").success(function(users){
-    $scope.users = users;
-  });
+app.controller('AddMessageController', function($scope, $http, GroupeAPI, BeaconAPI, UserAPI){
+
+  $scope.beaconList = BeaconAPI.get();
+
+  $scope.groupes  = GroupeAPI.get();
+
+  $scope.users = UserAPI.get();
 
   $scope.sauvegarder = function(){
-    console.log($scope.message);
     $http.post("/api/messages", $scope.message).success(function(message){
       $scope.message = message;
+      notie.alert(1, 'Success!', 1.5);
     })
   };
 
@@ -28,7 +25,6 @@ app.controller('AddMessageController', function($scope, $http){
     angular.forEach($scope.groupes, function(groupe){
       if($scope.groupeSelected.indexOf(groupe._id) != -1){
         angular.forEach(groupe.users, function(user){
-          console.log(user);
           $scope.message.destinataires.push(user._id);
         });
       }
@@ -45,7 +41,6 @@ app.controller('AddUserController', function($scope, $http){
   });
 
   $scope.sauvegarder = function(){
-    console.log($scope.user);
     $http.post("/api/users", $scope.user).success(function(user){
       $scope.user = user;
     })
@@ -53,25 +48,21 @@ app.controller('AddUserController', function($scope, $http){
   $scope.user = {};
 });
 
-app.controller('AddBeaconController', function($scope, $http){
+app.controller('AddBeaconController', function($scope, $http, BeaconAPI){
 
   function getBeacons(){
-    $http.get("/api/beacons").success(function(beacons){
-      $scope.beacons = beacons;
-    });
+    $scope.beacons = BeaconAPI.get();
   }
 
   getBeacons();
 
   $scope.sauvegarder = function(){
-    $http.post("/api/beacons", $scope.beacon).then(function(){
+      BeaconAPI.save($scope.beacon);
       getBeacons();
-    });
   };
 
   $scope.delete = function(beacon){
-    $http.delete("/api/beacons/"+beacon._id).then(function(){
-      getBeacons();
-    });
+    BeaconAPI.delete({"id" : beacon._id});
+    getBeacons();
   }
 });
