@@ -8,14 +8,50 @@
   <div class="twelve wide column">
 
     <div class="ui blue segment">
-      <h1 class="ui header"><%= title %></h1>
-
-      <div class="ui divided list">
-        <% users.forEach(function(user){ %>
-        <div class="item"><%= user.email %> / <%= user.password %></div>
-        <% }); %>
-      </div>
+      <h1 class="ui header">
+        <img src="/img/epsi-logo.png" class="ui bordered circular image">
+        <div class="content">
+        <%= title %>
+        <div class="sub header">Plateforme de contact de l'EPSI</div>
+        </div>
+      </h1>
     </div>
+
+    <div class="ui four stackable cards">
+      <a class="card" href="/users">
+        <div class="content">
+          <div class="header">Les utilisateurs</div>
+          <div class="meta">
+            <span class="category">Modifier/supprimer des utilisateurs</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="/messages">
+        <div class="content">
+          <div class="header">Les messages</div>
+          <div class="meta">
+            <span class="category">Liste des messages envoyés</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="/messages/edit">
+        <div class="content">
+          <div class="header">Envoyer un message</div>
+          <div class="meta">
+            <span class="category">Envoyer un message push ou beacon</span>
+          </div>
+        </div>
+      </a>
+      <a class="card" href="/beacons">
+        <div class="content">
+          <div class="header">Gerer les beacons</div>
+          <div class="meta">
+            <span class="category">Envoyer un message push ou beacon</span>
+          </div>
+        </div>
+      </a>
+    </div>
+
   </div>
 
   <div class="one wide column"><p></p></div>

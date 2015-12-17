@@ -18,12 +18,15 @@ router.post('/', Utils.isAuth, function (req, res, next){
       "toDate": req.body.todate,
       "beacons" : req.body.beacons,
       "destinataires" : req.body.destinataires,
+      "typeMessage" : req.body.type,
       "dateCreation" : new Date()
   });
   message.save(function(err){
     if(err) res.send(406);
     var sender = new SendPush(message._id);
-    sender.sendNow();
+    if(message.typeMessage == "push"){
+      sender.sendNow();
+    }
     res.send(message);
   });
 });

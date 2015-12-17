@@ -3,6 +3,7 @@ var express = require('express'),
   mongoose = require('mongoose'),
   passport = require('passport'),
   BeaconModel = mongoose.model('beacons'),
+  MessageModel = mongoose.model('messages'),
   Utils = require("../services/utils");
 
 module.exports = function (app) {
@@ -30,4 +31,22 @@ router.delete('/:id', Utils.isAuth, function (req, res, next){
   BeaconModel.remove({_id : req.params.id}, function(err){
     res.send(200);
   });
+});
+
+
+router.get('/user/', function (req, res, next){
+  var token = req.session[req.query.token];
+  if(token){
+    var idUser = token.user;
+    MessageModel.aggregate(
+      { $match : {"destinataires": idUser, "typeMessage": "beacon"}},
+      { $unwind : "$beacons" },
+      { $project : {"beacons" : 1} },
+      function(err, messages){
+        res.json(messages);
+      })
+  } else {
+    console.log("Non authentifié");
+    res.send(401);
+  }
 });

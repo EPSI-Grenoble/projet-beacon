@@ -15,7 +15,7 @@ module.exports = function (app) {
 router.get('/', Utils.isAuth , function (req, res, next) {
   UserModel.find( function(err, usersList) {
       res.render('index', {
-        title: 'Liste des utilisateurs',
+        title: 'EPSI Contact',
         user : req.user,
         users : usersList
       })
