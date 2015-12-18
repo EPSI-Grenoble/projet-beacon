@@ -28,22 +28,22 @@ MessageSchema.virtual('getPeriod').get(function() {
 });
 
 /*du code pour essayer (  Pierre Louis  )*/
-MessageSchema.virtual('getValiditeMessage').get(function() {
+MessageSchema.virtual('getValiditeMessage').get(function(Array destinataires, String message, String titre, Date dateCreation) {
 //je suppose que les conditions testées ci-dessous sont véritablement nécéssaires à la creation d'un message
 
-  if(this.destinataires == null)
+  if(destinataires == null)
   {
     return "Déstinataires invalides"
   }
-  else if (this.message == null)
+  else if (message == null)
   {
     return "Méssage manquant"
   }
-  else if (this.titre == null)
+  else if (titre == null)
   {
     return "Titre manquant"
   }
-  else if (this.dateCreation == null)
+  else if (dateCreation == null)
   {
     return "Date de creation manquante"
   }
