@@ -27,25 +27,5 @@ MessageSchema.virtual('getPeriod').get(function() {
   }
 });
 
-/*du code pour essayer (  Pierre Louis  )*/
-MessageSchema.virtual('getValiditeMessage').get(function(Array destinataires, String message, String titre, Date dateCreation) {
-//je suppose que les conditions testées ci-dessous sont véritablement nécéssaires à la creation d'un message
 
-  if(destinataires == null)
-  {
-    return "Déstinataires invalides"
-  }
-  else if (message == null)
-  {
-    return "Méssage manquant"
-  }
-  else if (titre == null)
-  {
-    return "Titre manquant"
-  }
-  else if (dateCreation == null)
-  {
-    return "Date de creation manquante"
-  }
-});
 mongoose.model('messages', MessageSchema);
