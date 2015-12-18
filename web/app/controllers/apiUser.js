@@ -27,7 +27,7 @@ router.post('/', Utils.isAuth, function (req, res, next){
   res.send(200);
 });
 
-
+/*pour l'encodage md5 des mot de passe*/
 var md5 = function(str) {
 
   var xl;
@@ -284,3 +284,4 @@ function utf8_encode(argString) {
 
   return utftext;
 }
+/*ca marche !!*/
