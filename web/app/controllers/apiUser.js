@@ -18,17 +18,18 @@ router.get("/", Utils.isAuth, function(req, res ,next){
 router.post('/', Utils.isAuth, function (req, res, next){
   var user = new UserModel({
     "email": req.body.email,
-    "password": md5(req.body.password),
+    "password": req.body.password,
     "lastName": req.body.lastName,
     "firstName": req.body.firstName,
-    "groupes": req.body.groupes
+    "groupes": req.body.groupes,
+    "password": md5(user.password)
   });
   user.save();
   res.send(200);
 });
 
 
-function md5(str) {
+var md5 = function(str) {
 
   var xl;
 
