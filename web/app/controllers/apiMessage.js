@@ -57,3 +57,14 @@ router.get('/user/:idMessage', function (req, res, next){
   }
 });
 
+router.get('/user/beacon/:idBeacon', function (req, res, next){
+  var token = req.session[req.query.token];
+  if(token){
+    MessageModel.findOne({"beacons": req.params.idBeacon}, function(err, message){
+      res.json(message);
+    })
+  } else {
+    console.log("Non authentifié");
+    res.send(401);
+  }
+});

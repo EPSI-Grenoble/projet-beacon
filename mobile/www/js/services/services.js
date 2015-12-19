@@ -115,5 +115,15 @@ angular.module('starter.services', [])
 
     return {init: init};
 
+  }])
+
+  .factory('BeaconService', ['$http', '$q', '$rootScope', '$cordovaBeacon', function($http, $q, $ionicLoading, $cordovaBeacon) {
+    var beaconToListen = function(){
+      $http.get(base_url+"/api/beacons/user/?token="+window.localStorage["api_token"]).success(function(beaconsToListen){
+          console.log(beaconsToListen);
+
+          $cordovaBeacon.startRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("ibeacon", "962ad966-e97f-44af-b069-c89f8d7b3aa2"));
+      });
+    }
   }]);
 

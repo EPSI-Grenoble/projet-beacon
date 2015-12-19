@@ -22,8 +22,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "
       }
       console.log(beacons);
     });
-
-    $cordovaBeacon.startRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("ibeacon", "962ad966-e97f-44af-b069-c89f8d7b3aa2"));
   });
 })
 
