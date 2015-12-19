@@ -1,6 +1,6 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "ngCordovaBeacon", "ngSanitize"])
 
-.run(function($ionicPlatform, NotificationService, $ionicLoading, $cordovaBeacon, $rootScope) {
+.run(function($ionicPlatform, NotificationService, $ionicLoading, $cordovaBeacon, $rootScope, BeaconService) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -17,29 +17,24 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "
     $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function(event, pluginResult) {
       var uniqueBeaconKey, beacons = {};
       for(var i = 0; i < pluginResult.beacons.length; i++) {
-        uniqueBeaconKey = pluginResult.beacons[i].uuid + ":" + pluginResult.beacons[i].major + ":" + pluginResult.beacons[i].minor;
-        beacons[uniqueBeaconKey] = pluginResult.beacons[i];
+        BeaconService.isMessageExist(pluginResult.beacons[i].uuid)
       }
       console.log(beacons);
+
     });
   });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
 
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
+
   $stateProvider
     .state('login', {
       url: '/login',
       templateUrl: 'templates/login.html',
       controller: 'LoginCtrl'
     })
-
-
-  .state('messages', {
+    .state('messages', {
       url: '/messages',
       templateUrl: 'templates/list-message.html',
       controller: 'ListMessageCtrl'
@@ -48,11 +43,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "
       url: '/messages/:messageId',
       templateUrl: 'templates/message-detail.html',
       controller: 'MessageDetailCtrl'
-    })
+    });
 
-
-
-  // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 
 });

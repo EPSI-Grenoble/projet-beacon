@@ -46,6 +46,7 @@ router.delete('/:id', Utils.isAuth, function (req, res, next){
  */
 router.get('/user/', function (req, res, next){
   var token = req.session[req.query.token];
+  console.log(req.session);
   if(token){
     var idUser = token.user;
     MessageModel.aggregate(

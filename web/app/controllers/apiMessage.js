@@ -4,7 +4,8 @@ var express = require('express'),
   passport = require('passport'),
   MessageModel = mongoose.model('messages'),
   Utils = require("../services/utils"),
-  SendPush = require("../services/sendPush");
+  SendPush = require("../services/sendPush"),
+  SendBeacon = require("../services/sendBeacon");
 
 module.exports = function (app) {
   app.use('/api/messages', router);
@@ -61,8 +62,13 @@ router.get('/user/:idMessage', function (req, res, next){
 router.get('/user/beacon/:idBeacon', function (req, res, next){
   var token = req.session[req.query.token];
   if(token){
-    MessageModel.findOne({"beacons": req.params.idBeacon}, function(err, message){
-      res.json(message);
+    var idUser = token.user;
+    MessageModel.find({"beacons": req.params.idBeacon}, function(err, messages){
+      messages.forEach(function(message){
+        var sender = new SendBeacon(message, idUser);
+        sender.sendNow();
+      });
+      res.json(200);
     })
   } else {
     console.log("Non authentifié");

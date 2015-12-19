@@ -4,15 +4,16 @@ var mongoose = require('mongoose'),
   moment = require('moment');
 
 var MessageSchema = new Schema({
-  sender: String,
+  dateCreation : Date,
   titre: String,
   message: String,
+  sender: String,
   fromDate: Date,
   toDate: Date,
   destinataires: Array,
   typeMessage :  String,
   beacons : Array,
-  dateCreation : Date
+  receiveBy: Array
 });
 
 MessageSchema.virtual('getPeriod').get(function() {

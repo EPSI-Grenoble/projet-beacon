@@ -1,4 +1,11 @@
-<ion-view view-title="Liste des messages">
+<ion-view view-title="Liste des messages" hide-back-button="true">
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-buttons side="left">
+      <button class="button  button-clear" ng-click="showMenu()">
+        <i class="icon ion-navicon"></i>
+      </button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
   <ion-content>
   <div class="bar bar-header item-input-inset">
     <label class="item-input-wrapper">

@@ -24,10 +24,11 @@ router.post('/auth', function (req, res, next) {
       else
       {
         var tokenGenerated = uuid.v4();
-          req.session[tokenGenerated] = {
+        req.session[tokenGenerated] = {
           user : user._id,
           expire: moment().add(10, 'days')
         };
+        console.log(req.session);
         user.device_token = req.body.device_token;
         user.save();
         res.json({success:true, token: tokenGenerated});

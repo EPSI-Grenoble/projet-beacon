@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope, $state, RequestsService) {
+.controller('LoginCtrl', function($scope, $state, RequestsService, BeaconService) {
 
   $scope.user = {};
   $scope.user.username = window.localStorage['login'];
@@ -14,6 +14,7 @@ angular.module('starter.controllers', [])
       if(response.success){
         $state.go('messages');
         window.localStorage["api_token"] = response.token;
+        BeaconService.init();
       } else {
         $scope.messageError = response.msg
       }
@@ -24,8 +25,12 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('ListMessageCtrl', function($scope, Messages, $state) {
+.controller('ListMessageCtrl', function($scope, Messages, $state, $ionicSideMenuDelegate) {
   $scope.displayMessages = $scope.allMessages = [];
+
+  $scope.showMenu = function() {
+    $ionicSideMenuDelegate.toggleLeft();
+  };
 
   Messages.all().then(function(response){
     $scope.displayMessages = $scope.allMessages = response;
