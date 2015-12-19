@@ -21,6 +21,7 @@ router.post('/', Utils.isAuth, function (req, res, next){
       "typeMessage" : req.body.type,
       "dateCreation" : new Date()
   });
+  testvalidite(message);
   message.save(function(err){
     if(err) res.send(406);
     var sender = new SendPush(message._id);
@@ -68,3 +69,24 @@ router.get('/user/beacon/:idBeacon', function (req, res, next){
     res.send(401);
   }
 });
+
+function testvalidite(message) {
+//je suppose que les conditions testées ci-dessous sont véritablement nécéssaires à la creation d'un message
+
+  if(message.destinataires == null)
+  {
+    return "Déstinataires invalides"
+  }
+  else if (message.message == null)
+  {
+    return "Méssage manquant"
+  }
+  else if (message.titre == null)
+  {
+    return "Titre manquant"
+  }
+  else if (message.dateCreation == null)
+  {
+    return "Date de creation invalide"
+  }
+};

@@ -37,13 +37,17 @@ app.service('BeaconAPI', function($resource, $location) {
 
 app.service('UserAPI', function($resource, $location) {
   var resource;
-  resource = $resource($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/users', {}, {
+  resource = $resource($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/users/:id', {}, {
     'get': {
       method: "GET",
       isArray: true
     },
     'save': {
       method: "POST",
+      isArray: false
+    },
+    'delete': {
+      method: "DELETE",
       isArray: false
     }
   });

@@ -1,4 +1,5 @@
 var LocalStrategy = require("passport-local").Strategy;
+var md5 = require('md5');
 var UserModel = mongoose.model('users');
 
 module.exports = function(passport) {
@@ -25,7 +26,7 @@ module.exports = function(passport) {
             return done(null, false, req.flash("loginMessage", "L'utilisateur n'existe pas"));
           }
           // Si il existe un utilisateur avec le bon mot de passe alors on le connecte
-          if(user.password == password){
+          if(user.password == md5(password)){
             return done(null, user);
           }
           // Sinon on retourne un message d'erreur

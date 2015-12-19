@@ -4,6 +4,7 @@ var express = require('express'),
   passport = require('passport'),
   moment = require('moment'),
   UserModel = mongoose.model('users'),
+  md5 = require('md5'),
   uuid = require('node-uuid');
 
 module.exports = function (app) {
@@ -13,7 +14,7 @@ module.exports = function (app) {
 // route de test des id de connexion smartphone
 router.post('/auth', function (req, res, next) {
   UserModel.findOne(
-    {email : req.body.login, password : req.body.password},
+    {email : req.body.login, password : md5(req.body.password)},
     function(err, user) {
       // S'il n'en existe pas on retourne un message d'erreur
       if(!user)

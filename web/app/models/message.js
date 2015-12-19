@@ -27,4 +27,5 @@ MessageSchema.virtual('getPeriod').get(function() {
   }
 });
 
+
 mongoose.model('messages', MessageSchema);

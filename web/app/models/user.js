@@ -5,18 +5,32 @@ var mongoose = require('mongoose'),
 var UserSchema = new Schema({
   email: {
     type: String,
+    unique: true,
+    required: true,
+    validate: [/.+\@.+\..+/, 'Email n\'est pas valide']
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  lastName: {
+    type: String,
+    required: true
+  },
+  firstName: {
+    type: String,
+    required: true
+  },
+  token: {
+    type: String,
     unique: true
   },
-  password: String,
-  lastName: String,
-  firstName: String,
-  token: String,
   date_token: Date,
   device_token: {
     type: String,
     unique: true
   },
-  groupes: []
+  groupes: Array
 });
 
 UserSchema.statics.getGroupes = function(callback){

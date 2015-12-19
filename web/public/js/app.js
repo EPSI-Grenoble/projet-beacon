@@ -34,18 +34,30 @@ app.controller('AddMessageController', function($scope, $http, GroupeAPI, Beacon
 });
 
 
-app.controller('AddUserController', function($scope, $http){
+app.controller('AddUserController', function($scope, GroupeAPI, UserAPI){
 
-  $http.get("/api/groupes").success(function(groupes){
-    $scope.groupes = groupes;
-  });
+  $scope.groupes  = GroupeAPI.get();
 
   $scope.sauvegarder = function(){
-    $http.post("/api/users", $scope.user).success(function(user){
-      $scope.user = user;
-    })
+      UserAPI.save($scope.user, function(user){
+        $scope.user = user;
+        $scope.error = null;
+        notie.alert(1, 'Sauvegardé !', 1.5);
+      }, function(err){
+        $scope.error = err.data;
+        notie.alert(3, 'Erreur', 1.5);
+      });
   };
   $scope.user = {};
+});
+
+app.controller('ListeUserController', function($scope, UserAPI){
+
+  $scope.remove = function(id){
+    UserAPI.delete({"id" : id});
+    $scope.users = UserAPI.get();
+  };
+
 });
 
 app.controller('AddBeaconController', function($scope, $http, BeaconAPI){

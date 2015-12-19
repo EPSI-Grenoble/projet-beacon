@@ -1,7 +1,7 @@
 <% include ../inc/header %>
 
 
-<div class="ui grid">
+<div class="ui grid" ng-controller="ListeUserController" ng-init='users=<%-JSON.stringify(users)%>'>
 
   <div class="three wide column"><p></p></div>
 
@@ -16,28 +16,26 @@
     </h2>
     <br>
     <div class="ui cards">
-        <% users.forEach(function(utilisateur){ %>
-          <div class="card">
+          <div class="card" ng-repeat="user in users">
             <div class="content">
               <i style="float:right;" class="large floated mini ui user middle aligned icon"></i>
               <div class="header">
-                <%= utilisateur.firstName %> <%= utilisateur.lastName %>
+                {{ user.firstName }} {{ user.lastName }}
               </div>
               <div class="meta">
-                <%= utilisateur.email %>
+                {{ user.email }}
               </div>
               <div class="description">
-                <%= utilisateur.groupes %>
+                <span class="ui label" ng-repeat="groupe in user.groupes">{{groupe}}</span>
               </div>
             </div>
             <div class="extra content">
               <div class="ui two buttons">
-                <a class="ui basic blue button" href="/users/edit/<%= utilisateur._id %>">Editer</a>
-                <div class="ui basic red button">Supprimer</div>
+                <a class="ui basic blue button" ng-href="/users/edit/{{user._id}}">Editer</a>
+                <div class="ui basic red button" ng-click="remove(user._id)">Supprimer</div>
               </div>
             </div>
           </div>
-        <% }); %>
       </div>
   </div>
 

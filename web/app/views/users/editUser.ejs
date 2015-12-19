@@ -8,22 +8,26 @@
     <div class="ui blue segment">
       <h1 class="ui header"><%= title %></h1>
       <form ng-submit="sauvegarder()" class="ui form">
-        <div class="field">
+        <div class="field ng-class:{'error' : error.email}">
           <label>Email</label>
           <input type="text" ng-model="user.email" name="title" value="" placeholder="Entrer un email">
+          <div class="ui pointing red label" ng-if="error.email">{{error.email.message}}</div>
         </div>
-        <div class="field">
+        <div class="field ng-class:{'error' : error.password}">
           <label>Mot de passe</label>
           <input type="password" ng-model="user.password" name="title" placeholder="password">
+          <div class="ui pointing red label" ng-if="error.password">{{error.password.message}}</div>
         </div>
         <div class="two fields">
-          <div class="field">
+          <div class="field ng-class:{'error' : error.lastName}">
             <label>Nom</label>
             <input type="text" ng-model="user.lastName" name="title" value="" placeholder="Entrer un nom">
+            <div class="ui pointing red label" ng-if="error.lastName">{{error.lastName.message}}</div>
           </div>
-          <div class="field">
+          <div class="field ng-class:{'error' : error.firstName}">
             <label>Prenom</label>
             <input type="text" ng-model="user.firstName" name="title" value="" placeholder="Entrer un prenom">
+            <div class="ui pointing red label" ng-if="error.firstName">{{error.firstName.message}}</div>
           </div>
         </div>
         <div class="field">
