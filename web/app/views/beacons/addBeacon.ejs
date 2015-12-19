@@ -1,48 +1,56 @@
 <% include ../inc/header %>
 
+
 <div class="ui grid" ng-controller="AddBeaconController">
 
   <div class="three wide column"><p></p></div>
 
   <div class="twelve wide column">
 
-    <div class="ui blue segment">
-      <h1 class="ui header"><%= title %></h1>
-
-      <div class="ui divided list">
-        <form ng-submit="sauvegarder()">
-            <div class="ui input">
-                <input type="text" ng-model="beacon.nom" name="nom" placeholder="Nom du beacon">
-            </div>
-            <div class="ui input">
-                <input type="text" ng-model="beacon.uuid" name="uuid" placeholder="Beacon" placeholder="UUID du beacon">
-            </div>
-            <input class="ui green button" type="submit" value="Enregistrer">
-        </form>
+    <h2 class="ui header inverted blue segment">
+      <i class="bullseye icon"></i>
+      <div class="content">
+        <%= title %>
       </div>
-
-      <table class="ui celled padded table">
-        <thead>
-            <tr>
-                <th>Noms</th>
-                <th>UUID</th>
-                <th>Actions</th>
-            </td>
-        </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="beacon in beacons">
-              <td>{{beacon.nom}}</td>
-              <td>{{beacon.UUID}}</td>
-              <td class="center aligned collapsing"><i class="circle inverted red large remove link icon" ng-click="delete(beacon)"></i></td>
-            </tr>
-        </tbody>
-      </table>
-
+    </h2>
+    <br>
+    <div class="ui cards">
+      <form class="card ui form" ng-cloak>
+        <div class="content">
+            <div class="field">
+              <input type="text" ng-model="beacon.nom" name="nom" placeholder="Nom du beacon">
+            </div>
+          <div class=field">
+            <input type="text" ng-model="beacon.uuid" name="uuid" placeholder="UUID du beacon">
+          </div>
+        </div>
+        <div class="extra content">
+          <div class="ui two buttons">
+            <input class="ui basic green button" type="submit" value="Enregistrer">
+          </div>
+        </div>
+      </form>
+      <div class="card" ng-repeat="beacon in beacons" ng-cloak>
+        <div class="content">
+          <i style="float:right;" class="large floated mini ui bullseye middle aligned icon"></i>
+          <div class="header">
+            {{ beacon.nom}}
+          </div>
+          <div class="description">
+            {{ beacon.UUID}}
+          </div>
+        </div>
+        <div class="extra content">
+          <div class="ui two buttons">
+            <div class="ui basic red button" ng-click="delete(beacon)">Supprimer</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="one wide column"><p></p></div>
 </div>
+
 
 <% include ../inc/footer %>

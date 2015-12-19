@@ -4,6 +4,7 @@ var express = require('express'),
   passport = require('passport'),
   UserModel = mongoose.model('users'),
   MessageModel = mongoose.model('messages'),
+  GroupeModel = mongoose.model('groupes'),
   BeaconModel = mongoose.model('beacons'),
   Utils = require("../services/utils");
 
@@ -72,6 +73,17 @@ router.get('/users/edit/:idUser', Utils.isAuth, function (req, res, next) {
       user: user
     });
   });
+});
+
+// Page des groupes
+router.get('/groupes', Utils.isAuth, function (req, res, next) {
+  GroupeModel.find().sort({name: 1}).exec(function(err, toutLesGroupes) {
+    res.render('groupes/listeGroup', {
+      title: 'Les groupes',
+      subtitle: 'Liste des groupes',
+      groupes : toutLesGroupes
+    })
+  })
 });
 
 // Page des beacons

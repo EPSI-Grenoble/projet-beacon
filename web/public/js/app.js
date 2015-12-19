@@ -60,6 +60,15 @@ app.controller('ListeUserController', function($scope, UserAPI){
 
 });
 
+app.controller('ListeGroupeController', function($scope, UserAPI){
+
+  $scope.remove = function(id){
+    UserAPI.delete({"id" : id});
+    $scope.users = UserAPI.get();
+  };
+
+});
+
 app.controller('AddBeaconController', function($scope, $http, BeaconAPI){
 
   function getBeacons(){
