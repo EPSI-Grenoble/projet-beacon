@@ -69,7 +69,7 @@ app.controller('ListeGroupeController', function($scope, UserAPI){
 
 });
 
-app.controller('AddBeaconController', function($scope, $http, BeaconAPI){
+app.controller('AddBeaconController', function($scope , BeaconAPI){
 
   function getBeacons(){
     $scope.beacons = BeaconAPI.get();
@@ -78,12 +78,18 @@ app.controller('AddBeaconController', function($scope, $http, BeaconAPI){
   getBeacons();
 
   $scope.sauvegarder = function(){
-      BeaconAPI.save($scope.beacon);
-      getBeacons();
+      BeaconAPI.save($scope.beacon, function(){
+        getBeacons();
+      }, function(err){
+        $scope.error = err.data;
+      });
   };
 
   $scope.delete = function(beacon){
-    BeaconAPI.delete({"id" : beacon._id});
-    getBeacons();
+    notie.confirm('Etes vous sur de vouloir supprimer ce beacon ?', 'Oui', 'Non', function() {
+      BeaconAPI.delete({"id" : beacon._id});
+      getBeacons();
+      notie.alert(1, 'Supprimé', 1.5);
+    });
   }
 });

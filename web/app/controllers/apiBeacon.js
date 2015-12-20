@@ -4,6 +4,7 @@ var express = require('express'),
   passport = require('passport'),
   BeaconModel = mongoose.model('beacons'),
   MessageModel = mongoose.model('messages'),
+  Criteria = require("../services/criteria"),
   Utils = require("../services/utils");
 
 module.exports = function (app) {
@@ -27,8 +28,13 @@ router.post('/', Utils.isAuth , function (req, res, next){
       "nom": req.body.nom,
       "UUID": req.body.uuid
   });
-  beacon.save();
-  res.send(200);
+  beacon.save(function(err){
+    if(err){
+      res.send(400, err.errors);
+    } else {
+      res.send(req.body);
+    }
+  });
 });
 
 /**
@@ -46,14 +52,15 @@ router.delete('/:id', Utils.isAuth, function (req, res, next){
  */
 router.get('/user/', function (req, res, next){
   var token = req.session[req.query.token];
-  console.log(req.session);
   if(token){
-    var idUser = token.user;
     MessageModel.aggregate(
-      { $match : {"destinataires": idUser, "typeMessage": "beacon"}},
+      { $match : Criteria.findBeaconToListenForUser(token.user)},
       { $unwind : "$beacons" },
       { $project : {"beacons" : 1} },
       function(err, messages){
+        if(err){
+          res.send(500, err);
+        }
         res.json(messages);
       })
   } else {

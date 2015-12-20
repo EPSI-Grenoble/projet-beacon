@@ -16,6 +16,19 @@
     </h2>
     <br>
     <div class="ui cards">
+      <form class="card ui form" ng-cloak>
+        <div class="content">
+          <div class="field ng-class:{'error' : error.nom}">
+            <input type="text" ng-model="beacon.nom" name="nom" placeholder="Nom du groupe">
+            <div class="ui pointing red label" ng-if="error.nom">{{error.nom.message}}</div>
+          </div>
+        </div>
+        <div class="extra content">
+          <div class="ui two buttons">
+            <input class="ui basic green button" type="submit" value="Enregistrer" ng-click="sauvegarder()">
+          </div>
+        </div>
+      </form>
       <div class="card" ng-repeat="groupe in groupe" ng-cloak>
         <div class="content">
           <i style="float:right;" class="large floated mini ui users middle aligned icon"></i>

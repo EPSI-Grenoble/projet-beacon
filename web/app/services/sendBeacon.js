@@ -50,13 +50,4 @@ module.exports = class SendBeacon {
     });
   }
 
-  /**
-   * On veut envoyer un notif dans le futur
-   * TODO il faudra donc mettre en place une cron et envoyer les notifs à ce moment là
-   * @param dateToSend
-     */
-  sendOn(dateToSend){
-
-  }
-
 };

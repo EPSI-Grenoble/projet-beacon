@@ -5,7 +5,8 @@ var express = require('express'),
   MessageModel = mongoose.model('messages'),
   Utils = require("../services/utils"),
   SendPush = require("../services/sendPush"),
-  SendBeacon = require("../services/sendBeacon");
+  SendBeacon = require("../services/sendBeacon"),
+  Criteria = require("../services/criteria");
 
 module.exports = function (app) {
   app.use('/api/messages', router);
@@ -59,12 +60,15 @@ router.get('/user/:idMessage', function (req, res, next){
   }
 });
 
+// Cherche tous les messages pour l'utilisateur associé au beacon donné
 router.get('/user/beacon/:idBeacon', function (req, res, next){
   var token = req.session[req.query.token];
   if(token){
     var idUser = token.user;
-    MessageModel.find({"beacons": req.params.idBeacon}, function(err, messages){
+    MessageModel.find(Criteria.findMessageForUserWithThisBeacon(idUser, req.params.idBeacon), function(err, messages){
       messages.forEach(function(message){
+        message.receiveBy.push(idUser);
+        message.save();
         var sender = new SendBeacon(message, idUser);
         sender.sendNow();
       });
