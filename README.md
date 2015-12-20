@@ -1,4 +1,6 @@
-# projet-beacon
+# Projet Beacon
+
+[URL de la plateforme](https://beacon.martin-choraine.fr/)
 
 ## Partie Web
 
@@ -20,3 +22,13 @@
 - Refaire les séléctions de message en intégrant les data de début et de fin
 - Faire l'IHM Web pour visualiser son profil
 - Faire l'IHM mobile pour visualiser son profil
+- Rajouter le droit admin aux utilisateurs et permettre la connexion au site uniquement si l'user est admin
+
+## Partie Mobile
+
+### Pré requis
+- Avoir installé ionic et cordova
+
+### Démarrage
+- Lancer la commande `ionic serve` pour lancer l'appli dans le navigateur
+- Lancer la commande `ionic run` pour déployer sur un mobile
