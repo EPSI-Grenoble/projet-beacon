@@ -7,7 +7,8 @@ module.exports =  {
       return next()
     } else {
       if(env === 'development') {
-        return next()
+        //return next()
+        res.redirect("/login");
       } else {
         res.redirect("/login");
       }
