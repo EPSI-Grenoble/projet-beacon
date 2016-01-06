@@ -22,17 +22,17 @@ router.post('/', Utils.isAuth, function (req, res, next){
   if(req.body._id){
     UserModel.update({"_id" : req.body._id}, req.body, { runValidators: true }, function (err, user){
       if(err){
-        res.send(400, err.errors);
+        res.status(400).send(err.errors);
       } else {
         res.send(req.body);
       }
     });
-  //Sinon en crée un user
+  // Sinon en crée un user
   } else {
     var user = new UserModel(req.body);
     user.save(function(err){
       if(err){
-        res.send(400, err.errors);
+        res.status(400).send(err.errors);
       } else {
         res.send(user);
       }

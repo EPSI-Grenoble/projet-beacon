@@ -67,7 +67,6 @@ router.get('/users/edit', Utils.isAuth, function (req, res, next) {
 // Page de l'edition de user
 router.get('/users/edit/:idUser', Utils.isAuth, function (req, res, next) {
   UserModel.findOne({"_id" : req.params.idUser}, function(err, user){
-    console.log(user);
     res.render('users/editUser', {
       title: 'Editer un utilisateur',
       user: user

@@ -17,8 +17,8 @@ var config = {
     app: {
       name: 'web'
     },
-    port: 3000,
-    // db: 'mongodb://localhost/web-test'
+    port: 3010,
+    db: 'mongodb://localhost/beacon'
   },
 
   production: {

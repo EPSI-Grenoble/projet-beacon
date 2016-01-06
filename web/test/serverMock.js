@@ -1,22 +1,12 @@
-
+process.env.NODE_ENV = "test";
 var express = require('express'),
   config = require('../config/config'),
-  glob = require('glob');
-mongoose = require('mongoose');
-var path = require('path'),
-  rootPath = path.normalize(__dirname + '/..'),
-  env = process.env.NODE_ENV || 'development';
+  glob = require('glob'),
+  mockgoose = require('mockgoose'),
+  md5 = require('md5'),
+  mongoose = require('mongoose');
 
-var config = {
-    root: rootPath,
-    app: {
-      name: 'web'
-    },
-    port: 3010,
-    db: 'mongodb://epsi:epsi@martin-choraine.fr:10443/beacon'
-};
-
-//test
+mockgoose(mongoose);
 mongoose.connect(config.db);
 var db = mongoose.connection;
 db.on('error', function () {
@@ -27,6 +17,9 @@ var models = glob.sync(config.root + '/app/models/*.js');
 models.forEach(function (model) {
   require(model);
 });
+mockgoose.reset(function(){
+});
+
 var app = express();
 
 require('../config/express')(app, config);
@@ -35,4 +28,18 @@ app.listen(config.port, function () {
   console.log('Express server listening on port ' + config.port);
 });
 
-module.exports = app;
+module.exports = {
+  app : app,
+  createUser: function(callback){
+    var UserModel = mongoose.model('users');
+    var user = new UserModel({
+      email : "test@testeur.com",
+      password : md5("test"),
+      lastName : "Test",
+      firstName : "App"
+    });
+    user.save(function(){
+      callback();
+    });
+  }
+};

@@ -30,7 +30,7 @@ router.post('/', Utils.isAuth , function (req, res, next){
   });
   beacon.save(function(err){
     if(err){
-      res.send(400, err.errors);
+      res.statys(400).send(err.errors);
     } else {
       res.send(req.body);
     }
@@ -41,7 +41,6 @@ router.post('/', Utils.isAuth , function (req, res, next){
  * Supprimer un beacon
  */
 router.delete('/:id', Utils.isAuth, function (req, res, next){
-  console.log(req.params.id);
   BeaconModel.remove({_id : req.params.id}, function(err){
     res.send(200);
   });
@@ -59,7 +58,7 @@ router.get('/user/', function (req, res, next){
       { $project : {"beacons" : 1} },
       function(err, messages){
         if(err){
-          res.send(500, err);
+          res.status(500).send(err);
         }
         res.json(messages);
       })

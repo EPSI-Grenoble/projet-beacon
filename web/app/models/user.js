@@ -23,12 +23,18 @@ var UserSchema = new Schema({
   },
   token: {
     type: String,
-    unique: true
+    unique: true,
+    required: false,
+    sparse: true
   },
-  date_token: Date,
+  date_token: {
+    type: Date
+  },
   device_token: {
     type: String,
-    unique: true
+    unique: true,
+    required: false,
+    sparse: true
   },
   groupes: Array
 });

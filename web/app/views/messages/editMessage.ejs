@@ -27,6 +27,27 @@
             <option value="">Choisir un ou plusieurs beacons</option>
           </select>
         </div>
+        <div class="field" ng-if="message.type == 'beacon'">
+          <label>Distance</label>
+          if (accuracy < 0) {
+          return "ProximityUnknown";
+          // is this correct?  does proximity only show unknown when accuracy is negative?  I have seen cases where it returns unknown when
+          // accuracy is -1;
+          }
+          if (accuracy < 0.5 ) {
+          return "ProximityImmediate";
+          }
+          // forums say 3.0 is the near/far threshold, but it looks to be based on experience that this is 4.0
+          if (accuracy <= 4.0) {
+          return "ProximityNear";
+          }
+          // if it is > 4.0 meters, call it far
+          return "ProximityFar";
+          }
+          <select type="text" class="ui fluid search dropdown" multiple ng-model="message.beacons" ng-dropdown ng-dropdown-values="beaconList" ng-options="beacon.UUID as beacon.nom for beacon in beaconList">
+            <option value="">Choisir un ou plusieurs beacons</option>
+          </select>
+        </div>
         <div class="two fields">
           <div class="field">
             <label>A partir du</label>
