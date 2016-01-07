@@ -39,14 +39,26 @@ app.controller('AddUserController', function($scope, GroupeAPI, UserAPI){
   $scope.groupes  = GroupeAPI.get();
 
   $scope.sauvegarder = function(){
-      UserAPI.save($scope.user, function(user){
-        $scope.user = user;
-        $scope.error = null;
-        notie.alert(1, 'Sauvegardé !', 1.5);
-      }, function(err){
-        $scope.error = err.data;
-        notie.alert(3, 'Erreur', 1.5);
-      });
+      if($scope.user.password == $scope.user.passwordRepeat || !$scope.editPassword) {
+        if(!$scope.editPassword){
+          delete $scope.user.password;
+          delete $scope.user.passwordRepeat;
+        }
+        UserAPI.save($scope.user, function(user){
+          $scope.user = user;
+          $scope.error = null;
+          notie.alert(1, 'Sauvegardé !', 1.5);
+        }, function(err){
+          $scope.error = err.data;
+          notie.alert(3, 'Erreur', 1.5);
+        });
+      } else {
+        $scope.error = {
+          "password" : {
+            "message" : "Les mots de passes ne correspondent pas"
+          }
+        };
+      }
   };
   $scope.user = {};
 });

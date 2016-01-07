@@ -48,6 +48,11 @@ router.get('/messages/edit', Utils.isAuth, function (req, res, next) {
 // Page des users
 router.get('/users', Utils.isAuth, function (req, res, next) {
     UserModel.find().sort({lastName: 1}).exec(function(err, toutLesUser) {
+      toutLesUser = toutLesUser.map(function(user){
+        user = user.toObject();
+        delete user.password;
+        return user;
+      });
       res.render('users/listeUsers', {
         title: 'Les Utilisateurs',
         subtitle: 'Liste des utilisateurs',
@@ -60,13 +65,15 @@ router.get('/users', Utils.isAuth, function (req, res, next) {
 router.get('/users/edit', Utils.isAuth, function (req, res, next) {
     res.render('users/editUser', {
       title: 'Editer un utilisateur',
-      user: {}
+      user: null
     });
 });
 
 // Page de l'edition de user
 router.get('/users/edit/:idUser', Utils.isAuth, function (req, res, next) {
   UserModel.findOne({"_id" : req.params.idUser}, function(err, user){
+    user = user.toObject();
+    delete user["password"];
     res.render('users/editUser', {
       title: 'Editer un utilisateur',
       user: user
