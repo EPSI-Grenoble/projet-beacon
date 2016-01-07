@@ -21,6 +21,7 @@
             <option value="push">Push</option>
           </select>
         </div>
+        <div class="two fields">
         <div class="field" ng-if="message.type == 'beacon'">
           <label>Beacons concerné</label>
           <select type="text" class="ui fluid search dropdown" multiple ng-model="message.beacons" ng-dropdown ng-dropdown-values="beaconList" ng-options="beacon.UUID as beacon.nom for beacon in beaconList">
@@ -28,25 +29,14 @@
           </select>
         </div>
         <div class="field" ng-if="message.type == 'beacon'">
-          <label>Distance</label>
-          if (accuracy < 0) {
-          return "ProximityUnknown";
-          // is this correct?  does proximity only show unknown when accuracy is negative?  I have seen cases where it returns unknown when
-          // accuracy is -1;
-          }
-          if (accuracy < 0.5 ) {
-          return "ProximityImmediate";
-          }
-          // forums say 3.0 is the near/far threshold, but it looks to be based on experience that this is 4.0
-          if (accuracy <= 4.0) {
-          return "ProximityNear";
-          }
-          // if it is > 4.0 meters, call it far
-          return "ProximityFar";
-          }
-          <select type="text" class="ui fluid search dropdown" multiple ng-model="message.beacons" ng-dropdown ng-dropdown-values="beaconList" ng-options="beacon.UUID as beacon.nom for beacon in beaconList">
-            <option value="">Choisir un ou plusieurs beacons</option>
+          <label>Proximité</label>
+          <select type="text" class="ui fluid dropdown" ng-model="message.beaconsProximity">
+            <option value="">Choisir une distance</option>
+            <option value="ProximityFar"> > 4m </option>
+            <option value="ProximityNear"> <= 4m </option>
+            <option value="ProximityImmediate"> < 0,5m </option>
           </select>
+        </div>
         </div>
         <div class="two fields">
           <div class="field">
@@ -65,11 +55,11 @@
               <i class="users circular link icon "></i>
               <div class="menu">
                 <div class="header ui input" style="margin-left: 0; margin-right: 0; ">
-                  <input type="text" placeholder="Filtrer...">
+                  <input type="text" placeholder="Filtrer..." ng-model="filter.user">
                 </div>
                 <div class="divider"></div>
                 <div class="header">Liste de diffusions</div>
-                <div class="item" ng-repeat="contact in users">
+                <div class="item" ng-repeat="contact in users | filter:filter.user  ">
                   <div class="ui checkbox">
                     <input type="checkbox" id="{{contact._id}}" class="hidden" checklist-model="message.destinataires" checklist-value="contact._id" ng-checked="userIsInSelectedGroup(contact.groupes)">
                     <label for="{{contact._id}}">{{contact.firstName}} {{contact.lastName}}</label>

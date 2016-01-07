@@ -19,6 +19,7 @@ router.post('/', Utils.isAuth, function (req, res, next){
       "fromDate": req.body.fromdate,
       "toDate": req.body.todate,
       "beacons" : req.body.beacons,
+      "beaconsProximity" : req.body.beaconsProximity,
       "destinataires" : req.body.destinataires,
       "typeMessage" : req.body.type,
       "dateCreation" : new Date()
@@ -63,9 +64,10 @@ router.get('/user/:idMessage', function (req, res, next){
 // Cherche tous les messages pour l'utilisateur associé au beacon donné
 router.get('/user/beacon/:idBeacon', function (req, res, next){
   var token = req.session[req.query.token];
+  var proximity = req.query.proximity;
   if(token){
     var idUser = token.user;
-    MessageModel.find(Criteria.findMessageForUserWithThisBeacon(idUser, req.params.idBeacon), function(err, messages){
+    MessageModel.find(Criteria.findMessageForUserWithThisBeacon(idUser, req.params.idBeacon, proximity), function(err, messages){
       messages.forEach(function(message){
         message.receiveBy.push(idUser);
         message.save();

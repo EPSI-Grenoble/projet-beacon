@@ -1,4 +1,4 @@
-var base_url = 'http://192.168.0.24:3000';
+var base_url = 'https://beacon.martin-choraine.fr/';
 
 angular.module('starter.services', [])
 
@@ -128,8 +128,8 @@ angular.module('starter.services', [])
       });
     };
 
-    var isMessageExist = function (beaconUUID) {
-      $http.get(base_url+"/api/messages/user/beacon/"+beaconUUID+"?token="+window.localStorage["api_token"]).success(function(result){
+    var isMessageExist = function (beaconUUID, proximity) {
+      $http.get(base_url+"/api/messages/user/beacon/"+beaconUUID+"?proximity="+proximity+"&token="+window.localStorage["api_token"]).success(function(result){
         $cordovaBeacon.stopRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("ibeacon", beaconUUID));
 
       })

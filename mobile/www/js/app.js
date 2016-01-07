@@ -12,14 +12,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "
 
     NotificationService.init();
 
+    $cordovaBeacon.enableBluetooth();
     $cordovaBeacon.requestWhenInUseAuthorization();
 
     $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function(event, pluginResult) {
-      var uniqueBeaconKey, beacons = {};
       for(var i = 0; i < pluginResult.beacons.length; i++) {
-        BeaconService.isMessageExist(pluginResult.beacons[i].uuid)
+        BeaconService.isMessageExist(pluginResult.beacons[i].uuid, pluginResult.beacons[i].proximity)
       }
-      console.log(beacons);
+      console.log(pluginResult.beacons);
 
     });
   });

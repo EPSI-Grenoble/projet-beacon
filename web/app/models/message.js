@@ -13,6 +13,7 @@ var MessageSchema = new Schema({
   destinataires: Array,
   typeMessage :  String,
   beacons : Array,
+  beaconsProximity : String,
   receiveBy: Array
 });
 
