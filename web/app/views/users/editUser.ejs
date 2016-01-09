@@ -10,13 +10,18 @@
         <i class="user icon"></i>
         <i class="corner write blue icon"></i>
       </i>
+
       <div class="content">
         <%= title %>
       </div>
     </h2>
 
     <div class="ui segment">
-      <form ng-submit="sauvegarder()" class="ui form" <% if(user == null) { %> ng-init="editPassword = true" <% } %>>
+      <form ng-submit="sauvegarder()" class="ui form"
+        <% if(user == null) { %>
+            ng-init="editPassword = true"
+        <% } %>
+      >
         <div class="field ng-class:{'error' : error.email}">
           <label>Email</label>
           <input type="text" ng-model="user.email" name="title" value="" placeholder="Entrer un email">
@@ -59,14 +64,16 @@
         </div>
         <div class="field">
           <label>Groupes</label>
-          <select class="ui fluid dropdown" multiple="" ng-model="user.groupes" ng-dropdown="{'key':'nom'}"
-                  ng-dropdown-choice="groupes">
-            <option value="">Groupes</option>
+          <select class="ui fluid dropdown" multiple="" ng-model="user.groupes" ng-dropdown="{'key':'nom'}" ng-dropdown-choice="groupes">
           </select>
         </div>
 
-        <div class="field">
-          <input class="ui green button" type="submit" value="Enregistrer">
+        <div class="three fields">
+          <div class="field"></div>
+          <div class="field">
+            <input class="ui green fluid button" type="submit" value="Enregistrer">
+          </div>
+          <div class="field"></div>
         </div>
       </form>
     </div>

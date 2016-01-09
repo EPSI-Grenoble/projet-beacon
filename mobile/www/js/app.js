@@ -19,8 +19,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "
       for(var i = 0; i < pluginResult.beacons.length; i++) {
         BeaconService.isMessageExist(pluginResult.beacons[i].uuid, pluginResult.beacons[i].proximity)
       }
-      console.log(pluginResult.beacons);
-
     });
   });
 })

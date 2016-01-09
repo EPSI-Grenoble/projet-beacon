@@ -12,8 +12,34 @@
 </head>
 <body>
 
-  <%- message %>
-  <%- error.status %>
-  <%- error.stack %>
+<div class="ui grid">
+
+  <div class="two wide column"><p></p></div>
+
+  <div class="twelve wide column">
+
+    <p></p>
+
+    <div class="ui blue inverted segment">
+      <h1 class="ui header">
+        <img src="/img/epsi-logo.png" class="ui bordered circular image" style="background-color: white">
+        <div class="content">
+          EPSI - Contact | An error occured
+          <a class="sub header" href="/"><i class="arrow left icon"></i> Retour à l'accueil</a>
+        </div>
+      </h1>
+    </div>
+
+    <div class="ui segment">
+      <h1>Erreur <%- error.status %></h1>
+      <h2><%- message %></h2>
+      <p><%- error.stack %></p>
+    </div>
+
+  </div>
+
+  <div class="two wide column"><p></p></div>
+
+</div>
 
 <% include inc/footer %>

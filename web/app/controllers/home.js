@@ -28,7 +28,7 @@ router.get('/', Utils.isAuth , function (req, res, next) {
 router.get('/messages', Utils.isAuth, function (req, res, next) {
     MessageModel.find().sort({"dateCreation" : -1}).exec(function(err, toutLesMessage) {
       res.render('messages/listeMessages', {
-        title: 'les messages',
+        title: 'Liste des messages envoyés',
         messages : toutLesMessage
       })
     })
@@ -38,7 +38,7 @@ router.get('/messages', Utils.isAuth, function (req, res, next) {
 router.get('/messages/edit', Utils.isAuth, function (req, res, next) {
   UserModel.find( function(err, usersList) {
       res.render('messages/editMessage', {
-        title: 'Editer un message',
+        title: 'Envoyer un message',
         user : req.user
       });
   });
@@ -64,7 +64,7 @@ router.get('/users', Utils.isAuth, function (req, res, next) {
 // Page de l'edition de user
 router.get('/users/edit', Utils.isAuth, function (req, res, next) {
     res.render('users/editUser', {
-      title: 'Editer un utilisateur',
+      title: 'Créer un utilisateur',
       user: null
     });
 });
@@ -75,7 +75,7 @@ router.get('/users/edit/:idUser', Utils.isAuth, function (req, res, next) {
     user = user.toObject();
     delete user["password"];
     res.render('users/editUser', {
-      title: 'Editer un utilisateur',
+      title: 'Modifier un utilisateur',
       user: user
     });
   });
@@ -96,7 +96,7 @@ router.get('/groupes', Utils.isAuth, function (req, res, next) {
 router.get('/beacons', Utils.isAuth, function (req, res, next) {
     BeaconModel.find( function(err, toutlesBeacons) {
       res.render('beacons/addBeacon', {
-        title: 'les beacons',
+        title: 'Administrer lLes beacons',
         beacons : toutlesBeacons
       })
     })

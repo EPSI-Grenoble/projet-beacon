@@ -68,6 +68,7 @@ router.get('/user/beacon/:idBeacon', function (req, res, next){
   if(token){
     var idUser = token.user;
     MessageModel.find(Criteria.findMessageForUserWithThisBeacon(idUser, req.params.idBeacon, proximity), function(err, messages){
+      console.log(err);
       messages.forEach(function(message){
         message.receiveBy.push(idUser);
         message.save();

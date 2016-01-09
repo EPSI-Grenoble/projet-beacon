@@ -20,6 +20,7 @@ var getProximity = function (proximity) {
       proximityList.push("ProximityUnknown");
       break;
   }
+  console.log(proximityList)
   return proximityList;
 };
 
@@ -29,7 +30,11 @@ module.exports = {
     return {
       destinataires: idUser,
       typeMessage: "beacon",
-      receiveBy: {$ne: idUser}
+      receiveBy:  {
+        $not : {
+          $in : [idUser]
+        }
+      }
     }
   },
 
@@ -38,6 +43,7 @@ module.exports = {
     return {
       beacons: idBeacon,
       destinataires: idUser,
+      receiveBy: {$ne: idUser},
       beaconsProximity: {$in: getProximity(proximity)}
     }
   }

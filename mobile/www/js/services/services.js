@@ -1,37 +1,37 @@
-var base_url = 'https://beacon.martin-choraine.fr/';
+var base_url = 'https://beacon.martin-choraine.fr';
 
 angular.module('starter.services', [])
 
-  .factory('Messages', function($http, $q) {
-    function getAll(){
+  .factory('Messages', function ($http, $q) {
+    function getAll() {
       var deferred = $q.defer();
 
-      $http.get(base_url+"/api/messages/user?token="+window.localStorage["api_token"])
-        .success(function(response){
+      $http.get(base_url + "/api/messages/user?token=" + window.localStorage["api_token"])
+        .success(function (response) {
           deferred.resolve(response);
         })
-        .error(function(data){
+        .error(function (data) {
           deferred.reject();
         });
 
       return deferred.promise;
     }
 
-    function get(id){
+    function get(id) {
       var deferred = $q.defer();
 
-      $http.get(base_url+"/api/messages/user/"+id+"?token="+window.localStorage["api_token"])
-        .success(function(response){
+      $http.get(base_url + "/api/messages/user/" + id + "?token=" + window.localStorage["api_token"])
+        .success(function (response) {
           deferred.resolve(response);
         })
-        .error(function(data){
+        .error(function (data) {
           deferred.reject();
         });
 
       return deferred.promise;
     }
 
-    function remove(id){
+    function remove(id) {
 
     }
 
@@ -43,20 +43,24 @@ angular.module('starter.services', [])
   })
 
 
-  .factory('RequestsService', ['$http', '$q', '$ionicLoading', '$rootScope', function($http, $q, $ionicLoading) {
+  .factory('RequestsService', ['$http', '$q', '$ionicLoading', '$rootScope', function ($http, $q, $ionicLoading) {
 
-    function logIn(login, password){
+    function logIn(login, password) {
       var deferred = $q.defer();
       $ionicLoading.show();
 
-      $http.post(base_url + '/api/auth', {'login': login, 'password' : password, 'device_token' :  window.localStorage['device_token']})
-        .success(function(response){
+      $http.post(base_url + '/api/auth', {
+          'login': login,
+          'password': password,
+          'device_token': window.localStorage['device_token']
+        })
+        .success(function (response) {
           window.localStorage['login'] = login;
           window.localStorage['password'] = password;
           $ionicLoading.hide();
           deferred.resolve(response);
         })
-        .error(function(data){
+        .error(function (data) {
           deferred.reject();
           $ionicLoading.hide();
         });
@@ -70,8 +74,8 @@ angular.module('starter.services', [])
   }])
 
 
-  .factory('NotificationService', ['$ionicLoading','$state', function($ionicLoading, $state) {
-    function init(){
+  .factory('NotificationService', ['$ionicLoading', '$state', function ($ionicLoading, $state) {
+    function init() {
 
       console.log("Notification service init");
 
@@ -83,22 +87,22 @@ angular.module('starter.services', [])
         "windows": {}
       });
 
-      if(!window.localStorage['device_token']){
+      if (!window.localStorage['device_token']) {
         $ionicLoading.show();
-        push.unregister(function(ok){
+        push.unregister(function (ok) {
           console.log(ok);
         });
       } else {
         console.log(window.localStorage['device_token']);
       }
 
-      push.on('registration', function(data) {
+      push.on('registration', function (data) {
         console.log(data);
         $ionicLoading.hide();
         window.localStorage['device_token'] = data.registrationId;
       });
 
-      push.on('notification', function(data) {
+      push.on('notification', function (data) {
         console.log(data);
         push.finish(function () {
           $state.go('message-detail', {messageId: data.additionalData.messageID});
@@ -106,7 +110,7 @@ angular.module('starter.services', [])
         });
       });
 
-      push.on('error', function(e) {
+      push.on('error', function (e) {
         console.error(e);
         $ionicLoading.hide();
       });
@@ -117,27 +121,33 @@ angular.module('starter.services', [])
 
   }])
 
-  .factory('BeaconService', ['$http', '$q', '$rootScope', '$cordovaBeacon', function($http, $q, $ionicLoading, $cordovaBeacon) {
+  .factory('BeaconService', ['$http', '$q', '$rootScope', '$cordovaBeacon', '$interval', function ($http, $q, $ionicLoading, $cordovaBeacon, $interval) {
 
-    var beaconToListen = function(){
-      $http.get(base_url+"/api/beacons/user/?token="+window.localStorage["api_token"]).success(function(beaconsToListen){
-          angular.forEach(beaconsToListen, function(beacon){
+    var beaconToListen = function () {
+      if (angular.isDefined($scope.intervalBeaconRequest)) {
+        $interval.cancel($scope.intervalBeaconRequest);
+        $scope.intervalBeaconRequest = undefined;
+      }
+      $scope.intervalBeaconRequest = $interval(function () {
+        $http.get(base_url + "/api/beacons/user/?token=" + window.localStorage["api_token"]).success(function (beaconsToListen) {
+          angular.forEach(beaconsToListen, function (beacon) {
             console.log(beacon);
             $cordovaBeacon.startRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("ibeacon", beacon.beacons));
           })
-      });
+        });
+      }, 10000);
     };
 
     var isMessageExist = function (beaconUUID, proximity) {
-      $http.get(base_url+"/api/messages/user/beacon/"+beaconUUID+"?proximity="+proximity+"&token="+window.localStorage["api_token"]).success(function(result){
+      $http.get(base_url + "/api/messages/user/beacon/" + beaconUUID + "?proximity=" + proximity + "&token=" + window.localStorage["api_token"]).success(function (result) {
         $cordovaBeacon.stopRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("ibeacon", beaconUUID));
 
       })
     };
 
     return {
-      init : beaconToListen,
-      isMessageExist : isMessageExist
+      init: beaconToListen,
+      isMessageExist: isMessageExist
     }
   }]);
 
