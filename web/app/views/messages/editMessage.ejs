@@ -6,8 +6,17 @@
 
   <div class="twelve wide column">
 
-    <div class="ui blue segment">
-      <h1 class="ui header"><%= title %></h1>
+    <h1 class="ui header inverted blue  segment">
+      <i class="icons">
+        <i class="conversation icon"></i>
+        <i class="corner add blue icon"></i>
+      </i>
+      <div class="content">
+        <%= title %>
+      </div>
+    </h1>
+
+    <div class="ui segment">
       <form ng-submit="sauvegarder()" class="ui form">
         <div class="field">
           <label>Objet du message</label>
@@ -67,7 +76,7 @@
                 </div>
               </div>
             </div>
-            <select type="text" class="ui fluid search dropdown" multiple ng-model="groupeSelected" ng-dropdown ng-dropdown-values="groupes" ng-options="groupe._id as groupe._id for groupe in groupes" ng-change="selectUsers()">
+            <select type="text" class="ui fluid search dropdown" multiple ng-model="groupeSelected" ng-dropdown="{}" ng-dropdown-values="groupes" ng-options="groupe._id as groupe._id for groupe in groupes" ng-change="selectUsers()">
               <option value="">Destinataire</option>
             </select>
           </div>

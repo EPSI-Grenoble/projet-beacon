@@ -5,9 +5,17 @@
 
   <div class="twelve wide column">
 
-    <div class="ui blue segment">
-      <h1 class="ui header"><%= title %></h1>
+    <h2 class="ui header inverted blue  segment">
+      <i class="icons">
+        <i class="user icon"></i>
+        <i class="corner write blue icon"></i>
+      </i>
+      <div class="content">
+        <%= title %>
+      </div>
+    </h2>
 
+    <div class="ui segment">
       <form ng-submit="sauvegarder()" class="ui form" <% if(user == null) { %> ng-init="editPassword = true" <% } %>>
         <div class="field ng-class:{'error' : error.email}">
           <label>Email</label>
@@ -51,7 +59,7 @@
         </div>
         <div class="field">
           <label>Groupes</label>
-          <select class="ui fluid dropdown" multiple="" ng-model="user.groupes" ng-dropdown="{}"
+          <select class="ui fluid dropdown" multiple="" ng-model="user.groupes" ng-dropdown="{'key':'nom'}"
                   ng-dropdown-choice="groupes">
             <option value="">Groupes</option>
           </select>

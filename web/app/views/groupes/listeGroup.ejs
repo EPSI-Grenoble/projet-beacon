@@ -1,7 +1,7 @@
 <% include ../inc/header %>
 
 
-<div class="ui grid" ng-controller="ListeGroupesController" ng-init='groupe=<%-JSON.stringify(groupes)%>'>
+<div class="ui grid" ng-controller="ListeGroupesController" ng-init='groupes=<%-JSON.stringify(groupes)%>'>
 
   <div class="three wide column"><p></p></div>
 
@@ -19,29 +19,33 @@
       <form class="card ui form" ng-cloak>
         <div class="content">
           <div class="field ng-class:{'error' : error.nom}">
-            <input type="text" ng-model="beacon.nom" name="nom" placeholder="Nom du groupe">
+            <input type="text" ng-model="groupeToSave.nom" name="nom" placeholder="Nom du groupe">
             <div class="ui pointing red label" ng-if="error.nom">{{error.nom.message}}</div>
           </div>
         </div>
         <div class="extra content">
           <div class="ui two buttons">
-            <input class="ui basic green button" type="submit" value="Enregistrer" ng-click="sauvegarder()">
+            <div class="ui basic green button" ng-click="sauvegarder()">Enregistrer</div>
           </div>
         </div>
       </form>
-      <div class="card" ng-repeat="groupe in groupe" ng-cloak>
+      <div class="card" ng-repeat="groupe in groupes" ng-cloak>
         <div class="content">
           <i style="float:right;" class="large floated mini ui users middle aligned icon"></i>
           <div class="header">
-            {{ groupe.nom}}
+            <span ng-if="!editMode[groupe._id]">{{ groupe.nom}}</span>
+            <div class="ui small input">
+            <input type="text" class="ui input" ng-model="groupe.nom" ng-if="editMode[groupe._id]">
+            </div>
           </div>
           <div class="meta">
           </div>
         </div>
         <div class="extra content">
           <div class="ui two buttons">
-            <a class="ui basic blue button" ng-href="/users/edit/{{user._id}}">Editer</a>
-            <div class="ui basic red button" ng-click="remove(user._id)">Supprimer</div>
+            <a class="ui basic blue button" ng-click="edit(groupe._id)" ng-if="!editMode[groupe._id]">Editer</a>
+            <a class="ui basic blue button" ng-click="save(groupe)" ng-if="editMode[groupe._id]">Sauvegarder</a>
+            <div class="ui basic red button" ng-click="remove(groupe._id)">Supprimer</div>
           </div>
         </div>
       </div>

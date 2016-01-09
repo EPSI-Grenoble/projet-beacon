@@ -36,6 +36,7 @@ module.exports = function(app, config) {
 
   // Le module qui nous permet de gérer l'authentification et la session
   require('./passport')(passport);
+  app.use(logger('dev'));
   app.use(session({ secret: 'MartinIsAwesome' }));
   app.use(passport.initialize());
   app.use(passport.session());
@@ -49,7 +50,7 @@ module.exports = function(app, config) {
   });
 
 
-  // On chage toutes nos routes
+  // On charge toutes nos routes
   var controllers = glob.sync(config.root + '/app/controllers/*.js');
   controllers.forEach(function (controller) {
     require(controller)(app);
@@ -63,7 +64,7 @@ module.exports = function(app, config) {
   });
 
   if(app.get('env') === 'development'){
-    //app.use(logger('dev'));
+    app.use(logger('dev'));
     app.use(function (err, req, res, next) {
       res.status(err.status || 500);
       res.render('error', {

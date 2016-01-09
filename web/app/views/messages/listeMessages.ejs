@@ -7,21 +7,29 @@
 
   <div class="twelve wide column">
 
-    <div class="ui blue segment">
-      <h1 class="ui header"><%= title %></h1>
+    <h2 class="ui header inverted blue  segment">
+      <i class="conversation icon"></i>
+      <div class="content">
+        <%= title %>
+      </div>
+    </h2>
 
-      <div class="ui divided list">
+      <div class="ui feed">
         <% messages.forEach(function(message){ %>
-          <div class="item">
-            <i class="large chat middle aligned icon"></i>
-            <div class="content">
-              <a class="header"><%= message.titre %> </a>
-              <div class="description"><%= message.getPeriod %></div>
+        <div class="ui event">
+          <div class="content">
+            <div class="ui segment">
+              <h4 class="ui header"><%= message.titre %></h4>
+              <div class="date"><%= message.getPeriod %></div>
+              <div class="meta">
+                <i class="user icon"></i> <%= message.destinataires.length %> personnes contactées
+              </div>
             </div>
           </div>
+        </div>
         <% }); %>
       </div>
-    </div>
+
   </div>
 
   <div class="one wide column"><p></p></div>

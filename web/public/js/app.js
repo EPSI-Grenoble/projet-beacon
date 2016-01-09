@@ -1,10 +1,11 @@
+'use strict';
 var app = angular.module("beacon", ["ckeditor", "ngSanitize", "ngSemantic", "checklist-model", "ngResource"]);
 
 app.controller('AddMessageController', function($scope, $http, GroupeAPI, BeaconAPI, UserAPI){
 
   $scope.beaconList = BeaconAPI.get();
 
-  $scope.groupes  = GroupeAPI.get();
+  $scope.groupes  = UserAPI.getGroupes();
 
   $scope.users = UserAPI.get();
 
@@ -72,12 +73,30 @@ app.controller('ListeUserController', function($scope, UserAPI){
 
 });
 
-app.controller('ListeGroupeController', function($scope, UserAPI){
+app.controller('ListeGroupesController', function($scope, GroupeAPI){
+
+  $scope.editMode = [];
 
   $scope.remove = function(id){
     UserAPI.delete({"id" : id});
     $scope.users = UserAPI.get();
   };
+
+  $scope.edit = function(idGroupe){
+    $scope.editMode[idGroupe] = true;
+  };
+
+  $scope.save = function(groupe){
+    $scope.editMode[groupe._id] = false;
+    GroupeAPI.save({"id" : groupe._id}, groupe)
+  };
+
+  $scope.sauvegarder = function(){
+    console.log("save");
+    GroupeAPI.save($scope.groupeToSave, function(){
+      $scope.groupes = GroupeAPI.get();
+    });
+  }
 
 });
 

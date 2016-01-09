@@ -21,6 +21,12 @@ router.get("/", Utils.isAuth, function (req, res, next) {
   })
 });
 
+router.get("/groupes", Utils.isAuth, function (req, res, next) {
+  UserModel.getGroupes(function (groupesList) {
+    res.json(groupesList);
+  })
+});
+
 router.post('/', Utils.isAuth, function (req, res, next) {
   if (req.body.password) {
     req.body.password = md5(req.body.password);

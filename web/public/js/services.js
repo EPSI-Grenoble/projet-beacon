@@ -5,10 +5,15 @@ var app = angular.module("beacon");
 
 app.service('GroupeAPI', function($resource, $location) {
   var resource;
-  resource = $resource($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/groupes', {}, {
+  resource = $resource($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/groupes/:id', {}, {
     'get': {
       method: "GET",
       isArray: true
+    },
+    'save': {
+      method: "POST",
+      isArray: false,
+      params:{id: '@id'}
     }
   });
   return resource;
@@ -41,6 +46,13 @@ app.service('UserAPI', function($resource, $location) {
     'get': {
       method: "GET",
       isArray: true
+    },
+    'getGroupes': {
+      method: "GET",
+      isArray: true,
+      params : {
+        id : "groupes"
+      }
     },
     'save': {
       method: "POST",

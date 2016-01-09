@@ -55,4 +55,8 @@ UserSchema.statics.getGroupes = function(callback){
   });
 };
 
+UserSchema.statics.updateGroupe = function(oldNom, newNom){
+
+};
+
 mongoose.model('users', UserSchema);
