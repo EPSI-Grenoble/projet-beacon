@@ -72,8 +72,10 @@ router.get('/users/edit', Utils.isAuth, function (req, res, next) {
 // Page de l'edition de user
 router.get('/users/edit/:idUser', Utils.isAuth, function (req, res, next) {
   UserModel.findOne({"_id" : req.params.idUser}, function(err, user){
-    user = user.toObject();
-    delete user["password"];
+    if(user){
+      user = user.toObject();
+      delete user["password"];
+    }
     res.render('users/editUser', {
       title: 'Modifier un utilisateur',
       user: user

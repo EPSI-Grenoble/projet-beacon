@@ -39,24 +39,5 @@ var UserSchema = new Schema({
   groupes: Array
 });
 
-UserSchema.statics.getGroupes = function(callback){
-  this.aggregate([
-    { $unwind: "$groupes" },
-    { $group: {
-      _id: "$groupes",
-      users: {$addToSet : { "_id":"$_id", "firstName" : "$firstName", "lastName": "$lastName"}}
-    }}
-  ], function (err, result) {
-    if (err) {
-      callback(err);
-      return;
-    }
-    callback(result);
-  });
-};
-
-UserSchema.statics.updateGroupe = function(oldNom, newNom){
-
-};
 
 mongoose.model('users', UserSchema);

@@ -12,5 +12,33 @@ module.exports =  {
         res.redirect("/login");
       }
     }
+  },
+  isTokenValid : function(req, res, next){
+    if(req.session[req.query.token]){
+      return next()
+    } else {
+      res.send(401);
+    }
+  },
+  getProximity : function (proximity) {
+    var proximityList = [];
+    switch (proximity) {
+      case "ProximityFar" :
+        proximityList.push("ProximityFar");
+        proximityList.push("ProximityUnknown");
+        break;
+      case "ProximityNear" :
+        proximityList.push("ProximityFar");
+        proximityList.push("ProximityNear");
+        proximityList.push("ProximityUnknown");
+        break;
+      case "ProximityImmediate" :
+        proximityList.push("ProximityFar");
+        proximityList.push("ProximityNear");
+        proximityList.push("ProximityImmediate");
+        proximityList.push("ProximityUnknown");
+        break;
+    }
+    return proximityList;
   }
 };
