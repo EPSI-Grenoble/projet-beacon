@@ -29,6 +29,7 @@ router.get('/messages', Utils.isAuth, function (req, res, next) {
     MessageModel.find().sort({"dateCreation" : -1}).exec(function(err, toutLesMessage) {
       res.render('messages/listeMessages', {
         title: 'Liste des messages envoyés',
+        user : req.user,
         messages : toutLesMessage
       })
     })
@@ -56,7 +57,8 @@ router.get('/users', Utils.isAuth, function (req, res, next) {
       res.render('users/listeUsers', {
         title: 'Les Utilisateurs',
         subtitle: 'Liste des utilisateurs',
-        users : toutLesUser
+        users : toutLesUser,
+        user : req.user
       })
     })
 });
@@ -65,7 +67,8 @@ router.get('/users', Utils.isAuth, function (req, res, next) {
 router.get('/users/edit', Utils.isAuth, function (req, res, next) {
     res.render('users/editUser', {
       title: 'Créer un utilisateur',
-      user: null
+      user : req.user,
+      newUser : null
     });
 });
 
@@ -78,7 +81,8 @@ router.get('/users/edit/:idUser', Utils.isAuth, function (req, res, next) {
     }
     res.render('users/editUser', {
       title: 'Modifier un utilisateur',
-      user: user
+      newUser : user,
+      user : req.user
     });
   });
 });
@@ -89,7 +93,8 @@ router.get('/groupes', Utils.isAuth, function (req, res, next) {
     res.render('groupes/listeGroup', {
       title: 'Les groupes',
       subtitle: 'Liste des groupes',
-      groupes : toutLesGroupes
+      groupes : toutLesGroupes,
+      user : req.user
     })
   })
 });
@@ -99,7 +104,8 @@ router.get('/beacons', Utils.isAuth, function (req, res, next) {
     BeaconModel.find( function(err, toutlesBeacons) {
       res.render('beacons/addBeacon', {
         title: 'Administrer lLes beacons',
-        beacons : toutlesBeacons
+        beacons : toutlesBeacons,
+        user : req.user
       })
     })
 });

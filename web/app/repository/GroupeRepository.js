@@ -8,9 +8,8 @@ module.exports = {
   getAll : function(callback){
     GroupeModel
       .find()
-      .sort({nom: 1})
+      .sort({nom: -1})
       .exec(function(err, groupesList){
-        console.log(groupesList);
         callback(err, groupesList);
       })
   },

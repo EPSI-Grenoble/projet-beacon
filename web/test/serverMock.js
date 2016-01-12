@@ -1,3 +1,11 @@
+/**
+ * Ce fichier permet de mocker l'application pour executer les tests fonctionnels
+ * On va utiliser une fausse base de données (en mémoire)
+ * Puis on crée un utilisateur pour pouvoir se connecter
+ */
+
+'use strict';
+
 process.env.NODE_ENV = "test";
 var express = require('express'),
   config = require('../config/config'),

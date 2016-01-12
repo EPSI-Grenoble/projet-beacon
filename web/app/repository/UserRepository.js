@@ -92,5 +92,16 @@ module.exports = {
       .exec(function (err, result) {
         callback(err, result);
       });
+  },
+
+  connexion: function(login, password, callback){
+    UserModel
+      .findOne({
+        email : login,
+        password : md5(password)
+      })
+      .exec(function(err, user){
+        callback(err, user);
+      })
   }
 };

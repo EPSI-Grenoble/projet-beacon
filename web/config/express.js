@@ -36,7 +36,6 @@ module.exports = function(app, config) {
 
   // Le module qui nous permet de gérer l'authentification et la session
   require('./passport')(passport);
-  app.use(logger('dev'));
   app.use(session({ secret: 'MartinIsAwesome' }));
   app.use(passport.initialize());
   app.use(passport.session());
@@ -63,8 +62,12 @@ module.exports = function(app, config) {
     next(err);
   });
 
-  if(app.get('env') === 'development'){
+  if(app.get('env') != 'test'){
     app.use(logger('dev'));
+
+  }
+
+  if(app.get('env') === 'development'){
     app.use(function (err, req, res, next) {
       res.status(err.status || 500);
       res.render('error', {

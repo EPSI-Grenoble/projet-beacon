@@ -15,12 +15,15 @@ module.exports = function (app) {
  */
 router.post('/', Utils.isAuth, function (req, res, next) {
   MessageRepository.createMessage(req.body, function(err, message) {
-    if (err) res.send(406);
-    var sender = new SendPush(message._id);
-    if (message.typeMessage == "push") {
-      sender.sendNow();
+    if (err) {
+      res.send(406);
+    } else {
+      if (message.typeMessage == "push") {
+        var sender = new SendPush(message._id);
+        sender.sendNow();
+      }
+      res.send(message);
     }
-    res.send(message);
   });
 });
 
@@ -48,6 +51,7 @@ router.get('/user/:idMessage', Utils.isTokenValid, function (req, res, next) {
  */
 router.get('/user/beacon/:idBeacon', Utils.isTokenValid, function (req, res, next) {
   var proximity = req.query.proximity;
+  var idBeacon = req.params.idBeacon;
   var idUser = req.session[req.query.token].user;
   MessageRepository.findMessageForThisUserAndThisBeacon(idUser, idBeacon, proximity, function (err, messages) {
     messages.forEach(function (message) {

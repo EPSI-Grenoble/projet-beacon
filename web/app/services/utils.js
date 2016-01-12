@@ -7,6 +7,11 @@ module.exports =  {
       return next()
     } else {
       if(env === 'development') {
+        req.user = {
+          "email" : "dev@epsi.fr",
+          "lastName" : "Dev",
+          "firstName" : "User"
+        };
         return next()
       } else {
         res.redirect("/login");

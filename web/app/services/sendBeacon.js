@@ -22,7 +22,6 @@ module.exports = class SendBeacon {
   /**
    * Methode pour envoyer le message immédiatement
    * On récupère le message à partir de son ID puis on envoi la notif à tous les destinataires du messages
-   * TODO pour l'insant on récupère pas les device_token du user, il faut donc récupèrer pour chaque user son device_token puis envoyer une notif
    */
   sendNow(){
     var device_tokens = [];
