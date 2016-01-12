@@ -123,12 +123,14 @@ angular.module('starter.services', [])
 
   .factory('BeaconService', ['$http', '$q', '$rootScope', '$cordovaBeacon', '$interval', function ($http, $q, $ionicLoading, $cordovaBeacon, $interval) {
 
+    var intervalBeaconRequest;
+
     var beaconToListen = function () {
-      if (angular.isDefined($scope.intervalBeaconRequest)) {
-        $interval.cancel($scope.intervalBeaconRequest);
-        $scope.intervalBeaconRequest = undefined;
+      if (angular.isDefined(intervalBeaconRequest)) {
+        $interval.cancel(intervalBeaconRequest);
+        intervalBeaconRequest = undefined;
       }
-      $scope.intervalBeaconRequest = $interval(function () {
+      intervalBeaconRequest = $interval(function () {
         $http.get(base_url + "/api/beacons/user/?token=" + window.localStorage["api_token"]).success(function (beaconsToListen) {
           angular.forEach(beaconsToListen, function (beacon) {
             console.log(beacon);
@@ -141,7 +143,6 @@ angular.module('starter.services', [])
     var isMessageExist = function (beaconUUID, proximity) {
       $http.get(base_url + "/api/messages/user/beacon/" + beaconUUID + "?proximity=" + proximity + "&token=" + window.localStorage["api_token"]).success(function (result) {
         $cordovaBeacon.stopRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("ibeacon", beaconUUID));
-
       })
     };
 
