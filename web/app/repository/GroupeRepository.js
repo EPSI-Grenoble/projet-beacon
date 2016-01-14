@@ -21,6 +21,22 @@ module.exports = {
     })
   },
 
+  removeGroupe : function(idGroupe, callback){
+    GroupeModel
+      .findById(idGroupe)
+      .exec(function (err, groupe) {
+        UserRepository.deleteGroupe(groupe.nom, function(){
+          groupe.remove(function(){
+            callback(err);
+          })
+        });
+      })
+      // .remove()
+      // .exec(function (err) {
+      //   callback(err);
+      // })
+  },
+
   updateGroupe: function (idGroupe, nomGroupe, callback) {
     GroupeModel
       .findById(idGroupe)

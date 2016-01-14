@@ -14,6 +14,11 @@ app.service('GroupeAPI', function($resource, $location) {
       method: "POST",
       isArray: false,
       params:{id: '@id'}
+    },
+    'delete': {
+      method: "DELETE",
+      isArray: false,
+      params:{id: '@id'}
     }
   });
   return resource;

@@ -25,3 +25,12 @@ router.post("/:id", Utils.isAuth, function(req, res ,next){
     res.json(groupeSaved);
   });
 });
+
+router.delete("/:id", Utils.isAuth, function (req, res, next) {
+  GroupeRepository.removeGroupe(req.params.id, function (err) {
+    if(err){
+      res.status(500).send(err);
+    }
+    res.send(200);
+  })
+});
