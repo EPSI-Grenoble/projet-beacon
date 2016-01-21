@@ -18,7 +18,7 @@ module.exports = {
       "dateCreation": new Date()
     });
     message.save(function (err) {
-      callback(err, message);
+          callback(err, message);
     });
   },
 
