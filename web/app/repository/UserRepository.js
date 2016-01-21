@@ -31,7 +31,6 @@ module.exports = {
     });
   },
 
-
   createUser : function(form, callback){
     var user = new UserModel({
       email : form.email,
@@ -39,6 +38,7 @@ module.exports = {
       lastName : form.lastName,
       groupes : form.groupes,
       password : md5(form.password),
+      isAdmin : form.isAdmin,
       device_token : form.device_token,
       token : form.token
     });
@@ -59,6 +59,7 @@ module.exports = {
         if (form.password) {
           user.password = md5(form.password);
         }
+        user.isAdmin = form.isAdmin;
         user.save(function(err, userSaved){
             delete userSaved.password;
             callback(err, userSaved)
