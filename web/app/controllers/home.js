@@ -58,9 +58,8 @@ router.get('/myaccount', Utils.isAuth, function (req, res, next) {
 
 // Page des users
 router.get('/users', Utils.isAuth, function (req, res, next) {
-    UserModel.find().sort({lastName: 1}).exec(function(err, toutLesUser) {
+  UserRepository.getAllUsers(function(err, toutLesUser) {
       toutLesUser = toutLesUser.map(function(user){
-        user = user.toObject();
         delete user.password;
         return user;
       });
@@ -122,6 +121,19 @@ router.get('/guest', Utils.isAuth, function (req, res, next) {
   })
 });
 
+// Page admin
+router.get("/viewAdmin", Utils.isAuth, function (req, res, next) {
+
+  UserRepository.getAllAdmins(function (err, users) {
+    res.render('admins/viewAdmin',{
+      title: 'Admins',
+      subtitle: 'Liste des utilisateurs admins  ',
+      users : users,
+      user: req.user
+    });
+  })
+});
+
 // Page des beacons
 router.get('/beacons', Utils.isAuth, function (req, res, next) {
     BeaconModel.find( function(err, toutlesBeacons) {
@@ -158,16 +170,3 @@ router.get("/monCompte", Utils.isAuth, function (req, res, next) {
       user : req.user
     });
 });
-// Pade admin
-router.get("/viewAdmin", Utils.isAuth, function (req, res, next) {
-
-  UserRepository.getAllAdmins(function (err, users) {
-    res.render('admins/viewAdmin',{
-      title: 'Afficher les admins',
-      subtitle: 'Voici tous les admins',
-      users : users,
-      user: req.user
-    });
-  })
-});
-

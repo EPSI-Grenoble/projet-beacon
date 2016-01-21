@@ -69,7 +69,7 @@ module.exports = {
 
   getAllUsers: function (callback) {
     UserModel
-      .find()
+      .find({isAdmin: { $ne: true }})
       .sort({lastName: 1})
       .exec(function (err, users) {
         users = users.map(function (user) {

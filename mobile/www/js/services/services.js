@@ -9,6 +9,7 @@ angular.module('starter.services', [])
       $http.get(base_url + "/api/messages/user?token=" + window.localStorage["api_token"])
         .success(function (response) {
           deferred.resolve(response);
+          console.log(response);        
         })
         .error(function (data) {
           deferred.reject();
@@ -43,7 +44,7 @@ angular.module('starter.services', [])
   })
 
 
-  .factory('RequestsService', ['$http', '$q', '$ionicLoading', '$rootScope', function ($http, $q, $ionicLoading) {
+  .factory('RequestsService', ['$http', '$q', '$ionicLoading', '$rootScope', function ($http, $q, $ionicLoading,$rootScope) {
 
     function logIn(login, password) {
       var deferred = $q.defer();
@@ -57,6 +58,7 @@ angular.module('starter.services', [])
         .success(function (response) {
           window.localStorage['login'] = login;
           window.localStorage['password'] = password;
+          $rootScope.username = response.user.firstName +" "+response.user.lastName; 
           $ionicLoading.hide();
           deferred.resolve(response);
         })

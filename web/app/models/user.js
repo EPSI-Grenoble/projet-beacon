@@ -38,7 +38,8 @@ var UserSchema = new Schema({
   },
   isAdmin: {
     type: Boolean,
-    required: true
+    required: true,
+    default: false
   },
   groupes: Array
 });
