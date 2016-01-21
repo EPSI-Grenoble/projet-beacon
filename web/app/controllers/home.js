@@ -144,13 +144,25 @@ router.get("/monCompte", Utils.isAuth, function (req, res, next) {
       user : req.user
     });
 });
-// Pade admin
+// Page admin
 router.get("/viewAdmin", Utils.isAuth, function (req, res, next) {
 
   UserRepository.getAllAdmins(function (err, users) {
     res.render('admins/viewAdmin',{
       title: 'Afficher les admins',
       subtitle: 'Voici tous les admins',
+      users : users,
+      user: req.user
+    });
+  })
+});
+// Page user
+router.get("/viewUser", Utils.isAuth, function (req, res, next) {
+
+  UserRepository.getAllUserOnly(function (err, users) {
+    res.render('admins/viewUser',{
+      title: 'Afficher les users',
+      subtitle: 'Voici tous les users',
       users : users,
       user: req.user
     });
