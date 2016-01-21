@@ -51,5 +51,13 @@ module.exports = {
       .exec(function (err, guest) {
         callback(err, guest)
       });
+  },
+
+  findByIdInDestinataireList: function(destinatairesList, callback){
+    GuestModel
+      .find({"_id": {$in: destinatairesList}})
+      .exec(function (err, guests) {
+        callback(err, guests)
+      });
   }
 };

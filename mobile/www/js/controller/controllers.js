@@ -29,12 +29,12 @@ angular.module('starter.controllers', [])
     // An elaborate, custom popup
     var myPopup = $ionicPopup.show({
       template: '<input type="text" ng-model="data.guest">',
-      title: 'Enter Guest Name',
+      title: 'Entrer le code invité',
       scope: $scope,
       buttons: [
-        { text: 'Cancel' },
+        { text: 'Retour' },
         {
-          text: '<b>Sign-in</b>',
+          text: '<b>Se connecter</b>',
           type: 'button-positive',
           onTap: function(e) {
             RequestsService.logGuest($scope.data.guest).then(function(response){

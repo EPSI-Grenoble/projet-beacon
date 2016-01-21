@@ -1,6 +1,3 @@
-/**
- * Created by mchoraine on 17/12/2015.
- */
 var app = angular.module("beacon");
 
 app.service('GroupeAPI', function($resource, $location) {

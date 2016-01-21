@@ -35,17 +35,19 @@ router.post('/auth', function (req, res) {
 
 router.post('/auth-guest', function (req, res) {
   GuestRepository.checkCode(req.body.code, function (err, guest) {
-      if (!guest || err) {
+    if (!guest || err) {
         res.json({success: false, msg: "Erreur d'identifiant ou de mot de passe"});
       }
       else {
-        var tokenGenerated = uuid.v4();
+      var tokenGenerated = uuid.v4();
         req.session[tokenGenerated] = {
           guest: guest._id,
           expire: moment().add(10, 'days')
         };
-        guest.device_token.push(req.body.device_token);
-        guest.save();
+        if(guest.device_token.indexOf(req.body.device_token) < 0 && req.body.device_token != null){
+          guest.device_token.push(req.body.device_token);
+          guest.save();
+        }
         res.json({success: true, token: tokenGenerated, user:{
           firstName : guest.label,
           lastName : ""
