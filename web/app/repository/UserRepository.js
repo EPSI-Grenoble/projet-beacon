@@ -80,6 +80,20 @@ module.exports = {
       });
   },
 
+  getAllAdmins: function (callback) {
+    UserModel
+      .find({isAdmin:true})
+      .sort({lastName: 1})
+      .exec(function (err, users) {
+        users = users.map(function (user) {
+          user = user.toObject();
+          delete user.password;
+          return user;
+        });
+        callback(err, users);
+      });
+  },
+
   removeUser : function(id, callback){
     UserModel
       .find({
