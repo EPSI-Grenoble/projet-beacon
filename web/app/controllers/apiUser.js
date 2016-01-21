@@ -33,7 +33,7 @@ router.post('/', Utils.isAuth, function (req, res, next) {
   if (req.body._id) {
     UserRepository.updateUser(req.body, function(err, user){
       if (err) {
-        res.status(400).send(err.errors);
+        res.status(406).send(err.errors);
       } else {
         res.send(req.body);
       }
@@ -41,7 +41,7 @@ router.post('/', Utils.isAuth, function (req, res, next) {
   } else {
     UserRepository.createUser(req.body, function (err, user) {
       if (err) {
-        res.status(400).send(err.errors);
+        res.status(406).send(err.errors);
       } else {
         res.send(user);
       }

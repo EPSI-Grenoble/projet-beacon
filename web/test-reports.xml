@@ -1,0 +1,25 @@
+<testsuite name="Mocha Tests" tests="23" failures="0" errors="0" skipped="0" timestamp="Thu, 21 Jan 2016 08:28:25 GMT" time="0.359">
+<testcase classname="Test Beacon API" name="Create invalid beacon" time="0.018"/>
+<testcase classname="Test Beacon API" name="Create beacon" time="0.007"/>
+<testcase classname="Test Beacon API" name="Get all beacon" time="0.012"/>
+<testcase classname="Test Groupe API" name="Create a groupe" time="0.009"/>
+<testcase classname="Test Groupe API" name="Create user with a groupe" time="0.013"/>
+<testcase classname="Test Groupe API" name="Get users groupes" time="0.013"/>
+<testcase classname="Test Groupe API" name="Get all groupes" time="0.011"/>
+<testcase classname="Test Groupe API" name="Update a groupe" time="0.016"/>
+<testcase classname="Test Groupe API" name="Should update users groupes" time="0.005"/>
+<testcase classname="Test Groupe API" name="Delete groupe" time="0.011"/>
+<testcase classname="Test Groupe API" name="Get all groupes" time="0.005"/>
+<testcase classname="Test Groupe API" name="Get users groupes" time="0.015"/>
+<testcase classname="Test Users API" name="Create user" time="0.01"/>
+<testcase classname="Test Users API" name="Create user incomplet" time="0.006"/>
+<testcase classname="Test Users API" name="Get all user" time="0.005"/>
+<testcase classname="Test controllers" name="GET / (Not log-in)" time="0.003"/>
+<testcase classname="Test controllers" name="POST /login (Log-in)" time="0.005"/>
+<testcase classname="Test controllers" name="GET /messages" time="0.014"/>
+<testcase classname="Test controllers" name="GET /users" time="0.009"/>
+<testcase classname="Test controllers" name="GET /users/edit" time="0.006"/>
+<testcase classname="Test controllers" name="GET /users/edit/:idUser" time="0.005"/>
+<testcase classname="Test controllers" name="GET /groupes" time="0.006"/>
+<testcase classname="Test controllers" name="GET /beacons" time="0.005"/>
+</testsuite>

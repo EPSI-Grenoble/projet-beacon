@@ -45,6 +45,14 @@ router.get('/messages/edit', Utils.isAuth, function (req, res, next) {
   });
 });
 
+// Page du compte
+router.get('/myaccount', Utils.isAuth, function (req, res, next) {
+    res.render('users/myAccount', {
+      subtitle: 'Vous êtes ici chez vous , bienvenue',
+      title: 'Afficher mon compte',
+      user : req.user
+    });
+});
 
 // Page des users
 router.get('/users', Utils.isAuth, function (req, res, next) {
@@ -91,8 +99,8 @@ router.get('/users/edit/:idUser', Utils.isAuth, function (req, res, next) {
 router.get('/groupes', Utils.isAuth, function (req, res, next) {
   GroupeModel.find().sort({name: 1}).exec(function(err, toutLesGroupes) {
     res.render('groupes/listeGroup', {
-      title: 'Les groupes',
-      subtitle: 'Liste des groupes',
+      title: 'Listes de diffusion',
+      subtitle: '',
       groupes : toutLesGroupes,
       user : req.user
     })

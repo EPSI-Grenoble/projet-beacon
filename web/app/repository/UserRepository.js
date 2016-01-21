@@ -23,16 +23,14 @@ module.exports = {
       .exec(function (err, users) {
         users.forEach(function (user) {
           var index = user.groupes.indexOf(groupName);
-          console.log(index);
           user.groupes.splice(index,1);
           user.save(function(){
-            console.log(user);
             callback()
           });
         });
     });
   },
-  
+
 
   createUser : function(form, callback){
     var user = new UserModel({
