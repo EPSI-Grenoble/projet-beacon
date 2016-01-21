@@ -1,0 +1,42 @@
+<% include ../inc/header %>
+
+<div class="ui grid">
+
+  <div class="three wide column"><p></p></div>
+
+  <div class="twelve wide column">
+    <h2 class="ui header inverted blue  segment">
+      <i class="users icon"></i>
+      <div class="content">
+        <%= title %>
+        <div class="sub header">
+          <%= subtitle %>
+        </div>
+      </div>
+    </h2>
+    <table class="ui celled structured table">
+      <thead>
+      <tr>
+        <th rowspan="2">Prenom</th>
+        <th rowspan="2">Nom</th>
+        <th rowspan="2">Email</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% users.forEach(function(eachUser){ %>
+      <tr>
+        <td><%= eachUser.email %></td>
+        <td><%= eachUser.lastName %></td>
+        <td><%= eachUser.firstName %></td>
+      </tr>
+      <% }); %>
+      </tbody>
+    </table>
+    <div>
+    </div>
+  </div>
+
+  <div class="one wide column"><p></p></div>
+</div>
+
+<% include ../inc//footer %>

@@ -6,6 +6,7 @@ var express = require('express'),
   MessageModel = mongoose.model('messages'),
   GroupeModel = mongoose.model('groupes'),
   BeaconModel = mongoose.model('beacons'),
+  UserRepository = require("../repository/UserRepository"),
   Utils = require("../services/utils");
 
 module.exports = function (app) {
@@ -143,3 +144,16 @@ router.get("/monCompte", Utils.isAuth, function (req, res, next) {
       user : req.user
     });
 });
+// Pade admin
+router.get("/viewAdmin", Utils.isAuth, function (req, res, next) {
+
+  UserRepository.getAllAdmins(function (err, users) {
+    res.render('admins/viewAdmin',{
+      title: 'Afficher les admins',
+      subtitle: 'Voici tous les admins',
+      users : users,
+      user: req.user
+    });
+  })
+});
+
