@@ -126,3 +126,12 @@ router.get('/logout', function(req, res){
   req.logout();
   res.redirect('/login');
 });
+
+// Pade de comptes
+router.get("/monCompte", Utils.isAuth, function (req, res, next) {
+    res.render('comptes/viewAccount',{
+      title: 'Afficher mon comptes',
+      subtitle: 'Voici votre comptes',
+      user : req.user
+    });
+});
