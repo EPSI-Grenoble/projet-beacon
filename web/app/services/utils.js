@@ -22,7 +22,7 @@ module.exports =  {
     if(req.session[req.query.token]){
       return next()
     } else {
-      res.send(401);
+      res.sendStatus(401);
     }
   },
   getProximity : function (proximity) {

@@ -35,10 +35,10 @@ app.directive("ngDropdown", [ "$timeout",
 
         if(scope['ngDropdown']["key"]){
           scope.tagKey = scope['ngDropdown']["key"];
+          console.log(scope.tagKey)
         }
 
         scope.$watch("ngDropdownChoice", function(value) {
-          console.log(scope['ngDropdown'] );
           scope.tagsList = value;
           if(scope.tagsList != undefined && scope.tagsList)
           console.log(scope.tagsList);
