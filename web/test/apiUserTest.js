@@ -1,24 +1,26 @@
 var expect = require("chai").expect;
-var server = require("./serverMock").app,
-  mockgoose = require('mockgoose'),
+var server = require("./serverMock"),
   supertest = require("supertest");
 
 
 describe("Test Users API", function () {
-  var request = supertest.agent(server);
+  var request;
 
   before(function (done) {
-    mockgoose.reset(function() {
-      require("./serverMock").createUser(function () {
-        request
-          .post('/login')
-          .send({
-            'user': 'test@testeur.com',
-            'password': 'test'
-          })
-          .expect(302, done)
-      });
-    })
+    server.app(function(app) {
+      request = supertest.agent(app);
+      done();
+    });
+  });
+
+  it("log user", function (done) {
+    request
+      .post('/login')
+      .send({
+        'user': 'test@testeur.com',
+        'password': 'test'
+      })
+      .expect(302, done)
   });
 
   it("Create user", function (done) {
@@ -61,5 +63,10 @@ describe("Test Users API", function () {
         done();
       });
   });
+
+  after(function (done) {
+    server.shutdown();
+    done()
+  })
 
 });

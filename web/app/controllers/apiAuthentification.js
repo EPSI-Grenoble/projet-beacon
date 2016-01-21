@@ -25,7 +25,7 @@ router.post('/auth', function (req, res) {
         };
         user.device_token = req.body.device_token;
         user.save();
-        res.json({success: true, token: tokenGenerated});
+        res.json({success: true, token: tokenGenerated, user:user});
       }
     }
   );
