@@ -6,7 +6,18 @@
     <div class="item item-avatar">
       <img src="img/{{message.typeMessage}}.png">
       <h2>{{message.nom}}</h2>
-      <p>{{message.fromDate}}-{{message.toDate}}</p>
+       <p ng-if="message.fromDate!=null || message.toDate!=null">
+          <span ng-if="message.fromDate!=null">
+            À partir de {{message.fromDate | date:'dd/MM/yyyy à HH:mm:ss'}}
+          </span>
+          <span ng-if="message.toDate!=null">
+            Jusqu'au {{message.toDate | date:'dd/MM/yyyy à HH:mm:ss'}}
+          </span>
+      </p>
+
+      <p ng-if="message.fromDate==null && message.toDate==null">
+       Le {{message.dateCreation | date:'dd/MM/yyyy à HH:mm:ss'}}
+      </p>
     </div>
     <div class="card">
       <div class="item item-divider">

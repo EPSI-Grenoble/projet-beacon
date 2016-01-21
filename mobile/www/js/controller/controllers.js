@@ -1,5 +1,15 @@
 angular.module('starter.controllers', [])
 
+.controller('MenuCtrl', function($rootScope) {
+
+  $rootScope.signOut = function(){
+      $state.go('login');
+  }
+
+
+});
+
+
 .controller('LoginCtrl', function($scope, $state, RequestsService, BeaconService,$ionicPopup) {
 
   $scope.user = {};
@@ -37,7 +47,7 @@ angular.module('starter.controllers', [])
           text: '<b>Sign-in</b>',
           type: 'button-positive',
           onTap: function(e) {
-            if (!$scope.data.wifi) {
+            if (!$scope.data.guest) {
               //don't allow the user to close unless he enters wifi password
               e.preventDefault();
             } else {
@@ -56,7 +66,7 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('ListMessageCtrl', function($scope, Messages, $state, $ionicSideMenuDelegate, $window) {
+.controller('ListMessageCtrl', function($scope, Messages, $state, $ionicSideMenuDelegate) {
   $scope.displayMessages = $scope.allMessages = [];
 
   $scope.showMenu = function() {
