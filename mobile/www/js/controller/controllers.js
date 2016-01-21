@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope, $state, RequestsService, BeaconService) {
+.controller('LoginCtrl', function($scope, $state, RequestsService, BeaconService,$ionicPopup) {
 
   $scope.user = {};
   $scope.user.username = window.localStorage['login'];
@@ -22,21 +22,58 @@ angular.module('starter.controllers', [])
       $scope.messageError = "Une erreur est survenue."
     });
   };
+
+  $scope.showPopup = function() {
+    $scope.data = {};
+
+    // An elaborate, custom popup
+    var myPopup = $ionicPopup.show({
+      template: '<input type="text" ng-model="data.guest">',
+      title: 'Enter Guest Name',
+      scope: $scope,
+      buttons: [
+        { text: 'Cancel' },
+        {
+          text: '<b>Sign-in</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            if (!$scope.data.wifi) {
+              //don't allow the user to close unless he enters wifi password
+              e.preventDefault();
+            } else {
+              return $scope.data.guest;
+            }
+          }
+        }
+      ]
+  });
+
+  myPopup.then(function(res) {
+    console.log('Tapped!', res);
+  });
+
+ };
 })
 
 
-.controller('ListMessageCtrl', function($scope, Messages, $state, $ionicSideMenuDelegate) {
+.controller('ListMessageCtrl', function($scope, Messages, $state, $ionicSideMenuDelegate, $window) {
   $scope.displayMessages = $scope.allMessages = [];
 
   $scope.showMenu = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };
 
-  Messages.all().then(function(response){
-    $scope.displayMessages = $scope.allMessages = response;
-  }, function(){
-    $state.go('login');
-  });
+  $scope.refresh = function() {
+    $scope.displayMessages = $scope.allMessages = [];
+    Messages.all().then(function(response){
+      $scope.displayMessages = $scope.allMessages = response;
+    }, function(){
+      $state.go('login');
+    });
+  };
+
+  $scope.refresh();
+  
 
   $scope.remove = function(message) {
     Messages.remove(message);
