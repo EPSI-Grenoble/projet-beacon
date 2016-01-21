@@ -1,0 +1,27 @@
+<% include ../inc/header %>
+
+
+<div class="ui grid">
+
+  <div class="three wide column"><p></p></div>
+
+  <div class="twelve wide column">
+      <h2 class="ui header inverted blue  segment">
+        <i class="users icon"></i>
+        <div class="content">
+          <%= title %>
+          <div class="sub header"><%= subtitle %></div>
+        </div>
+      </h2>
+      <%= user.firstName %>
+      <%= user.lastName %>
+
+      <div class="meta">
+        <%= user.email %>
+      </div>
+  </div>
+
+  <div class="one wide column"></div>
+</div>
+
+<% include ../inc//footer %>
