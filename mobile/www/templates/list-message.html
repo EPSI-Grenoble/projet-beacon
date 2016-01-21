@@ -18,7 +18,8 @@
   </div>
     <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="message in displayMessages" type="item-text-wrap" href="#/messages/{{message._id}}">
-        <img ng-src="img/user.png">
+
+        <img  class="typeMessage" ng-src="img/{{message.typeMessage}}.png">
         <h2>{{message.titre}}</h2>
         <p>{{message.fromDate}} - {{message.toDate}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
