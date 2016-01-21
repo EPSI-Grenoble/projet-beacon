@@ -58,7 +58,9 @@ angular.module('starter.services', [])
         .success(function (response) {
           window.localStorage['login'] = login;
           window.localStorage['password'] = password;
-          $rootScope.username = response.user.firstName +" "+response.user.lastName;
+          $rootScope.user = response.user;
+          console.log($rootScope.user);
+          $rootScope.user.username = response.user.firstName +" "+response.user.lastName;
           $ionicLoading.hide();
           deferred.resolve(response);
         })

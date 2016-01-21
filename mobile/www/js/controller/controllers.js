@@ -1,12 +1,5 @@
 angular.module('starter.controllers', [])
 
-.controller('MenuCtrl', function($rootScope) {
-  $rootScope.signOut = function(){
-      $state.go('login');
-  }
-})
-
-
 .controller('LoginCtrl', function($scope, $state, RequestsService, BeaconService,$ionicPopup) {
 
   $scope.user = {};
@@ -68,6 +61,11 @@ angular.module('starter.controllers', [])
  };
 })
 
+.controller('ProfileCtrl', function($scope,$ionicSideMenuDelegate){
+  $scope.showMenu = function() {
+    $ionicSideMenuDelegate.toggleLeft();
+  };
+})
 
 .controller('ListMessageCtrl', function($scope, Messages, $state, $ionicSideMenuDelegate) {
   $scope.displayMessages = $scope.allMessages = [];

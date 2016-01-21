@@ -1,0 +1,25 @@
+<ion-view view-title="Mon Profil" hide-back-button="true">
+  <ion-nav-bar class="bar-positive">
+    <ion-nav-buttons side="left">
+      <button class="button  button-clear" ng-click="showMenu()">
+        <i class="icon ion-navicon"></i>
+      </button>
+    </ion-nav-buttons>
+  </ion-nav-bar>
+  <ion-content>
+    <div class="list">
+      <span class="item item-icon-left">
+        <i class="icon ion-person"></i>
+        {{user.username}}
+      </span>
+      <span class="item item-icon-left">
+        <i class="icon ion-email"></i>
+        {{user.email}}
+      </span>
+      <span class="item item-icon-left" ng-repeat="groupe in user.groupes">
+        <i class="icon ion-person-stalker"></i>
+        {{groupe}}
+      </span>
+    </div>
+  </ion-content>
+</ion-view>

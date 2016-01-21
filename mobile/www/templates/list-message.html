@@ -1,4 +1,4 @@
-<ion-view view-title="Liste des messages" hide-back-button="true">
+<ion-view view-title="Mes Messages" hide-back-button="true">
   <ion-nav-bar class="bar-positive">
     <ion-nav-buttons side="left">
       <button class="button  button-clear" ng-click="showMenu()">
@@ -7,12 +7,12 @@
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
       <button class="button  button-clear" ng-click="refresh()">
-        <i class="icon ion-refresh"></i>
+        <i class="icon ion-ios-reload"></i>
       </button>
     </ion-nav-buttons>
   </ion-nav-bar>
   <ion-content>
-  <div class="bar bar-header item-input-inset">
+  <div class="bar item-input-inset">
     <label class="item-input-wrapper">
       <i class="icon ion-ios-search placeholder-icon"></i>
       <input type="text" placeholder="Search" ng-model="search.query" ng-change="search()">
