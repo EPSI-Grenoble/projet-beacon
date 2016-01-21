@@ -83,8 +83,9 @@ app.controller('ListeGroupesController', function($scope, GroupeAPI){
   $scope.editMode = [];
 
   $scope.remove = function(id){
-    UserAPI.delete({"id" : id});
-    $scope.users = UserAPI.get();
+    GroupeAPI.delete({"id" : id}, function(){
+      $scope.groupes = GroupeAPI.get();
+    });
   };
 
   $scope.edit = function(idGroupe){
