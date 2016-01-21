@@ -1,13 +1,10 @@
 angular.module('starter.controllers', [])
 
 .controller('MenuCtrl', function($rootScope) {
-
   $rootScope.signOut = function(){
       $state.go('login');
   }
-
-
-});
+})
 
 
 .controller('LoginCtrl', function($scope, $state, RequestsService, BeaconService,$ionicPopup) {
@@ -47,12 +44,18 @@ angular.module('starter.controllers', [])
           text: '<b>Sign-in</b>',
           type: 'button-positive',
           onTap: function(e) {
-            if (!$scope.data.guest) {
-              //don't allow the user to close unless he enters wifi password
-              e.preventDefault();
-            } else {
-              return $scope.data.guest;
-            }
+            RequestsService.logGuest($scope.data.guest).then(function(response){
+              if(response.success){
+                e.preventDefault();
+                $state.go('messages');
+                window.localStorage["api_token"] = response.token;
+                BeaconService.init();
+              } else {
+                $scope.messageError = response.msg
+              }
+            }, function(){
+              $scope.messageError = "Une erreur est survenue."
+            });
           }
         }
       ]
@@ -83,7 +86,7 @@ angular.module('starter.controllers', [])
   };
 
   $scope.refresh();
-  
+
 
   $scope.remove = function(message) {
     Messages.remove(message);

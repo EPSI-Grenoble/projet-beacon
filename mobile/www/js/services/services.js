@@ -9,7 +9,7 @@ angular.module('starter.services', [])
       $http.get(base_url + "/api/messages/user?token=" + window.localStorage["api_token"])
         .success(function (response) {
           deferred.resolve(response);
-          console.log(response);        
+          console.log(response);
         })
         .error(function (data) {
           deferred.reject();
@@ -58,7 +58,27 @@ angular.module('starter.services', [])
         .success(function (response) {
           window.localStorage['login'] = login;
           window.localStorage['password'] = password;
-          $rootScope.username = response.user.firstName +" "+response.user.lastName; 
+          $rootScope.username = response.user.firstName +" "+response.user.lastName;
+          $ionicLoading.hide();
+          deferred.resolve(response);
+        })
+        .error(function (data) {
+          deferred.reject();
+          $ionicLoading.hide();
+        });
+      return deferred.promise;
+    }
+
+    function logGuest(codeGuest) {
+      var deferred = $q.defer();
+      $ionicLoading.show();
+
+      $http.post(base_url + '/api/auth-guest', {
+          'code': codeGuest,
+          'device_token': window.localStorage['device_token']
+        })
+        .success(function (response) {
+          $rootScope.username = response.user.firstName;
           $ionicLoading.hide();
           deferred.resolve(response);
         })
@@ -70,7 +90,8 @@ angular.module('starter.services', [])
     }
 
     return {
-      logIn: logIn
+      logIn: logIn,
+      logGuest: logGuest
     };
 
   }])
