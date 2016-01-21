@@ -1,0 +1,50 @@
+<% include ../inc/header %>
+<div class="ui grid" ng-controller="ListeUserController" ng-init='users=<%-JSON.stringify(users)%>'>
+
+  <div class="three wide column"><p></p></div>
+
+  <div class="twelve wide column">
+
+    <h2 class="ui header inverted blue  segment">
+      <i class="users icon"></i>
+      <div class="content">
+        <%= title %>
+        <div class="sub header"><%= subtitle %></div>
+      </div>
+    </h2>
+
+    <div class="ui fluid icon input">
+      <input type="text" placeholder="Filtrer..." ng-model="query">
+      <i class="search icon"></i>
+    </div>
+
+    <br>
+
+    <div class="ui cards" style="margin-left: 15px;">
+      <div class="card" ng-repeat="user in users | filter:query">
+        <div class="content">
+          <i style="float:right;" class="large floated mini ui user middle aligned icon"></i>
+          <div class="header">
+            {{ user.firstName }} {{ user.lastName }}
+          </div>
+          <div class="meta">
+            {{ user.email }}
+          </div>
+          <div class="description">
+            <span class="ui label" ng-repeat="groupe in user.groupes">{{groupe}}</span>
+          </div>
+        </div>
+        <div class="extra content">
+          <div class="ui two buttons">
+            <a class="ui basic blue button" ng-href="/users/edit/{{user._id}}">Editer</a>
+            <div class="ui basic red button" ng-click="remove(user._id)">Supprimer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="one wide column"><p></p></div>
+</div>
+
+<% include ../inc//footer %>
