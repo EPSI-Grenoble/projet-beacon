@@ -12,8 +12,13 @@ app.controller('AddMessageController', function($scope, $http, GroupeAPI, Beacon
   $scope.sauvegarder = function(){
     $http.post("/api/messages", $scope.message).success(function(message){
       $scope.message = message;
+      $scope.error = null;
       notie.alert(1, 'Success!', 1.5);
-    })
+      }).error( function(err){
+                               $scope.error = err.data;
+                               console.log(err);
+                               notie.alert(3, 'Erreur', 1.5);
+                             })
   };
 
   $scope.message = {
@@ -56,7 +61,7 @@ app.controller('AddUserController', function($scope, GroupeAPI, UserAPI){
       } else {
         $scope.error = {
           "password" : {
-            "message" : "Les mots de passes ne correspondent pas"
+            "message" : "Les mots de passe ne correspondent pas"
           }
         };
       }
@@ -78,8 +83,9 @@ app.controller('ListeGroupesController', function($scope, GroupeAPI){
   $scope.editMode = [];
 
   $scope.remove = function(id){
-    UserAPI.delete({"id" : id});
-    $scope.users = UserAPI.get();
+    GroupeAPI.delete({"id" : id}, function(){
+      $scope.groupes = GroupeAPI.get();
+    });
   };
 
   $scope.edit = function(idGroupe){

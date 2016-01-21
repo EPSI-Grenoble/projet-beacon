@@ -100,6 +100,33 @@ describe("Test Groupe API", function () {
       });
   });
 
+  it("Delete groupe", function (done) {
+    request
+      .delete('/api/groupes/'+idGroupe)
+      .end(function (err, res) {
+        expect(res.statusCode).to.equal(200);
+        done();
+      });
+  });
 
+  it("Get all groupes", function (done) {
+    request
+      .get('/api/groupes')
+      .end(function (err, res) {
+        expect(res.statusCode).to.equal(200);
+        expect(res.body.length).to.equal(0);
+        done();
+      });
+  });
+
+it("Get users groupes", function (done) {
+    request
+      .get('/api/users/groupes')
+      .end(function (err, res) {
+        expect(res.statusCode).to.equal(200);
+        expect(res.body.length).to.equal(1);
+        done();
+      });
+  });
 
 });

@@ -17,6 +17,23 @@ module.exports = {
       })
   },
 
+  deleteGroupe: function (groupName, callback) {
+    UserModel
+      .find({groupes: groupName})
+      .exec(function (err, users) {
+        users.forEach(function (user) {
+          var index = user.groupes.indexOf(groupName);
+          console.log(index);
+          user.groupes.splice(index,1);
+          user.save(function(){
+            console.log(user);
+            callback()
+          });
+        });
+    });
+  },
+  
+
   createUser : function(form, callback){
     var user = new UserModel({
       email : form.email,
