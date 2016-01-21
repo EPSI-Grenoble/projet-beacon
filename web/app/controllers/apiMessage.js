@@ -16,7 +16,7 @@ module.exports = function (app) {
 router.post('/', Utils.isAuth, function (req, res, next) {
   MessageRepository.createMessage(req.body, function(err, message) {
     if (err) {
-      res.send(406);
+      res.status(406).send(err.errors);
     } else {
       if (message.typeMessage == "push") {
         var sender = new SendPush(message._id);

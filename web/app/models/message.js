@@ -4,17 +4,54 @@ var mongoose = require('mongoose'),
   moment = require('moment');
 
 var MessageSchema = new Schema({
-  dateCreation : Date,
-  titre: String,
-  message: String,
-  sender: String,
-  fromDate: Date,
-  toDate: Date,
-  destinataires: Array,
-  typeMessage :  String,
-  beacons : Array,
-  beaconsProximity : String,
+
+  dateCreation : {
+  type : Date,
+  },
+
+  titre: {
+  type : String,
+  required: true,
+  },
+
+  message: {
+  type : String,
+  required: true,
+  },
+
+  sender: {
+  type : String,
+  },
+
+  fromDate: {
+  type : Date,
+  required: true,
+  },
+
+  toDate: {
+  type : Date,
+  required: true,
+  },
+
+  destinataires: {
+  type : Array,
+  required: true,
+  },
+
+  typeMessage :  {
+  type : String,
+  },
+
+  beacons : {
+  type : Array,
+  },
+
+  beaconsProximity : {
+  type : String,
+  },
+
   receiveBy: Array
+
 });
 
 MessageSchema.virtual('getPeriod').get(function() {
