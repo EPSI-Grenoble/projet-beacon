@@ -23,16 +23,13 @@ module.exports = {
       .exec(function (err, users) {
         users.forEach(function (user) {
           var index = user.groupes.indexOf(groupName);
-          console.log(index);
           user.groupes.splice(index,1);
           user.save(function(){
-            console.log(user);
             callback()
           });
         });
     });
   },
-  
 
   createUser : function(form, callback){
     var user = new UserModel({
@@ -41,6 +38,7 @@ module.exports = {
       lastName : form.lastName,
       groupes : form.groupes,
       password : md5(form.password),
+      isAdmin : form.isAdmin,
       device_token : form.device_token,
       token : form.token
     });
@@ -61,6 +59,7 @@ module.exports = {
         if (form.password) {
           user.password = md5(form.password);
         }
+        user.isAdmin = form.isAdmin;
         user.save(function(err, userSaved){
             delete userSaved.password;
             callback(err, userSaved)
@@ -71,6 +70,20 @@ module.exports = {
   getAllUsers: function (callback) {
     UserModel
       .find()
+      .sort({lastName: 1})
+      .exec(function (err, users) {
+        users = users.map(function (user) {
+          user = user.toObject();
+          delete user.password;
+          return user;
+        });
+        callback(err, users);
+      });
+  },
+
+  getAllAdmins: function (callback) {
+    UserModel
+      .find({isAdmin:true})
       .sort({lastName: 1})
       .exec(function (err, users) {
         users = users.map(function (user) {

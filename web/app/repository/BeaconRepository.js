@@ -16,7 +16,8 @@ module.exports = {
   createBeacon : function(form, callback){
     var beacon = new BeaconModel({
       nom: form.nom,
-      UUID: form.uuid
+      UUID: form.uuid,
+      dateCreation: new Date()
     });
     beacon.save(function (err, beaconSaved) {
       callback(err, beaconSaved);

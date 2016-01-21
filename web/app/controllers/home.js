@@ -6,6 +6,7 @@ var express = require('express'),
   MessageModel = mongoose.model('messages'),
   GroupeModel = mongoose.model('groupes'),
   BeaconModel = mongoose.model('beacons'),
+  UserRepository = require("../repository/UserRepository"),
   Utils = require("../services/utils");
 
 module.exports = function (app) {
@@ -45,6 +46,14 @@ router.get('/messages/edit', Utils.isAuth, function (req, res, next) {
   });
 });
 
+// Page du compte
+router.get('/myaccount', Utils.isAuth, function (req, res, next) {
+    res.render('users/myAccount', {
+      subtitle: 'Vous êtes ici chez vous , bienvenue',
+      title: 'Afficher mon compte',
+      user : req.user
+    });
+});
 
 // Page des users
 router.get('/users', Utils.isAuth, function (req, res, next) {
@@ -91,8 +100,8 @@ router.get('/users/edit/:idUser', Utils.isAuth, function (req, res, next) {
 router.get('/groupes', Utils.isAuth, function (req, res, next) {
   GroupeModel.find().sort({name: 1}).exec(function(err, toutLesGroupes) {
     res.render('groupes/listeGroup', {
-      title: 'Les groupes',
-      subtitle: 'Liste des groupes',
+      title: 'Listes de diffusion',
+      subtitle: '',
       groupes : toutLesGroupes,
       user : req.user
     })
@@ -126,3 +135,25 @@ router.get('/logout', function(req, res){
   req.logout();
   res.redirect('/login');
 });
+
+// Pade de comptes
+router.get("/monCompte", Utils.isAuth, function (req, res, next) {
+    res.render('comptes/viewAccount',{
+      title: 'Afficher mon comptes',
+      subtitle: 'Voici votre comptes',
+      user : req.user
+    });
+});
+// Pade admin
+router.get("/viewAdmin", Utils.isAuth, function (req, res, next) {
+
+  UserRepository.getAllAdmins(function (err, users) {
+    res.render('admins/viewAdmin',{
+      title: 'Afficher les admins',
+      subtitle: 'Voici tous les admins',
+      users : users,
+      user: req.user
+    });
+  })
+});
+
