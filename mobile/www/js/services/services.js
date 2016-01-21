@@ -1,4 +1,4 @@
-var base_url = 'http://192.168.44.16:3000';
+var base_url = 'https://beacon.martin-choraine.fr';
 
 angular.module('starter.services', [])
 
