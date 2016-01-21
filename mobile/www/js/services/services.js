@@ -1,4 +1,4 @@
-var base_url = 'https://beacon.martin-choraine.fr';
+var base_url = 'http://192.168.44.16:3000';
 
 angular.module('starter.services', [])
 
@@ -54,7 +54,7 @@ angular.module('starter.services', [])
           'login': login,
           'password': password,
           'device_token': window.localStorage['device_token']
-        })
+        }, {cache: false})
         .success(function (response) {
           window.localStorage['login'] = login;
           window.localStorage['password'] = password;
@@ -73,10 +73,15 @@ angular.module('starter.services', [])
       var deferred = $q.defer();
       $ionicLoading.show();
 
-      $http.post(base_url + '/api/auth-guest', {
+      $http({
+        url : base_url + '/api/auth-guest',
+        method : "POST",
+        data: {
           'code': codeGuest,
           'device_token': window.localStorage['device_token']
-        })
+        },
+        cache: false
+      })
         .success(function (response) {
           $rootScope.username = response.user.firstName;
           $ionicLoading.hide();

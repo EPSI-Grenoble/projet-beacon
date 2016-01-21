@@ -1,7 +1,7 @@
 {
-  "name": "mobile",
+  "name": "EPSI Contact",
   "version": "1.1.1",
-  "description": "mobile: An Ionic project",
+  "description": "Platforme de contact pour EPSI Grenoble",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-concat": "^2.2.0",
@@ -26,11 +26,7 @@
       "locator": "https://github.com/petermetz/cordova-plugin-ibeacon.git",
       "id": "com.unarin.cordova.beacon"
     },
-    "phonegap-plugin-push",
-    {
-      "locator": "https://github.com/phonegap-build/PushPlugin.git",
-      "id": "com.phonegap.plugins.PushPlugin"
-    }
+    "phonegap-plugin-push"
   ],
   "cordovaPlatforms": [
     "ios",
