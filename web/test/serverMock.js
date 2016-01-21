@@ -39,7 +39,8 @@ module.exports = {
       email : "test@testeur.com",
       password : md5("test"),
       lastName : "Test",
-      firstName : "App"
+      firstName : "App",
+      isAdmin : true
     });
     user.save(function(){
       callback(app)
@@ -48,17 +49,5 @@ module.exports = {
   shutdown: function() {
     mongoose.connection.db.dropDatabase();
     server.close()
-  },
-  createUser: function(callback){
-    var UserModel = mongoose.model('users');
-    var user = new UserModel({
-      email : "test@testeur.com",
-      password : md5("test"),
-      lastName : "Test",
-      firstName : "App"
-    });
-    user.save(function(){
-      callback();
-    });
   }
 };

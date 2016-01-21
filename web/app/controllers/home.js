@@ -7,6 +7,7 @@ var express = require('express'),
   GroupeModel = mongoose.model('groupes'),
   BeaconModel = mongoose.model('beacons'),
   UserRepository = require("../repository/UserRepository"),
+  GuestRepository = require("../repository/GuestRepository"),
   Utils = require("../services/utils");
 
 module.exports = function (app) {
@@ -103,6 +104,19 @@ router.get('/groupes', Utils.isAuth, function (req, res, next) {
       title: 'Listes de diffusion',
       subtitle: '',
       groupes : toutLesGroupes,
+      user : req.user
+    })
+  })
+});
+
+
+// Page des beacons
+router.get('/guest', Utils.isAuth, function (req, res, next) {
+  GuestRepository.getAllGuest(function(err, guests) {
+    res.render('guest/listeGuest', {
+      title: 'Guest',
+      subtitle: 'Liste des utilisateurs guests',
+      guest : guests,
       user : req.user
     })
   })

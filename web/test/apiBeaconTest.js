@@ -1,5 +1,5 @@
-var expect = require("chai").expect;
-var server = require("./serverMock"),
+var expect = require("chai").expect,
+  server = require("./serverMock"),
   supertest = require("supertest");
 
 

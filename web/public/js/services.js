@@ -70,3 +70,23 @@ app.service('UserAPI', function($resource, $location) {
   });
   return resource;
 });
+
+app.service('GuestAPI', function($resource, $location) {
+  var resource;
+  resource = $resource($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/guests/:id', {}, {
+    'get': {
+      method: "GET",
+      isArray: true
+    },
+    'save': {
+      method: "POST",
+      isArray: false
+    },
+    'delete': {
+      method: "DELETE",
+      isArray: false
+    }
+  });
+  return resource;
+});
+
