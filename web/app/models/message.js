@@ -6,51 +6,51 @@ var mongoose = require('mongoose'),
 var MessageSchema = new Schema({
 
   dateCreation : {
-  type : Date,
+  type : Date
   },
 
   titre: {
   type : String,
-  required: true,
+  required: true
   },
 
   message: {
   type : String,
-  required: true,
+  required: true
   },
 
   sender: {
-  type : String,
+  type : String
   },
 
   fromDate: {
   type : Date,
-  required: true,
+  required: true
   },
 
   toDate: {
   type : Date,
-  required: true,
+  required: true
   },
 
   destinataires: {
   type : Array,
-  required: true,
+  required: true
   },
 
   typeMessage :  {
-  type : String,
+  type : String
   },
 
   beacons : {
-  type : Array,
+  type : Array
   },
 
   beaconsProximity : {
-  type : String,
+  type : String
   },
 
-  receiveBy: Array
+  receiveBy : Array
 
 });
 

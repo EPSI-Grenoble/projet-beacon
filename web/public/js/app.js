@@ -15,8 +15,7 @@ app.controller('AddMessageController', function($scope, $http, GroupeAPI, Beacon
       $scope.error = null;
       notie.alert(1, 'Success!', 1.5);
       }).error( function(err){
-                               $scope.error = err.data;
-                               console.log(err);
+                               $scope.error = err.errors;
                                notie.alert(3, 'Erreur', 1.5);
                              })
   };
@@ -71,7 +70,7 @@ app.controller('AddUserController', function($scope, GroupeAPI, UserAPI){
 
 app.controller('ListeUserController', function($scope, UserAPI){
 
-  $scope.remove = function(id){
+  $scope.delete = function(id){
     UserAPI.delete({"id" : id});
     $scope.users = UserAPI.get();
   };
@@ -101,9 +100,13 @@ app.controller('ListeGroupesController', function($scope, GroupeAPI){
     console.log("save");
     GroupeAPI.save($scope.groupeToSave, function(){
       $scope.groupes = GroupeAPI.get();
+    }, function(err){
+    console.log(err.data.errors);
+    $scope.error = err.data.errors;
+    notie.alert(3, 'Erreur', 1.5);
     });
-  }
-
+  };
+//avec angular : transformation du err avec ajout dans l'arborescence de data --> err.data
 });
 
 app.controller('AddBeaconController', function($scope , BeaconAPI){
@@ -122,7 +125,7 @@ app.controller('AddBeaconController', function($scope , BeaconAPI){
       });
   };
 
-  $scope.delete = function(beacon){
+  $scope.remove = function(beacon){
     notie.confirm('Etes vous sur de vouloir supprimer ce beacon ?', 'Oui', 'Non', function() {
       BeaconAPI.delete({"id" : beacon._id});
       getBeacons();

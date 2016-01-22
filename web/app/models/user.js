@@ -36,7 +36,7 @@ var UserSchema = new Schema({
     required: false,
     sparse: true
   },
-  groupes: Array
+  groupes : Array
 });
 
 

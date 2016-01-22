@@ -17,11 +17,12 @@
     <br>
     <div class="ui cards">
       <form class="card ui form" ng-cloak>
-        <div class="content">
-          <div class="field ng-class:{'error' : error.nom}">
+        <div class="content ng-class:{'error' : error.nom}">
+          <div class="field">
             <input type="text" ng-model="groupeToSave.nom" name="nom" placeholder="Nom du groupe">
-            <div class="ui pointing red label" ng-if="error.nom">{{error.nom.message}}</div>
+
           </div>
+          <div class="ui pointing red label" ng-if="error.nom">{{error.nom.message}}</div>
         </div>
         <div class="extra content">
           <div class="ui two buttons">
@@ -34,8 +35,9 @@
           <i style="float:right;" class="large floated mini ui users middle aligned icon"></i>
           <div class="header">
             <span ng-if="!editMode[groupe._id]">{{ groupe.nom}}</span>
-            <div class="ui small input">
+            <div class="ui small input ng-class:{'error' : error.nom}">
             <input type="text" class="ui input" ng-model="groupe.nom" ng-if="editMode[groupe._id]">
+            <div class="ui pointing red label" ng-if="error.nom">{{error.nom.message}}</div>
             </div>
           </div>
           <div class="meta">
