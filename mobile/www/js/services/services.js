@@ -9,6 +9,7 @@ angular.module('starter.services', [])
       $http.get(base_url + "/api/messages/user?token=" + window.localStorage["api_token"])
         .success(function (response) {
           deferred.resolve(response);
+          console.log(response);
         })
         .error(function (data) {
           deferred.reject();
@@ -43,7 +44,7 @@ angular.module('starter.services', [])
   })
 
 
-  .factory('RequestsService', ['$http', '$q', '$ionicLoading', '$rootScope', function ($http, $q, $ionicLoading) {
+  .factory('RequestsService', ['$http', '$q', '$ionicLoading', '$rootScope', function ($http, $q, $ionicLoading,$rootScope) {
 
     function logIn(login, password) {
       var deferred = $q.defer();
@@ -53,10 +54,38 @@ angular.module('starter.services', [])
           'login': login,
           'password': password,
           'device_token': window.localStorage['device_token']
-        })
+        }, {cache: false})
         .success(function (response) {
           window.localStorage['login'] = login;
           window.localStorage['password'] = password;
+          $rootScope.user = response.user;
+          console.log($rootScope.user);
+          $rootScope.user.username = response.user.firstName +" "+response.user.lastName;
+          $ionicLoading.hide();
+          deferred.resolve(response);
+        })
+        .error(function (data) {
+          deferred.reject();
+          $ionicLoading.hide();
+        });
+      return deferred.promise;
+    }
+
+    function logGuest(codeGuest) {
+      var deferred = $q.defer();
+      $ionicLoading.show();
+
+      $http({
+        url : base_url + '/api/auth-guest',
+        method : "POST",
+        data: {
+          'code': codeGuest,
+          'device_token': window.localStorage['device_token']
+        },
+        cache: false
+      })
+        .success(function (response) {
+          $rootScope.username = response.user.firstName;
           $ionicLoading.hide();
           deferred.resolve(response);
         })
@@ -68,7 +97,8 @@ angular.module('starter.services', [])
     }
 
     return {
-      logIn: logIn
+      logIn: logIn,
+      logGuest: logGuest
     };
 
   }])

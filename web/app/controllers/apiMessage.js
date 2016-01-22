@@ -32,7 +32,13 @@ router.post('/', Utils.isAuth, function (req, res, next) {
  * Retourne les messages de l'utilisateur
  */
 router.get('/user/', Utils.isTokenValid, function (req, res, next) {
-  var idUser = req.session[req.query.token].user;
+  var session = req.session[req.query.token];
+  if(session.user){
+    var idUser = req.session[req.query.token].user;
+  } else if(session.guest){
+    var idUser = req.session[req.query.token].guest;
+  }
+
   MessageRepository.findMessageForThisUser(idUser, function (err, messages) {
     res.json(messages);
   })

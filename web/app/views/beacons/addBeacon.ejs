@@ -41,6 +41,10 @@
           <div class="description">
             {{ beacon.UUID}}
           </div>
+          <div class="date de creation">
+            {{ beacon.dateCreation | date : 'dd-MM-yyyy | HH : mm'}}
+          </div>
+
         </div>
         <div class="extra content">
           <div class="ui two buttons">

@@ -6,6 +6,8 @@ var express = require('express'),
   MessageModel = mongoose.model('messages'),
   GroupeModel = mongoose.model('groupes'),
   BeaconModel = mongoose.model('beacons'),
+  UserRepository = require("../repository/UserRepository"),
+  GuestRepository = require("../repository/GuestRepository"),
   Utils = require("../services/utils");
 
 module.exports = function (app) {
@@ -45,12 +47,19 @@ router.get('/messages/edit', Utils.isAuth, function (req, res, next) {
   });
 });
 
+// Page du compte
+router.get('/myaccount', Utils.isAuth, function (req, res, next) {
+    res.render('users/myAccount', {
+      subtitle: 'Vous êtes ici chez vous , bienvenue',
+      title: 'Afficher mon compte',
+      user : req.user
+    });
+});
 
 // Page des users
 router.get('/users', Utils.isAuth, function (req, res, next) {
-    UserModel.find().sort({lastName: 1}).exec(function(err, toutLesUser) {
+  UserRepository.getAllUsers(function(err, toutLesUser) {
       toutLesUser = toutLesUser.map(function(user){
-        user = user.toObject();
         delete user.password;
         return user;
       });
@@ -91,11 +100,37 @@ router.get('/users/edit/:idUser', Utils.isAuth, function (req, res, next) {
 router.get('/groupes', Utils.isAuth, function (req, res, next) {
   GroupeModel.find().sort({name: 1}).exec(function(err, toutLesGroupes) {
     res.render('groupes/listeGroup', {
-      title: 'Les groupes',
-      subtitle: 'Liste des groupes',
+      title: 'Listes de diffusion',
+      subtitle: '',
       groupes : toutLesGroupes,
       user : req.user
     })
+  })
+});
+
+
+// Page des beacons
+router.get('/guest', Utils.isAuth, function (req, res, next) {
+  GuestRepository.getAllGuest(function(err, guests) {
+    res.render('guest/listeGuest', {
+      title: 'Guest',
+      subtitle: 'Liste des utilisateurs guests',
+      guest : guests,
+      user : req.user
+    })
+  })
+});
+
+// Page admin
+router.get("/viewAdmin", Utils.isAuth, function (req, res, next) {
+
+  UserRepository.getAllAdmins(function (err, users) {
+    res.render('admins/viewAdmin',{
+      title: 'Admins',
+      subtitle: 'Liste des utilisateurs admins  ',
+      users : users,
+      user: req.user
+    });
   })
 });
 
@@ -125,4 +160,13 @@ router.post('/login', passport.authenticate('local-login', { successRedirect: '/
 router.get('/logout', function(req, res){
   req.logout();
   res.redirect('/login');
+});
+
+// Pade de comptes
+router.get("/monCompte", Utils.isAuth, function (req, res, next) {
+    res.render('comptes/viewAccount',{
+      title: 'Afficher mon comptes',
+      subtitle: 'Voici votre comptes',
+      user : req.user
+    });
 });

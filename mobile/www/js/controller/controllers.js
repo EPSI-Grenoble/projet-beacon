@@ -1,6 +1,6 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope, $state, RequestsService, BeaconService) {
+.controller('LoginCtrl', function($scope, $state, RequestsService, BeaconService,$ionicPopup) {
 
   $scope.user = {};
   $scope.user.username = window.localStorage['login'];
@@ -22,8 +22,50 @@ angular.module('starter.controllers', [])
       $scope.messageError = "Une erreur est survenue."
     });
   };
+
+  $scope.showPopup = function() {
+    $scope.data = {};
+
+    // An elaborate, custom popup
+    var myPopup = $ionicPopup.show({
+      template: '<input type="text" ng-model="data.guest">',
+      title: 'Entrer le code invité',
+      scope: $scope,
+      buttons: [
+        { text: 'Retour' },
+        {
+          text: '<b>Se connecter</b>',
+          type: 'button-positive',
+          onTap: function(e) {
+            RequestsService.logGuest($scope.data.guest).then(function(response){
+              if(response.success){
+                e.preventDefault();
+                $state.go('messages');
+                window.localStorage["api_token"] = response.token;
+                BeaconService.init();
+              } else {
+                $scope.messageError = response.msg
+              }
+            }, function(){
+              $scope.messageError = "Une erreur est survenue."
+            });
+          }
+        }
+      ]
+  });
+
+  myPopup.then(function(res) {
+    console.log('Tapped!', res);
+  });
+
+ };
 })
 
+.controller('ProfileCtrl', function($scope,$ionicSideMenuDelegate){
+  $scope.showMenu = function() {
+    $ionicSideMenuDelegate.toggleLeft();
+  };
+})
 
 .controller('ListMessageCtrl', function($scope, Messages, $state, $ionicSideMenuDelegate) {
   $scope.displayMessages = $scope.allMessages = [];
@@ -32,11 +74,17 @@ angular.module('starter.controllers', [])
     $ionicSideMenuDelegate.toggleLeft();
   };
 
-  Messages.all().then(function(response){
-    $scope.displayMessages = $scope.allMessages = response;
-  }, function(){
-    $state.go('login');
-  });
+  $scope.refresh = function() {
+    $scope.displayMessages = $scope.allMessages = [];
+    Messages.all().then(function(response){
+      $scope.displayMessages = $scope.allMessages = response;
+    }, function(){
+      $state.go('login');
+    });
+  };
+
+  $scope.refresh();
+
 
   $scope.remove = function(message) {
     Messages.remove(message);

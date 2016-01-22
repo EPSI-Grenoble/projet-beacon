@@ -1,0 +1,68 @@
+<% include ../inc/header %>
+
+
+<div class="ui grid" ng-controller="ListeGuestController" ng-init='guests=<%-JSON.stringify(guest)%>'>
+
+  <div class="three wide column"><p></p></div>
+
+  <div class="twelve wide column">
+
+    <h2 class="ui header inverted blue  segment">
+      <i class="users icon"></i>
+      <div class="content">
+        <%= title %>
+        <div class="sub header"><%= subtitle %></div>
+      </div>
+    </h2>
+    <br>
+    <div class="ui cards">
+      <form class="card ui form" ng-cloak>
+        <div class="content">
+          <div class="field ng-class:{'error' : error.label}">
+            <input type="text" ng-model="guestToSave.label" name="label" placeholder="Libellé">
+            <div class="ui pointing red label" ng-if="error.label">{{error.label.message}}</div>
+          </div>
+          <div class="field ng-class:{'error' : error.code}">
+            <input type="text" ng-model="guestToSave.code" name="code" placeholder="Code">
+            <div class="ui pointing red label" ng-if="error.nom">{{error.code.message}}</div>
+          </div>
+        </div>
+        <div class="extra content">
+          <div class="ui two buttons">
+            <div class="ui basic green button" ng-click="sauvegarder()">Enregistrer</div>
+          </div>
+        </div>
+      </form>
+      <div class="card" ng-repeat="guest in guests" ng-cloak>
+        <div class="content">
+          <i style="float:right;" class="large floated mini ui users middle aligned icon"></i>
+          <div class="header">
+            <span ng-if="!editMode[guest._id]">{{ guest.label}}</span>
+            <div class="ui small input">
+              <input type="text" class="ui input" ng-model="guest.label" ng-if="editMode[guest._id]">
+            </div>
+          </div>
+          <div class="meta" ng-if="!editMode[guest._id]">
+            Code : {{guest.code | uppercase }}
+          </div>
+          <div class="ui small input meta" ng-if="editMode[guest._id]">
+            <input type="text" class="ui input" ng-model="guest.code" ng-if="editMode[guest._id]">
+          </div>
+        </div>
+        <div class="extra content">
+          <div class="ui three buttons">
+            <a class="ui basic blue button" ng-click="activate(guest)" ng-if="!guest.activate">Activer</a>
+            <a class="ui basic blue button" ng-click="desactivate(guest)" ng-if="guest.activate">Desactiver</a>
+            <a class="ui basic blue button" ng-click="edit(guest._id)" ng-if="!editMode[guest._id]">Editer</a>
+            <a class="ui basic blue button" ng-click="modifier(guest)" ng-if="editMode[guest._id]">Sauvegarder</a>
+            <a class="ui basic red button" ng-click="remove(guest._id)">Supprimer</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="one wide column"><p></p></div>
+</div>
+
+<% include ../inc//footer %>

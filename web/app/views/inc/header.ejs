@@ -22,9 +22,7 @@
   <div class="item">
     <div class="header"><i class="user icon"></i><%= user.firstName %> <%= user.lastName%></div>
     <div class="menu">
-      <a class="item">
-        Mon compte
-      </a>
+      <a href="/monCompte" class="item">Mon compte</a>
       <a href="/logout" class="item">Déconnexion</a>
     </div>
   </div>
@@ -38,9 +36,11 @@
   <div class="item">
     <div class="header"><i class="users icon"></i>Utilisateurs</div>
     <div class="menu">
-      <a href="/users" class="item">Les utilisateurs</a>
+      <a href="/users" class="item">Utilisateurs</a>
+      <a href="/viewAdmin" class="item">Administrateurs</a>
+      <a href="/guest" class="item">Guests</a>
       <a href="/users/edit" class="item">Créer un utilisateur</a>
-      <a href="/groupes" class="item">Gérer les groupes</a>
+      <a href="/groupes" class="item">Gérer les listes de diffusion</a>
     </div>
   </div>
   <div class="item">

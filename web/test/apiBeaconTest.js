@@ -1,25 +1,27 @@
-var expect = require("chai").expect;
-var server = require("./serverMock").app,
-  mockgoose = require('mockgoose'),
+var expect = require("chai").expect,
+  server = require("./serverMock"),
   supertest = require("supertest");
 
 
 describe("Test Beacon API", function () {
-  var request = supertest.agent(server);
 
-  // Reset la base, crée un user puis authentification
+  var request;
+
   before(function (done) {
-    mockgoose.reset(function() {
-      require("./serverMock").createUser(function () {
-        request
-          .post('/login')
-          .send({
-            'user': 'test@testeur.com',
-            'password': 'test'
-          })
-          .expect(302, done)
-      });
+    server.app(function (app) {
+      request = supertest.agent(app);
+      done()
     });
+  });
+
+  it("log user", function (done) {
+    request
+      .post('/login')
+      .send({
+        'user': 'test@testeur.com',
+        'password': 'test'
+      })
+      .expect(302, done)
   });
 
   it("Create invalid beacon", function (done) {
@@ -59,5 +61,10 @@ describe("Test Beacon API", function () {
       });
   });
 
+
+  after(function (done) {
+    server.shutdown();
+    done()
+  })
 
 });

@@ -1,1 +1,20 @@
-/* Empty. Add your own CSS if you like */
+ion-list.list-bottom{
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+}
+
+ion-list.list-bottom div.list{
+	text-align: center;
+}
+
+ion-list.list-bottom div.list .item{
+	font-size: 35px;
+	font-weight: normal;
+	color: #387ef5;
+}
+
+ion-list.list-bottom div.list .item a.item-content{
+	padding-right: 0;
+}
+
