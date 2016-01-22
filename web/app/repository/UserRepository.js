@@ -21,6 +21,10 @@ module.exports = {
     UserModel
       .find({groupes: groupName})
       .exec(function (err, users) {
+        if(users.length == 0){
+          callback();
+          return;
+        }
         users.forEach(function (user) {
           var index = user.groupes.indexOf(groupName);
           user.groupes.splice(index,1);
