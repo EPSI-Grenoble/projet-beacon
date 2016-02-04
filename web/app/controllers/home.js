@@ -122,7 +122,7 @@ router.get('/guest', Utils.isAuth, function (req, res, next) {
 });
 
 // Page admin
-router.get("/viewAdmin", Utils.isAuth, function (req, res, next) {
+router.get("/admin", Utils.isAuth, function (req, res, next) {
 
   UserRepository.getAllAdmins(function (err, users) {
     res.render('admins/viewAdmin',{

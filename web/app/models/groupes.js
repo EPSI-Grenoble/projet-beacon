@@ -1,11 +1,11 @@
-
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 var GroupeSchema = new Schema({
-  nom : {
-  type : String,
-  required : true
+  nom: {
+    type: String,
+    unique: true,
+    required: true,
   }
 });
 

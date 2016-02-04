@@ -34,7 +34,7 @@ module.exports = function(passport) {
             }
             else
             {
-              return done(null, false, req.flash("loginMessage", "Vous n'est pas administrateure"));
+              return done(null, false, req.flash("loginMessage", "Vous n'êtes pas administrateur"));
             }
 
 

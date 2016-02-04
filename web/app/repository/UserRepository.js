@@ -17,34 +17,71 @@ module.exports = {
       })
   },
 
+  getMembresGroupe: function (nomGroupe, callback) {
+    UserModel
+      .find({groupes: nomGroupe})
+      .exec(function (err, users) {
+        callback(err, users);
+      })
+  },
+
+  addToGroupe: function (nomGroupe, idUser, callback) {
+    UserModel
+      .findById(idUser)
+      .exec(function (err, user) {
+        if (user != null) {
+          user.groupes.push(nomGroupe);
+          user.save();
+        }
+        callback(err, user);
+      })
+  },
+
   deleteGroupe: function (groupName, callback) {
     UserModel
       .find({groupes: groupName})
       .exec(function (err, users) {
-        if(users.length == 0){
+        if (users.length == 0) {
           callback();
           return;
         }
         users.forEach(function (user) {
           var index = user.groupes.indexOf(groupName);
-          user.groupes.splice(index,1);
-          user.save(function(){
+          user.groupes.splice(index, 1);
+          user.save(function () {
+            console.log(user)
             callback()
           });
         });
-    });
+      });
   },
 
-  createUser : function(form, callback){
+  removeFromGroupe: function (groupe, userID, callback) {
+    UserModel
+      .findById(userID)
+      .exec(function (err, user) {
+        if(user) {
+          var index = user.groupes.indexOf(groupe.nom);
+          user.groupes.splice(index, 1);
+          user.save(function () {
+            callback(err, user)
+          });
+        } else {
+          callback(err)
+        }
+      });
+  },
+
+  createUser: function (form, callback) {
     var user = new UserModel({
-      email : form.email,
-      firstName : form.firstName,
-      lastName : form.lastName,
-      groupes : form.groupes,
-      password : md5(form.password),
-      isAdmin : form.isAdmin,
-      device_token : form.device_token,
-      token : form.token
+      email: form.email,
+      firstName: form.firstName,
+      lastName: form.lastName,
+      groupes: form.groupes,
+      password: md5(form.password),
+      isAdmin: form.isAdmin,
+      device_token: form.device_token,
+      token: form.token
     });
 
     user.save(function (err, user) {
@@ -52,7 +89,7 @@ module.exports = {
     });
   },
 
-  updateUser : function(form, callback){
+  updateUser: function (form, callback) {
     UserModel
       .findOne({"_id": form._id})
       .exec(function (err, user) {
@@ -64,16 +101,30 @@ module.exports = {
           user.password = md5(form.password);
         }
         user.isAdmin = form.isAdmin;
-        user.save(function(err, userSaved){
-            delete userSaved.password;
-            callback(err, userSaved)
+        user.save(function (err, userSaved) {
+          delete userSaved.password;
+          callback(err, userSaved)
         })
       });
   },
 
   getAllUsers: function (callback) {
     UserModel
-      .find({isAdmin: { $ne: true }})
+      .find({})
+      .sort({lastName: 1})
+      .exec(function (err, users) {
+        users = users.map(function (user) {
+          user = user.toObject();
+          delete user.password;
+          return user;
+        });
+        callback(err, users);
+      });
+  },
+
+  getAllNoAdmin: function (callback) {
+    UserModel
+      .find({isAdmin: {$ne: true}})
       .sort({lastName: 1})
       .exec(function (err, users) {
         users = users.map(function (user) {
@@ -87,7 +138,7 @@ module.exports = {
 
   getAllAdmins: function (callback) {
     UserModel
-      .find({isAdmin:true})
+      .find({isAdmin: true})
       .sort({lastName: 1})
       .exec(function (err, users) {
         users = users.map(function (user) {
@@ -99,7 +150,7 @@ module.exports = {
       });
   },
 
-  removeUser : function(id, callback){
+  removeUser: function (id, callback) {
     UserModel
       .find({
         _id: id
@@ -128,13 +179,13 @@ module.exports = {
       });
   },
 
-  connexion: function(login, password, callback){
+  connexion: function (login, password, callback) {
     UserModel
       .findOne({
-        email : login,
-        password : md5(password)
+        email: login,
+        password: md5(password)
       })
-      .exec(function(err, user){
+      .exec(function (err, user) {
         callback(err, user);
       })
   }

@@ -9,7 +9,6 @@ module.exports = {
       label: form.label,
       code: form.code
     });
-
     guest.save(function (err, guest) {
       callback(err, guest)
     });

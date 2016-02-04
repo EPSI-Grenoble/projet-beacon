@@ -10,7 +10,8 @@ var GuestSchema = new Schema({
   code: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
+    lowercase : true
   },
   activate: {
     type: Boolean,

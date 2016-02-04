@@ -7,6 +7,9 @@
   <link rel="stylesheet" href="/css/style.css">
   <link rel="stylesheet" href="/components/semantic/dist/semantic.min.css">
   <link rel="stylesheet" href="/components/jquery-ui/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/components/ng-dialog/css/ngDialog.min.css">
+  <link rel="stylesheet" href="/components/ng-dialog/css/ngDialog-theme-default.min.css">
+  <link rel="stylesheet" href="/components/ng-dialog/css/ngDialog-theme-plain.min.css">
   <link rel="icon" href="/img/favicon.png">
   <% if (ENV_DEVELOPMENT) { %>
   <script src="http://localhost:35729/livereload.js"></script>
@@ -37,7 +40,7 @@
     <div class="header"><i class="users icon"></i>Utilisateurs</div>
     <div class="menu">
       <a href="/users" class="item">Utilisateurs</a>
-      <a href="/viewAdmin" class="item">Administrateurs</a>
+      <a href="/admin" class="item">Administrateurs</a>
       <a href="/guest" class="item">Guests</a>
       <a href="/users/edit" class="item">Créer un utilisateur</a>
       <a href="/groupes" class="item">Gérer les listes de diffusion</a>

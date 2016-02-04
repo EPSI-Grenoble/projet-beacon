@@ -2,10 +2,25 @@ var app = angular.module("beacon");
 
 app.service('GroupeAPI', function($resource, $location) {
   var resource;
-  resource = $resource($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/groupes/:id', {}, {
+  resource = $resource($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/groupes/:id/:action', {}, {
     'get': {
       method: "GET",
       isArray: true
+    },
+    'getMembres': {
+      method: "GET",
+      isArray: true,
+      params : {action : "membres"}
+    },
+    'removeMembres': {
+      method: "DELETE",
+      isArray: false,
+      params : {action : "membres"}
+    },
+    addToGroupe : {
+      method: "POST",
+      isArray: false,
+      params : {action : "add"}
     },
     'save': {
       method: "POST",
