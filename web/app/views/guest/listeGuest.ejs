@@ -22,9 +22,9 @@
             <input type="text" ng-model="guestToSave.label" name="label" placeholder="Libellé">
             <div class="ui pointing red label" ng-if="error.label">{{error.label.message}}</div>
           </div>
-          <div class="field ng-class:{'error' : error.nom}">
+          <div class="field ng-class:{'error' : error.code}">
             <input type="text" ng-model="guestToSave.code" name="code" placeholder="Code">
-            <div class="ui pointing red label" ng-if="error.nom">{{error.nom.message}}</div>
+            <div class="ui pointing red label" ng-if="error.code">{{error.code.message}}</div>
           </div>
         </div>
         <div class="extra content">
@@ -50,13 +50,18 @@
           </div>
         </div>
         <div class="extra content">
-          <div class="ui three buttons">
-            <a class="ui basic blue button" ng-click="activate(guest)" ng-if="!guest.activate">Activer</a>
-            <a class="ui basic blue button" ng-click="desactivate(guest)" ng-if="guest.activate">Desactiver</a>
-            <a class="ui basic blue button" ng-click="edit(guest._id)" ng-if="!editMode[guest._id]">Editer</a>
-            <a class="ui basic blue button" ng-click="modifier(guest)" ng-if="editMode[guest._id]">Sauvegarder</a>
-            <a class="ui basic red button" ng-click="remove(guest._id)">Supprimer</a>
-          </div>
+
+
+            <div class="ui three buttons">
+              <a class="ui green button" ng-click="modifier(guest)" ng-if="editMode[guest._id]" ><i class="write icon"></i></a>
+              <a class="ui green button" ng-click="edit(guest._id)" ng-if="!editMode[guest._id]"><i class="write icon"></i></i></a>
+              <a class="ui blue button" ng-click="desactivate(guest)" ng-if="guest.activate"><i class="checkmark icon"></i></a>
+              <div class="ui blue button" ng-click="activate(guest)" ng-if="!guest.activate"><i class="remove icon"></i></div>
+              <div class="ui red button" ng-click="remove(guest._id)"><i class="trash icon"></i></div>
+            </div>
+
+
+
         </div>
       </div>
     </div>

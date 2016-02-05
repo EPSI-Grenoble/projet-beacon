@@ -1,15 +1,19 @@
 'use strict';
 var app = angular.module("beacon", ["ckeditor", "ngSanitize", "ngSemantic", "checklist-model", "ngResource", 'ngDialog']);
 
-app.controller('AddMessageController', function ($scope, $http, GroupeAPI, BeaconAPI, UserAPI) {
+app.controller('AddMessageController', function ($scope, $http, GroupeAPI, BeaconAPI, UserAPI, GuestAPI, ngDialog) {
 
   $scope.beaconList = BeaconAPI.get();
 
   $scope.groupes = UserAPI.getGroupes();
 
+  $scope.guests = GuestAPI.get();
+  console.log($scope.guests);
+
   $scope.users = UserAPI.get();
 
   $scope.sauvegarder = function () {
+    console.log($scope.message);
     $http.post("/api/messages", $scope.message).success(function (message) {
       $scope.message = message;
       $scope.error = null;
@@ -36,8 +40,25 @@ app.controller('AddMessageController', function ($scope, $http, GroupeAPI, Beaco
     });
   };
 
-});
+  $scope.selectGuest = function(){
+    angular.forEach($scope.guestSelected, function (guest) {
+      $scope.message.destinataires.push(guest);
+    });
+  };
 
+  $scope.userIsInSelectedGroup = function(id){
+    console.log($scope.message.destinataires.indexOf(id));
+    return $scope.message.destinataires.indexOf(id) != -1
+  };
+
+  $scope.openDestinaireList = function () {
+    ngDialog.open({
+      template: 'listeDestinatireTemplate',
+      scope: $scope
+    });
+  };
+
+});
 
 app.controller('AddUserController', function ($scope, GroupeAPI, UserAPI) {
 
@@ -70,12 +91,25 @@ app.controller('AddUserController', function ($scope, GroupeAPI, UserAPI) {
 
 app.controller('ListeUserController', function ($scope, UserAPI) {
 
-  $scope.delete = function (id) {
-    UserAPI.delete({"id": id});
-    $scope.users = UserAPI.get();
-  };
+  $scope.remove = function (id) {
+        notie.confirm('Etes vous sur de vouloir supprimer ce User ?', 'Oui', 'Non', function () {
+          UserAPI.delete({"id": id}, function () {
+            $scope.users = UserAPI.get();
+          });
+          notie.alert(3, 'Supprimé', 1.5);
+        });
+      };
 
 });
+
+/*$scope.remove = function (id) {
+      notie.confirm('Etes vous sur de vouloir supprimer ce guest ?', 'Oui', 'Non', function () {
+        GuestAPI.delete({"id": id}, function () {
+          $scope.guests = GuestAPI.get();
+        });
+        notie.alert(3, 'Supprimé', 1.5);
+      });
+    };*/
 
 app.controller('ListeGroupesController', function ($scope, GroupeAPI, ngDialog) {
 
@@ -218,11 +252,8 @@ app.controller('ListeGuestController', function ($scope, GuestAPI) {
            $scope.error = err.data.errors;
            notie.alert(3, 'Erreur', 1.5);
          });
-
   }
-
 });
-
 
 app.filter("notMembers", function () {
   return function (users, members) {
@@ -234,3 +265,4 @@ app.filter("notMembers", function () {
     });
   };
 });
+

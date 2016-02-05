@@ -28,7 +28,7 @@ module.exports = function(passport) {
           }
           // Si il existe un utilisateur avec le bon mot de passe alors on le connecte
           if(user.password == md5(password)){
-            if (user.isAdmin == true)
+            if (user.isAdmin)
             {
               return done(null, user);
             }
