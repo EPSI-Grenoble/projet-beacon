@@ -29,10 +29,12 @@
 
         <div class="field ng-class:{'error' : error.type}">
           <label>Type de message</label>
-          <select name="type" ng-model="message.type" class="ui fluid dropdown">
+          <%= type %>
+          <select name="type" ng-model="message.type" class="ui fluid dropdown" ng-init ="message.type= '<%= type %>'">
+
             <option value="">-- Choisir un type de message --</option>
-            <option value="beacon">Beacon</option>
-            <option value="push">Push</option>
+            <option value="beacon" >Beacon </option>
+            <option value="push" >Push </option>
           </select>
 
           <div class="ui pointing red label" ng-if="error.type">{{error.type.message}}</div>

@@ -29,10 +29,13 @@ router.get('/', Utils.isAuth , function (req, res, next) {
 // Page des messages
 router.get('/messages', Utils.isAuth, function (req, res, next) {
     MessageModel.find().sort({"dateCreation" : -1}).exec(function(err, toutLesMessage) {
+
+
       res.render('messages/listeMessages', {
         title: 'Liste des messages envoyés',
         user : req.user,
-        messages : toutLesMessage
+        messages : toutLesMessage,
+
       })
     })
 });
@@ -40,9 +43,11 @@ router.get('/messages', Utils.isAuth, function (req, res, next) {
 // Page de l'edition de message
 router.get('/messages/edit', Utils.isAuth, function (req, res, next) {
   UserModel.find( function(err, usersList) {
+  var type = req.query.type;
       res.render('messages/editMessage', {
         title: 'Envoyer un message',
-        user : req.user
+        user : req.user,
+        type : type
       });
   });
 });
