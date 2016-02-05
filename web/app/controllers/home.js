@@ -131,8 +131,8 @@ router.get("/admin", Utils.isAuth, function (req, res, next) {
 
   UserRepository.getAllAdmins(function (err, users) {
     res.render('admins/viewAdmin',{
-      title: 'Admins',
-      subtitle: 'Liste des utilisateurs admins  ',
+      title: 'Administrateurs',
+      subtitle: 'Liste des utilisateurs administrateurs  ',
       users : users,
       user: req.user
     });
@@ -143,7 +143,7 @@ router.get("/admin", Utils.isAuth, function (req, res, next) {
 router.get('/beacons', Utils.isAuth, function (req, res, next) {
     BeaconModel.find( function(err, toutlesBeacons) {
       res.render('beacons/addBeacon', {
-        title: 'Administrer lLes beacons',
+        title: 'Administrer les beacons',
         beacons : toutlesBeacons,
         user : req.user
       })
@@ -167,11 +167,11 @@ router.get('/logout', function(req, res){
   res.redirect('/login');
 });
 
-// Pade de comptes
+// Pade de compte
 router.get("/monCompte", Utils.isAuth, function (req, res, next) {
     res.render('comptes/viewAccount',{
-      title: 'Afficher mon comptes',
-      subtitle: 'Voici votre comptes',
+      title: 'Afficher mon compte',
+      subtitle: 'Voici votre compte',
       user : req.user
     });
 });
