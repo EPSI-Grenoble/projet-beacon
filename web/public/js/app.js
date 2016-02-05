@@ -70,12 +70,25 @@ app.controller('AddUserController', function ($scope, GroupeAPI, UserAPI) {
 
 app.controller('ListeUserController', function ($scope, UserAPI) {
 
-  $scope.delete = function (id) {
-    UserAPI.delete({"id": id});
-    $scope.users = UserAPI.get();
-  };
+  $scope.remove = function (id) {
+        notie.confirm('Etes vous sur de vouloir supprimer ce User ?', 'Oui', 'Non', function () {
+          UserAPI.delete({"id": id}, function () {
+            $scope.users = UserAPI.get();
+          });
+          notie.alert(3, 'Supprimé', 1.5);
+        });
+      };
 
 });
+
+/*$scope.remove = function (id) {
+      notie.confirm('Etes vous sur de vouloir supprimer ce guest ?', 'Oui', 'Non', function () {
+        GuestAPI.delete({"id": id}, function () {
+          $scope.guests = GuestAPI.get();
+        });
+        notie.alert(3, 'Supprimé', 1.5);
+      });
+    };*/
 
 app.controller('ListeGroupesController', function ($scope, GroupeAPI, ngDialog) {
 
@@ -218,11 +231,8 @@ app.controller('ListeGuestController', function ($scope, GuestAPI) {
            $scope.error = err.data.errors;
            notie.alert(3, 'Erreur', 1.5);
          });
-
   }
-
 });
-
 
 app.filter("notMembers", function () {
   return function (users, members) {
