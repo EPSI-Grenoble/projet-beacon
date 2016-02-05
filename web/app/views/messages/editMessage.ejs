@@ -56,20 +56,20 @@
           </div>
         </div>
         <div class="two fields">
-          <div class="required field ng-class:{'error' : error.fromdate}">
+          <div class="required field ng-class:{'error' : error.fromDate}">
             <label>A partir du</label>
             <input ng-model="message.fromdate" name="fromdate" class="datepicker">
 
-            <div class="ui pointing red label" ng-if="error.fromdate">{{error.fromdate.message}}</div>
+            <div class="ui pointing red label" ng-if="error.fromDate">{{error.fromDate.message}}</div>
           </div>
-          <div class="required field ng-class:{'error' : error.todate}">
+          <div class="required field ng-class:{'error' : error.toDate}">
             <label>jusqu'au</label>
             <input ng-model="message.todate" name="todate" class="datepicker">
 
-            <div class="ui pointing red label" ng-if="error.todate">{{error.todate.message}}</div>
+            <div class="ui pointing red label" ng-if="error.toDate">{{error.toDate.message}}</div>
           </div>
         </div>
-        <div class="required field ng-class:{'error' : error.destinataire}">
+        <div class="required field ng-class:{'error' : error.destinataires}">
           <label>Destinataire</label>
 
           <div class="inline fields">
@@ -99,7 +99,7 @@
             </select>
 
           </div>
-          <div class="ui pointing red label" ng-if="error.destinataire">{{error.destinataire.message}}</div>
+          <div class="ui pointing red label" ng-if="error.destinataires">{{error.destinataires.message}}</div>
         </div>
 
         <div class="field">
@@ -111,9 +111,10 @@
           </select>
         </div>
 
-        <div class="required field">
+        <div class="required field" ng-class:{'error' : error.message}"">
           <label>Contenu du message</label>
           <textarea name="content" ckeditor="{}" ng-model="message.content"></textarea>
+          <div class="ui pointing red label" ng-if="error.message">{{error.message.message}}</div>
         </div>
 
         <div class="field">
@@ -124,7 +125,6 @@
 
     <div class="ui segment">
       <h2 class="ui header">Preview</h2>
-
       <p class="ui message" ng-bind-html="message.content"></p>
     </div>
   </div>
