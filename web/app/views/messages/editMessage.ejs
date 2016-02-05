@@ -74,24 +74,9 @@
 
           <div class="inline fields">
             <div class="ui simple dropdown item">
-              <i class="users circular link icon "></i>
-
-              <div class="menu">
-                <div class="header ui input" style="margin-left: 0; margin-right: 0; ">
-                  <input type="text" placeholder="Filtrer..." ng-model="filter.user">
-
-                </div>
-                <div class="divider"></div>
-                <div class="header">Liste de diffusions</div>
-                <div class="item" ng-repeat="contact in users | filter:filter.user  ">
-                  <div class="ui checkbox">
-                    <input type="checkbox" id="{{contact._id}}" class="hidden" checklist-model="message.destinataires"
-                           checklist-value="contact._id" ng-checked="userIsInSelectedGroup(contact.groupes)">
-                    <label for="{{contact._id}}">{{contact.firstName}} {{contact.lastName}}</label>
-                  </div>
-                </div>
-              </div>
+              <i class="users circular link icon" ng-click="openDestinaireList()"></i>
             </div>
+
             <select type="text" class="ui fluid search dropdown" multiple ng-model="groupeSelected" ng-dropdown="{}"
                     ng-dropdown-values="groupes" ng-options="groupe._id as groupe._id for groupe in groupes"
                     ng-change="selectUsers()">
@@ -131,5 +116,23 @@
 
   <div class="one wide column"><p></p></div>
 </div>
+
+<script type="text/ng-template" id="listeDestinatireTemplate">
+  <h1>Destinataires</h1>
+  <section class="ui form">
+    <div class="ui field">
+      <input type="text" placeholder="Filtrer..." ng-model="filter.user">
+    </div>
+  </section>
+  <section class="ui list segment">
+    <div class="item" ng-repeat="contact in users | filter:filter.user  ">
+      <div class="ui checkbox">
+        <input type="checkbox" id="{{contact._id}}" class="hidden" checklist-model="message.destinataires"
+               checklist-value="contact._id" ng-checked="userIsInSelectedGroup(contact._id)">
+        <label for="{{contact._id}}">{{contact.firstName}} {{contact.lastName}}</label>
+      </div>
+    </div>
+  </section>
+</script>
 
 <% include ../inc/footer %>

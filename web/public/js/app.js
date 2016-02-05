@@ -1,7 +1,7 @@
 'use strict';
 var app = angular.module("beacon", ["ckeditor", "ngSanitize", "ngSemantic", "checklist-model", "ngResource", 'ngDialog']);
 
-app.controller('AddMessageController', function ($scope, $http, GroupeAPI, BeaconAPI, UserAPI) {
+app.controller('AddMessageController', function ($scope, $http, GroupeAPI, BeaconAPI, UserAPI, ngDialog) {
 
   $scope.beaconList = BeaconAPI.get();
 
@@ -36,8 +36,19 @@ app.controller('AddMessageController', function ($scope, $http, GroupeAPI, Beaco
     });
   };
 
-});
+  $scope.userIsInSelectedGroup = function(id){
+    console.log($scope.message.destinataires.indexOf(id));
+    return $scope.message.destinataires.indexOf(id) != -1
+  };
 
+  $scope.openDestinaireList = function () {
+    ngDialog.open({
+      template: 'listeDestinatireTemplate',
+      scope: $scope
+    });
+  };
+
+});
 
 app.controller('AddUserController', function ($scope, GroupeAPI, UserAPI) {
 
