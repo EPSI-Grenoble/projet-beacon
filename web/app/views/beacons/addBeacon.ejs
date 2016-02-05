@@ -38,12 +38,18 @@
           <div class="header">
             {{ beacon.nom}}
           </div>
+
           <div class="description">
             {{ beacon.UUID}}
           </div>
-          <div class="date de creation">
-            {{ beacon.dateCreation | date : 'dd-MM-yyyy | HH : mm'}}
-          </div>
+
+          </br>
+            <div class="ui label">
+
+               <i class="calendar icon"></i>
+               {{ beacon.dateCreation | date : 'dd-MM-yyyy | HH : mm'}}
+            </div>
+
 
         </div>
         <div class="extra content">
