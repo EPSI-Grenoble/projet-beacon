@@ -4,3 +4,5 @@ npm-debug.log
 .idea/
 /web/public/components/
 .DS_Store
+web/uploads/
+uploads/

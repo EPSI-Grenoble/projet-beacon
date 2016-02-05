@@ -6,7 +6,22 @@ var express = require('express'),
   MessageModel = mongoose.model('messages'),
   GroupeModel = mongoose.model('groupes'),
   BeaconModel = mongoose.model('beacons'),
-  Utils = require("../services/utils");
+  Utils = require("../services/utils"),
+  multer  =   require('multer'),
+  Excel = require("exceljs"),
+  UserRepository = require("../repository/UserRepository"),
+  md5 = require('md5');
+
+/*var storage =   multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, '../../uploads');
+  },
+  filename: function (req, file, callback) {
+    callback(null, file.fieldname + '-' + Date.now());
+  }
+});
+var upload = multer({ storage : storage}).single('usersXls');*/
+var upload = multer({ dest: 'uploads/' })
 
 module.exports = function (app) {
   app.use('/', router);
@@ -71,6 +86,56 @@ router.get('/users/edit', Utils.isAuth, function (req, res, next) {
       newUser : null
     });
 });
+
+// Page d'import des users
+router.get('/users/import', Utils.isAuth, function (req, res, next) {
+    res.render('users/importUsers', {
+      title: 'Importer des utilisateurs',
+      user : req.user
+    });
+});
+
+// Url import XLS
+router.post('/users/sendXls', upload.single('usersXls'), function (req, res, next) {
+  res.header("Content-Type", "application/json; charset=utf-8");
+  var workbook = new Excel.Workbook();
+  var options = {
+    map: function(value, index) {
+        return value;
+    }
+  }
+  workbook.csv.readFile(req.file.path, options)
+      .then(function(worksheet) {
+        var counter = 0;
+        // Pour chaque ligne, on crée un array de groupes avec les groupes, on crée un dict et on crée un user
+        worksheet.eachRow(function(row, rowNumber) {
+          counter += 1;
+        });
+        worksheet.eachRow(function(row, rowNumber) {
+          var groupes = row.values[5].split(",");
+          if (rowNumber != 0){
+            var dict = {
+              'firstName':row.values[1],
+              'lastName':row.values[2],
+              'email':row.values[3],
+              'password':md5(row.values[4]),
+              'groupes' : groupes
+            }
+            UserRepository.createUser(dict, function (err, user) {
+              if (err) {
+                if(counter == rowNumber){
+                    res.status(406).send(err.errors);
+                }
+              }
+              if (rowNumber == counter) {
+                res.redirect('/users');
+              }
+            });
+          }
+            
+        });
+      });
+})
 
 // Page de l'edition de user
 router.get('/users/edit/:idUser', Utils.isAuth, function (req, res, next) {
