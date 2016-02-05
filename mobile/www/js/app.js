@@ -41,6 +41,11 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "
       url: '/messages/:messageId',
       templateUrl: 'templates/message-detail.html',
       controller: 'MessageDetailCtrl'
+    })
+    .state('profile', {
+      url: '/profile',
+      templateUrl: 'templates/profile.html',
+      controller: 'ProfileCtrl'
     });
 
   $urlRouterProvider.otherwise('/login');

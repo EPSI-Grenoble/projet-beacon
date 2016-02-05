@@ -28,7 +28,16 @@ module.exports = function(passport) {
           }
           // Si il existe un utilisateur avec le bon mot de passe alors on le connecte
           if(user.password == md5(password)){
-            return done(null, user);
+            if (user.isAdmin)
+            {
+              return done(null, user);
+            }
+            else
+            {
+              return done(null, false, req.flash("loginMessage", "Vous n'êtes pas administrateur"));
+            }
+
+
           }
           // Sinon on retourne un message d'erreur
           else {

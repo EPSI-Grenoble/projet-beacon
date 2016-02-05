@@ -3,9 +3,9 @@
     <feature name="Device">
         <param name="browser-package" value="Device" />
     </feature>
-    <name>testIonic</name>
+    <name>EPSI Contact</name>
     <description>
-        An Ionic Framework and Cordova project.
+        Plateforme de contact de l'EPSI Grenoble
     </description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">
       Ionic Framework Team

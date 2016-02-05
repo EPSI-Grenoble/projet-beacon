@@ -10,18 +10,9 @@ var express = require('express'),
   multer  =   require('multer'),
   Excel = require("exceljs"),
   UserRepository = require("../repository/UserRepository"),
-  md5 = require('md5');
-
-/*var storage =   multer.diskStorage({
-  destination: function (req, file, callback) {
-    callback(null, '../../uploads');
-  },
-  filename: function (req, file, callback) {
-    callback(null, file.fieldname + '-' + Date.now());
-  }
-});
-var upload = multer({ storage : storage}).single('usersXls');*/
-var upload = multer({ dest: 'uploads/' })
+  GuestRepository = require("../repository/GuestRepository"),
+  md5 = require('md5'),
+  var upload = multer({ dest: 'uploads/' });
 
 module.exports = function (app) {
   app.use('/', router);
@@ -42,10 +33,13 @@ router.get('/', Utils.isAuth , function (req, res, next) {
 // Page des messages
 router.get('/messages', Utils.isAuth, function (req, res, next) {
     MessageModel.find().sort({"dateCreation" : -1}).exec(function(err, toutLesMessage) {
+
+
       res.render('messages/listeMessages', {
         title: 'Liste des messages envoyés',
         user : req.user,
-        messages : toutLesMessage
+        messages : toutLesMessage,
+
       })
     })
 });
@@ -53,19 +47,28 @@ router.get('/messages', Utils.isAuth, function (req, res, next) {
 // Page de l'edition de message
 router.get('/messages/edit', Utils.isAuth, function (req, res, next) {
   UserModel.find( function(err, usersList) {
+  var type = req.query.type;
       res.render('messages/editMessage', {
         title: 'Envoyer un message',
-        user : req.user
+        user : req.user,
+        type : type
       });
   });
 });
 
+// Page du compte
+router.get('/myaccount', Utils.isAuth, function (req, res, next) {
+    res.render('users/myAccount', {
+      subtitle: 'Vous êtes ici chez vous , bienvenue',
+      title: 'Afficher mon compte',
+      user : req.user
+    });
+});
 
 // Page des users
 router.get('/users', Utils.isAuth, function (req, res, next) {
-    UserModel.find().sort({lastName: 1}).exec(function(err, toutLesUser) {
+  UserRepository.getAllUsers(function(err, toutLesUser) {
       toutLesUser = toutLesUser.map(function(user){
-        user = user.toObject();
         delete user.password;
         return user;
       });
@@ -156,11 +159,37 @@ router.get('/users/edit/:idUser', Utils.isAuth, function (req, res, next) {
 router.get('/groupes', Utils.isAuth, function (req, res, next) {
   GroupeModel.find().sort({name: 1}).exec(function(err, toutLesGroupes) {
     res.render('groupes/listeGroup', {
-      title: 'Les groupes',
-      subtitle: 'Liste des groupes',
+      title: 'Listes de diffusion',
+      subtitle: '',
       groupes : toutLesGroupes,
       user : req.user
     })
+  })
+});
+
+
+// Page des beacons
+router.get('/guest', Utils.isAuth, function (req, res, next) {
+  GuestRepository.getAllGuest(function(err, guests) {
+    res.render('guest/listeGuest', {
+      title: 'Guest',
+      subtitle: 'Liste des utilisateurs guests',
+      guest : guests,
+      user : req.user
+    })
+  })
+});
+
+// Page admin
+router.get("/admin", Utils.isAuth, function (req, res, next) {
+
+  UserRepository.getAllAdmins(function (err, users) {
+    res.render('admins/viewAdmin',{
+      title: 'Administrateurs',
+      subtitle: 'Liste des utilisateurs administrateurs  ',
+      users : users,
+      user: req.user
+    });
   })
 });
 
@@ -168,7 +197,7 @@ router.get('/groupes', Utils.isAuth, function (req, res, next) {
 router.get('/beacons', Utils.isAuth, function (req, res, next) {
     BeaconModel.find( function(err, toutlesBeacons) {
       res.render('beacons/addBeacon', {
-        title: 'Administrer lLes beacons',
+        title: 'Administrer les beacons',
         beacons : toutlesBeacons,
         user : req.user
       })
@@ -190,4 +219,13 @@ router.post('/login', passport.authenticate('local-login', { successRedirect: '/
 router.get('/logout', function(req, res){
   req.logout();
   res.redirect('/login');
+});
+
+// Pade de compte
+router.get("/monCompte", Utils.isAuth, function (req, res, next) {
+    res.render('comptes/viewAccount',{
+      title: 'Afficher mon compte',
+      subtitle: 'Voici votre compte',
+      user : req.user
+    });
 });

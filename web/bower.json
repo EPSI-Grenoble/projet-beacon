@@ -16,6 +16,7 @@
     "angular-sanitize": "~1.4.8",
     "checklist-model": "~0.8.0",
     "angular-resource": "~1.4.8",
-    "notie": "*"
+    "notie": "*",
+    "ng-dialog": "~0.5.6"
   }
 }

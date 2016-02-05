@@ -1,7 +1,7 @@
 <% include ../inc/header %>
 
 
-<div class="ui grid" ng-controller="ListeGroupesController" ng-init='groupes=<%-JSON.stringify(groupes)%>'>
+<div class="ui grid" ng-controller="ListeGroupesController" ng-init='groupes=<%- JSON.stringify(groupes) %>'>
 
   <div class="three wide column"><p></p></div>
 
@@ -17,11 +17,12 @@
     <br>
     <div class="ui cards">
       <form class="card ui form" ng-cloak>
-        <div class="content">
-          <div class="field ng-class:{'error' : error.nom}">
+        <div class="content ng-class:{'error' : error.nom}">
+          <div class="field">
             <input type="text" ng-model="groupeToSave.nom" name="nom" placeholder="Nom du groupe">
-            <div class="ui pointing red label" ng-if="error.nom">{{error.nom.message}}</div>
+
           </div>
+          <div class="ui pointing red label" ng-if="error.nom">{{error.nom.message}}</div>
         </div>
         <div class="extra content">
           <div class="ui two buttons">
@@ -34,18 +35,18 @@
           <i style="float:right;" class="large floated mini ui users middle aligned icon"></i>
           <div class="header">
             <span ng-if="!editMode[groupe._id]">{{ groupe.nom}}</span>
-            <div class="ui small input">
-            <input type="text" class="ui input" ng-model="groupe.nom" ng-if="editMode[groupe._id]">
+            <div class="ui small input ng-class:{'error' : error.nom}">
+              <input type="text" class="ui input" ng-model="groupe.nom" ng-if="editMode[groupe._id]">
+              <div class="ui pointing red label" ng-if="error.nom">{{error.nom.message}}</div>
             </div>
-          </div>
-          <div class="meta">
           </div>
         </div>
         <div class="extra content">
-          <div class="ui two buttons">
-            <a class="ui basic blue button" ng-click="edit(groupe._id)" ng-if="!editMode[groupe._id]">Editer</a>
-            <a class="ui basic blue button" ng-click="save(groupe)" ng-if="editMode[groupe._id]">Sauvegarder</a>
-            <div class="ui basic red button" ng-click="remove(groupe._id)">Supprimer</div>
+          <div class="ui three buttons">
+            <a class="ui green button" ng-click="edit(groupe._id)" ng-if="!editMode[groupe._id]"><i class="write icon"></i></a>
+            <a class="ui green button" ng-click="save(groupe)" ng-if="editMode[groupe._id]"><i class="checkmark icon"></i></a>
+            <div class="ui blue button" ng-click="openMemberList(groupe)"><i class="users icon"></i></div>
+            <div class="ui red button" ng-click="remove(groupe._id)"><i class="trash icon"></i></div>
           </div>
         </div>
       </div>
@@ -54,5 +55,37 @@
 
   <div class="one wide column"><p></p></div>
 </div>
+
+<script type="text/ng-template" id="listeMembreTemplate">
+  <h1>Membres de {{groupe.nom}}</h1>
+  <section class="ui form">
+    <div class="fields">
+      <div class="fifteen wide field">
+        <select type="text" class="ui fluid search dropdown" ng-model="userSelected"
+                ng-dropdown="{'key': '_id', 'value' : 'fullName'}"
+                ng-dropdown-choice="users">
+          <option value="">Liste de utilisateurs</option>
+        </select>
+      </div>
+      <div class="two wide field"><i class="circular inverted green link add icon" ng-click="addUserToGroupe()"></i></div>
+    </div>
+  </section>
+  <br>
+  <section>
+    <div class="ui middle aligned divided list">
+      <div class="item" ng-if="membres.length == 0">
+        Aucun membre
+      </div>
+      <div class="item" ng-repeat="membre in membres">
+        <div class="right floated content">
+          <div class="ui button" ng-click="removeUserFromGroupe(membre, $index)">Supprimer</div>
+        </div>
+        <i class="circular inverted blue user icon"></i>
+        <div class="content">
+          {{membre.firstName}} {{membre.lastName}}
+        </div>
+      </div>
+  </section>
+</script>
 
 <% include ../inc//footer %>

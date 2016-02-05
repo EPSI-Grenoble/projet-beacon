@@ -1,14 +1,26 @@
-/**
- * Created by mchoraine on 17/12/2015.
- */
 var app = angular.module("beacon");
 
 app.service('GroupeAPI', function($resource, $location) {
   var resource;
-  resource = $resource($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/groupes/:id', {}, {
+  resource = $resource($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/groupes/:id/:action', {}, {
     'get': {
       method: "GET",
       isArray: true
+    },
+    'getMembres': {
+      method: "GET",
+      isArray: true,
+      params : {action : "membres"}
+    },
+    'removeMembres': {
+      method: "DELETE",
+      isArray: false,
+      params : {action : "membres"}
+    },
+    addToGroupe : {
+      method: "POST",
+      isArray: false,
+      params : {action : "add"}
     },
     'save': {
       method: "POST",
@@ -70,3 +82,23 @@ app.service('UserAPI', function($resource, $location) {
   });
   return resource;
 });
+
+app.service('GuestAPI', function($resource, $location) {
+  var resource;
+  resource = $resource($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/guests/:id', {}, {
+    'get': {
+      method: "GET",
+      isArray: true
+    },
+    'save': {
+      method: "POST",
+      isArray: false
+    },
+    'delete': {
+      method: "DELETE",
+      isArray: false
+    }
+  });
+  return resource;
+});
+

@@ -1,4 +1,3 @@
-
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
@@ -37,7 +36,19 @@ var UserSchema = new Schema({
     sparse: true
   },
   groupes: Array
+}, {
+  toObject: {
+    virtuals: true
+  },
+  toJSON: {
+    virtuals: true
+  }
 });
 
+UserSchema
+  .virtual('fullName')
+  .get(function () {
+    return this.firstName + ' ' + this.lastName;
+  });
 
 mongoose.model('users', UserSchema);

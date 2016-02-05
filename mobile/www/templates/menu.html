@@ -1,0 +1,22 @@
+<ion-side-menus>
+	<ion-side-menu side="left">
+		<header class="bar bar-header bar-positive">
+			<h1 class="title">{{user.username}}</h1>
+		</header>
+		<ion-content class="has-header">
+			<ion-list>
+				<ion-item nav-clear menu-close href="#/app/messages">
+				  Inbox
+				</ion-item>
+				<ion-item nav-clear menu-close href="#/app/profile">
+				  My profile
+				</ion-item>
+			</ion-list>
+			<ion-list class="list-bottom">
+		      <a class="item" href="#/login">
+		        <i class="icon ion-power"></i>
+		      </a>
+		    </ion-list>
+		</ion-content>
+	</ion-side-menu>
+<ion-side-menu>

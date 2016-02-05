@@ -28,9 +28,13 @@
 
           <div class="ui pointing red label" ng-if="error.email">{{error.email.message}}</div>
         </div>
+        <div class="inline field">
+          <label>Administrateur :</label>
+          <input type="checkbox" name="isAdmin" ng-model="user.isAdmin"/>
+        </div>
         <% if(newUser != null) { %>
         <div class="inline field ng-class:{'error' : error.password}">
-          <label>Modifier le mot de passe</label>
+          <label>Modifier le mot de passe ? :</label>
           <input type="checkbox" ng-model="editPassword">
         </div>
         <% } %>
@@ -63,10 +67,11 @@
           </div>
         </div>
         <div class="field">
-          <label>Groupes</label>
+          <label>Listes de diffusion</label>
           <select class="ui fluid dropdown" multiple="" ng-model="user.groupes" ng-dropdown="{'key':'nom'}" ng-dropdown-choice="groupes">
           </select>
         </div>
+
 
         <div class="three fields">
           <div class="field"></div>

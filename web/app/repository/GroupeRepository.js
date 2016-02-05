@@ -30,11 +30,7 @@ module.exports = {
             callback(err);
           })
         });
-      })
-      // .remove()
-      // .exec(function (err) {
-      //   callback(err);
-      // })
+      });
   },
 
   updateGroupe: function (idGroupe, nomGroupe, callback) {
@@ -44,9 +40,34 @@ module.exports = {
         var oldNom = groupe.nom;
         groupe.nom = nomGroupe;
         groupe.save(function (err, groupe) {
-          callback(groupe);
+          callback(err, groupe);
         });
         UserRepository.updateGroupe(oldNom, nomGroupe);
       })
+  },
+
+  getMembresGroupe: function (idGroupe, callback) {
+    GroupeModel
+      .findById(idGroupe)
+      .exec(function (err, groupe) {
+        UserRepository.getMembresGroupe(groupe.nom, callback);
+      });
+  },
+
+  removeMembresGroupe: function (idGroupe, idUser, callback) {
+    GroupeModel
+      .findById(idGroupe)
+      .exec(function (err, groupe) {
+        UserRepository.removeFromGroupe(groupe.nom, idUser, callback);
+      });
+  },
+
+  addUserToGroupe: function (idGroupe, userId, callback) {
+    GroupeModel
+      .findById(idGroupe)
+      .exec(function (err, groupe) {
+        UserRepository.addToGroupe(groupe.nom, userId, callback);
+      });
   }
+
 };

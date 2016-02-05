@@ -38,9 +38,19 @@
           <div class="header">
             {{ beacon.nom}}
           </div>
+
           <div class="description">
             {{ beacon.UUID}}
           </div>
+
+          </br>
+            <div class="ui label">
+
+               <i class="calendar icon"></i>
+               {{ beacon.dateCreation | date : 'dd-MM-yyyy | HH : mm'}}
+            </div>
+
+
         </div>
         <div class="extra content">
           <div class="ui two buttons">

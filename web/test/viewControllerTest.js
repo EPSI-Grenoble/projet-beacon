@@ -1,16 +1,17 @@
 var expect = require("chai").expect;
-var server = require("./serverMock").app,
+var server = require("./serverMock"),
   supertest = require("supertest");
 
 
 describe("Test controllers", function () {
 
-  var request = supertest.agent(server);
+  var request;
 
-  before(function(done){
-    require("./serverMock").createUser(function(){
-      done()
-    })
+  before(function (done) {
+    server.app(function(app) {
+      request = supertest.agent(app);
+      done();
+    });
   });
 
   it("GET / (Not log-in)", function (done) {
@@ -64,5 +65,10 @@ describe("Test controllers", function () {
       .get('/beacons')
       .expect(200, done);
   });
+
+  after(function (done) {
+    server.shutdown();
+    done()
+  })
 
 });

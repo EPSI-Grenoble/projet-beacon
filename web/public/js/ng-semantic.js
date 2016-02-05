@@ -24,10 +24,11 @@ app.directive("ngDropdown", [ "$timeout",
         ngDropdownChoice : "=",
         ngDropdown : "="
       },
-      template : '<option value="{{tag[tagKey]}}" ng-repeat="tag in tagsList">{{tag[tagKey]}}</option>',
+      template : '<option value="{{tag[tagKey]}}" ng-repeat="tag in tagsList">{{tag[tagValue]}}</option>',
       link: function(scope, elem, attr) {
 
         scope.tagKey = "_id";
+        scope.tagValue = "_id";
 
         if(scope['ngDropdown'] == "" || scope['ngDropdown'] == null){
           scope['ngDropdown'] = {};
@@ -35,10 +36,14 @@ app.directive("ngDropdown", [ "$timeout",
 
         if(scope['ngDropdown']["key"]){
           scope.tagKey = scope['ngDropdown']["key"];
+          scope.tagValue = scope['ngDropdown']["value"];
+        }
+
+        if(scope['ngDropdown']["value"]){
+          scope.tagValue = scope['ngDropdown']["value"];
         }
 
         scope.$watch("ngDropdownChoice", function(value) {
-          console.log(scope['ngDropdown'] );
           scope.tagsList = value;
           if(scope.tagsList != undefined && scope.tagsList)
           console.log(scope.tagsList);

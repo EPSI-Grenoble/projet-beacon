@@ -1,25 +1,27 @@
-var expect = require("chai").expect;
-var server = require("./serverMock").app,
-  mockgoose = require('mockgoose'),
+var expect = require("chai").expect,
+ server = require("./serverMock"),
   supertest = require("supertest");
 
 
 describe("Test Groupe API", function () {
-  var request = supertest.agent(server);
+  var request;
 
-  // Reset la base, crée un user puis authentification
   before(function (done) {
-    mockgoose.reset(function() {
-      require("./serverMock").createUser(function () {
-        request
-          .post('/login')
-          .send({
-            'user': 'test@testeur.com',
-            'password': 'test'
-          })
-          .expect(302, done)
-      });
+    server.app(function (app) {
+      request = supertest.agent(app);
+      done()
     });
+  });
+
+
+  it("log user", function (done) {
+    request
+      .post('/login')
+      .send({
+        'user': 'test@testeur.com',
+        'password': 'test'
+      })
+      .expect(302, done)
   });
 
   it("Create a groupe", function (done) {
@@ -78,7 +80,7 @@ describe("Test Groupe API", function () {
 
   it("Update a groupe", function (done) {
     request
-      .post('/api/groupes/'+idGroupe)
+      .post('/api/groupes/' + idGroupe)
       .send({
         nom: "groupe3"
       })
@@ -102,7 +104,7 @@ describe("Test Groupe API", function () {
 
   it("Delete groupe", function (done) {
     request
-      .delete('/api/groupes/'+idGroupe)
+      .delete('/api/groupes/' + idGroupe)
       .end(function (err, res) {
         expect(res.statusCode).to.equal(200);
         done();
@@ -119,7 +121,7 @@ describe("Test Groupe API", function () {
       });
   });
 
-it("Get users groupes", function (done) {
+  it("Get users groupes", function (done) {
     request
       .get('/api/users/groupes')
       .end(function (err, res) {
@@ -128,5 +130,10 @@ it("Get users groupes", function (done) {
         done();
       });
   });
+
+  after(function (done) {
+    server.shutdown();
+    done()
+  })
 
 });

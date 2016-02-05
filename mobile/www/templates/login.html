@@ -3,29 +3,28 @@
       <ion-nav-bar class="bar-positive">
       </ion-nav-bar>
       <ion-content>
-        <div class="row row-center">
-          <div class="col col-100">
-            <div class="card">
-              <div class="item">
-                <div class="list">
-                  <label class="item item-input">
-                    <span class="input-label">Username</span>
-                    <input type="text" ng-model="user.username">
-                  </label>
-                  <label class="item item-input">
-                    <span class="input-label">Password</span>
-                    <input type="password" ng-model="user.password">
-                  </label>
-                </div>
-              </div>
-            </div>
-          </div>
+        <div class="list list-inset">
+          <label class="item item-input">
+            <i class="icon ion-person placeholder-icon"></i>
+            <input type="text" placeholder="Email" ng-model="user.username">
+          </label>
+          <label class="item item-input">
+            <i class="icon ion-locked placeholder-icon"></i>
+            <input type="password" placeholder="Password" ng-model="user.password">
+          </label>
         </div>
         <div class="padding">
           <button class="button button-block button-positive" ng-click="signIn(user)">
-            Sign-In
+            Se connecter
           </button>
         </div>
+
+        <div class="padding">
+          <button class="button button-block button-royal" ng-click="showPopup()">
+            Mode invité
+          </button>
+        </div>
+
         <div class="card positive" ng-if="messageError">
           <div class="item item-text-wrap">
             {{messageError}}

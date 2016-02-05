@@ -11,102 +11,95 @@
         <i class="conversation icon"></i>
         <i class="corner add blue icon"></i>
       </i>
+
       <div class="content">
         <%= title %>
       </div>
     </h1>
 
     <div class="ui segment">
-      <form ng-submit="sauvegarder()" class="ui form" >
+      <form ng-submit="sauvegarder()" class="ui form">
 
-<!-- test erreur quand pb champs des message
-
-      <div class="field ng-class:{'error' : error.email}">
-                <label>Email</label>
-                <input type="text" ng-model="message.email" name="title" value="" placeholder="Entrer un email">
-
-                <div class="ui pointing red label" ng-if="error.email">{{error.email.message}}</div>
-              </div>
-
- test erreur quand pb champs des message -->
-
-        <div class="field ng-class:{'error' : error.titre}">
+        <div class="required field ng-class:{'error' : error.titre}">
           <label>Objet du message</label>
           <input type="text" ng-model="message.titre" name="title" value="" placeholder="Entrer un objet">
 
           <div class="ui pointing red label" ng-if="error.titre">{{error.titre.message}}</div>
         </div>
 
-        <div class="field" ng-class:{'error' : error.type}">
+        <div class="field ng-class:{'error' : error.type}">
           <label>Type de message</label>
-          <select name="type" ng-model="message.type" class="ui fluid dropdown">
+          <%= type %>
+          <select name="type" ng-model="message.type" class="ui fluid dropdown" ng-init="message.type= '<%= type %>'">
+
             <option value="">-- Choisir un type de message --</option>
             <option value="beacon">Beacon</option>
             <option value="push">Push</option>
           </select>
+
           <div class="ui pointing red label" ng-if="error.type">{{error.type.message}}</div>
         </div>
         <div class="two fields">
-        <div class="field" ng-if="message.type == 'beacon'">
-          <label>Beacons concerné</label>
-          <select type="text" class="ui fluid search dropdown" multiple ng-model="message.beacons" ng-dropdown ng-dropdown-values="beaconList" ng-options="beacon.UUID as beacon.nom for beacon in beaconList">
-            <option value="">Choisir un ou plusieurs beacons</option>
-          </select>
-        </div>
-        <div class="field" ng-if="message.type == 'beacon'">
-          <label>Proximité</label>
-          <select type="text" class="ui fluid dropdown" ng-model="message.beaconsProximity">
-            <option value="">Choisir une distance</option>
-            <option value="ProximityFar"> > 4m </option>
-            <option value="ProximityNear"> <= 4m </option>
-            <option value="ProximityImmediate"> < 0,5m </option>
-          </select>
-        </div>
+          <div class="field" ng-if="message.type == 'beacon'">
+            <label>Beacons concerné</label>
+            <select type="text" class="ui fluid search dropdown" multiple ng-model="message.beacons" ng-dropdown
+                    ng-dropdown-values="beaconList" ng-options="beacon.UUID as beacon.nom for beacon in beaconList">
+              <option value="">Choisir un ou plusieurs beacons</option>
+            </select>
+          </div>
+          <div class="field" ng-if="message.type == 'beacon'">
+            <label>Proximité</label>
+            <select type="text" class="ui fluid dropdown" ng-model="message.beaconsProximity">
+              <option value="">Choisir une distance</option>
+              <option value="ProximityFar"> > 4m</option>
+              <option value="ProximityNear"> <= 4m</option>
+              <option value="ProximityImmediate"> < 0,5m</option>
+            </select>
+          </div>
         </div>
         <div class="two fields">
-          <div class="field" ng-class:{'error' : error.fromdate}">
+          <div class="field ng-class:{'error' : error.fromDate}">
             <label>A partir du</label>
-            <input ng-model="message.fromdate" name="fromdate" class="datepicker" >
-            <div class="ui pointing red label" ng-if="error.fromdate">{{error.fromdate.message}}</div>
+            <input ng-model="message.fromdate" name="fromdate" class="datepicker">
+
+            <div class="ui pointing red label" ng-if="error.fromDate">{{error.fromDate.message}}</div>
           </div>
-          <div class="field" ng-class:{'error' : error.todate}">
+          <div class="field ng-class:{'error' : error.toDate}">
             <label>jusqu'au</label>
-            <input ng-model="message.todate" name="todate" class="datepicker" >
-            <div class="ui pointing red label" ng-if="error.todate">{{error.todate.message}}</div>
+            <input ng-model="message.todate" name="todate" class="datepicker">
+
+            <div class="ui pointing red label" ng-if="error.toDate">{{error.toDate.message}}</div>
           </div>
         </div>
-        <div class="field" ng-class:{'error' : error.destinataire}">
-          <label>Destinataire</label>
-          <div class="inline fields">
-            <div class="ui simple dropdown item">
-              <i class="users circular link icon "></i>
-              <div class="menu">
-                <div class="header ui input" style="margin-left: 0; margin-right: 0; ">
-                  <input type="text" placeholder="Filtrer..." ng-model="filter.user">
-
-                </div>
-                <div class="divider"></div>
-                <div class="header">Liste de diffusions</div>
-                <div class="item" ng-repeat="contact in users | filter:filter.user  ">
-                  <div class="ui checkbox">
-                    <input type="checkbox" id="{{contact._id}}" class="hidden" checklist-model="message.destinataires" checklist-value="contact._id" ng-checked="userIsInSelectedGroup(contact.groupes)">
-                    <label for="{{contact._id}}">{{contact.firstName}} {{contact.lastName}}</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <select type="text" class="ui fluid search dropdown" multiple ng-model="groupeSelected" ng-dropdown="{}" ng-dropdown-values="groupes" ng-options="groupe._id as groupe._id for groupe in groupes" ng-change="selectUsers()">
-              <option value="">Destinataire</option>
+        <div class="three fields">
+          <div class="two wide field">
+            <label>Destinataires</label>
+            <buttton class="ui blue tiny fluid button" ng-click="openDestinaireList()"><i class="users icon"></i> Ouvrir</buttton>
+          </div>
+          <div class="seven wide field ng-class:{'error' : error.destinataires}">
+            <label>Liste de diffusion</label>
+            <select type="text" class="ui fluid search dropdown" multiple ng-model="groupeSelected" ng-dropdown="{}"
+                    ng-dropdown-values="groupes" ng-options="groupe._id as groupe._id for groupe in groupes"
+                    ng-change="selectUsers()">
+              <option value="">Liste de diffusion</option>
             </select>
-
+            <div class="ui pointing red label" ng-if="error.destinataires">{{error.destinataires.message}}</div>
           </div>
-<div class="ui pointing red label" ng-if="error.destinataire">{{error.destinataire.message}}</div>
+
+          <div class="seven wide field ng-class:{'error' : error.destinataires}">
+            <label>Guest</label>
+            <select type="text" class="ui fluid search dropdown" multiple ng-model="guestSelected"
+                    ng-dropdown="{'key': '_id', 'value' : 'label'}"
+                    ng-dropdown-values="guests" ng-options="guest._id as guest.label for guest in guests"
+                    ng-change="selectGuest()">
+              <option value="">Liste des guests</option>
+            </select>
+          </div>
         </div>
-
-        <div class="field">
+        <div class="required field ng-class:{'error' : error.message}">
           <label>Contenu du message</label>
-          <textarea name="content" ckeditor="{}"  ng-model="message.content"></textarea>
-
+          <textarea name="content" ckeditor="{}" ng-model="message.content"></textarea>
+          <div class="ui pointing red label" ng-if="error.message">{{error.message.message}}</div>
         </div>
 
         <div class="field">
@@ -123,5 +116,23 @@
 
   <div class="one wide column"><p></p></div>
 </div>
+
+<script type="text/ng-template" id="listeDestinatireTemplate">
+  <h1>Destinataires</h1>
+  <section class="ui form">
+    <div class="ui field">
+      <input type="text" placeholder="Filtrer..." ng-model="filter.user">
+    </div>
+  </section>
+  <section class="ui list segment">
+    <div class="item" ng-repeat="contact in users | filter:filter.user  ">
+      <div class="ui checkbox">
+        <input type="checkbox" id="{{contact._id}}" class="hidden" checklist-model="message.destinataires"
+               checklist-value="contact._id" ng-checked="userIsInSelectedGroup(contact._id)">
+        <label for="{{contact._id}}">{{contact.firstName}} {{contact.lastName}}</label>
+      </div>
+    </div>
+  </section>
+</script>
 
 <% include ../inc/footer %>
