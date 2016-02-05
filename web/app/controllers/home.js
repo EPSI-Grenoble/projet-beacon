@@ -29,10 +29,13 @@ router.get('/', Utils.isAuth , function (req, res, next) {
 // Page des messages
 router.get('/messages', Utils.isAuth, function (req, res, next) {
     MessageModel.find().sort({"dateCreation" : -1}).exec(function(err, toutLesMessage) {
+
+
       res.render('messages/listeMessages', {
         title: 'Liste des messages envoyés',
         user : req.user,
-        messages : toutLesMessage
+        messages : toutLesMessage,
+
       })
     })
 });
@@ -40,9 +43,11 @@ router.get('/messages', Utils.isAuth, function (req, res, next) {
 // Page de l'edition de message
 router.get('/messages/edit', Utils.isAuth, function (req, res, next) {
   UserModel.find( function(err, usersList) {
+  var type = req.query.type;
       res.render('messages/editMessage', {
         title: 'Envoyer un message',
-        user : req.user
+        user : req.user,
+        type : type
       });
   });
 });
@@ -126,8 +131,8 @@ router.get("/admin", Utils.isAuth, function (req, res, next) {
 
   UserRepository.getAllAdmins(function (err, users) {
     res.render('admins/viewAdmin',{
-      title: 'Admins',
-      subtitle: 'Liste des utilisateurs admins  ',
+      title: 'Administrateurs',
+      subtitle: 'Liste des utilisateurs administrateurs  ',
       users : users,
       user: req.user
     });
@@ -138,7 +143,7 @@ router.get("/admin", Utils.isAuth, function (req, res, next) {
 router.get('/beacons', Utils.isAuth, function (req, res, next) {
     BeaconModel.find( function(err, toutlesBeacons) {
       res.render('beacons/addBeacon', {
-        title: 'Administrer lLes beacons',
+        title: 'Administrer les beacons',
         beacons : toutlesBeacons,
         user : req.user
       })
@@ -162,11 +167,11 @@ router.get('/logout', function(req, res){
   res.redirect('/login');
 });
 
-// Pade de comptes
+// Pade de compte
 router.get("/monCompte", Utils.isAuth, function (req, res, next) {
     res.render('comptes/viewAccount',{
-      title: 'Afficher mon comptes',
-      subtitle: 'Voici votre comptes',
+      title: 'Afficher mon compte',
+      subtitle: 'Voici votre compte',
       user : req.user
     });
 });

@@ -11,12 +11,12 @@ var MessageSchema = new Schema({
 
   titre: {
   type : String,
-  required: true
+  required: 'Le titre est requis!'
   },
 
   message: {
   type : String,
-  required: true
+  required: 'Le message est requis!'
   },
 
   sender: {
@@ -25,17 +25,14 @@ var MessageSchema = new Schema({
 
   fromDate: {
   type : Date,
-  required: true
   },
 
   toDate: {
   type : Date,
-  required: true
   },
 
   destinataires: {
   type : Array,
-  required: true
   },
 
   typeMessage :  {

@@ -81,12 +81,25 @@ app.controller('AddUserController', function ($scope, GroupeAPI, UserAPI) {
 
 app.controller('ListeUserController', function ($scope, UserAPI) {
 
-  $scope.delete = function (id) {
-    UserAPI.delete({"id": id});
-    $scope.users = UserAPI.get();
-  };
+  $scope.remove = function (id) {
+        notie.confirm('Etes vous sur de vouloir supprimer ce User ?', 'Oui', 'Non', function () {
+          UserAPI.delete({"id": id}, function () {
+            $scope.users = UserAPI.get();
+          });
+          notie.alert(3, 'Supprimé', 1.5);
+        });
+      };
 
 });
+
+/*$scope.remove = function (id) {
+      notie.confirm('Etes vous sur de vouloir supprimer ce guest ?', 'Oui', 'Non', function () {
+        GuestAPI.delete({"id": id}, function () {
+          $scope.guests = GuestAPI.get();
+        });
+        notie.alert(3, 'Supprimé', 1.5);
+      });
+    };*/
 
 app.controller('ListeGroupesController', function ($scope, GroupeAPI, ngDialog) {
 
@@ -107,7 +120,7 @@ app.controller('ListeGroupesController', function ($scope, GroupeAPI, ngDialog) 
   $scope.save = function (groupe) {
     $scope.editMode[groupe._id] = false;
     GroupeAPI.save({"id": groupe._id}, groupe, function(){
-      notie.alert(1, 'Supprimé', 1.5);
+      notie.alert(1, 'Sauvegardé !', 1.5);
     }, function(){
       notie.alert(3, 'Une erreur s\'est produite', 1.5);
     })
@@ -117,6 +130,7 @@ app.controller('ListeGroupesController', function ($scope, GroupeAPI, ngDialog) 
     console.log("save");
     GroupeAPI.save($scope.groupeToSave, function () {
       $scope.groupes = GroupeAPI.get();
+      notie.alert(1, 'Succes!', 1.5);
     }, function (err) {
       console.log(err.data.errors);
       $scope.error = err.data.errors;
@@ -168,6 +182,7 @@ app.controller('AddBeaconController', function ($scope, BeaconAPI) {
   $scope.sauvegarder = function () {
     BeaconAPI.save($scope.beacon, function () {
       $scope.beacons = BeaconAPI.get();
+      notie.alert(1, 'Sauvegardé !', 1.5);
     }, function (err) {
       $scope.error = err.data;
     });
@@ -177,7 +192,7 @@ app.controller('AddBeaconController', function ($scope, BeaconAPI) {
     notie.confirm('Etes vous sur de vouloir supprimer ce beacon ?', 'Oui', 'Non', function () {
       BeaconAPI.delete({"id": beacon._id});
       $scope.beacons = BeaconAPI.get();
-      notie.alert(1, 'Supprimé', 1.5);
+      notie.alert(3, 'Supprimé', 1.5);
     });
   }
 });
@@ -192,7 +207,7 @@ app.controller('ListeGuestController', function ($scope, GuestAPI) {
       GuestAPI.delete({"id": id}, function () {
         $scope.guests = GuestAPI.get();
       });
-      notie.alert(1, 'Supprimé', 1.5);
+      notie.alert(3, 'Supprimé', 1.5);
     });
   };
 
@@ -202,27 +217,33 @@ app.controller('ListeGuestController', function ($scope, GuestAPI) {
 
   $scope.modifier = function (guest) {
     $scope.editMode[guest._id] = false;
-    GuestAPI.save({"id": guest._id}, guest)
+    GuestAPI.save({"id": guest._id}, guest);
+    notie.alert(1, 'Success!', 1.5);
   };
 
   $scope.activate = function (guest) {
     guest.activate = true;
     GuestAPI.save({"id": guest._id}, guest)
+          notie.alert(1, 'Succes!', 1.5);
   };
 
   $scope.desactivate = function (guest) {
     guest.activate = false;
     GuestAPI.save({"id": guest._id}, guest)
+          notie.alert(1, 'Succes!', 1.5);
   };
 
   $scope.sauvegarder = function () {
     GuestAPI.save($scope.guestToSave, function () {
-      $scope.groupes = GuestAPI.get();
-    });
+      $scope.guests = GuestAPI.get();
+            notie.alert(1, 'Sauvegardé !', 1.5);
+    }, function (err) {
+           console.log(err.data.errors);
+           $scope.error = err.data.errors;
+           notie.alert(3, 'Erreur', 1.5);
+         });
   }
-
 });
-
 
 app.filter("notMembers", function () {
   return function (users, members) {
