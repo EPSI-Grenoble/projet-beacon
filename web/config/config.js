@@ -27,7 +27,7 @@ var config = {
       name: 'web'
     },
     port: 3002,
-    db: 'mongodb://epsi:epsi@martin-choraine.fr:10443/beacon'
+    db: 'mongodb://localhost:27017/beacon'
   }
 };
 
