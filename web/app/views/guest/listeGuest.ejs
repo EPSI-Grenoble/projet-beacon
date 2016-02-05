@@ -22,9 +22,9 @@
             <input type="text" ng-model="guestToSave.label" name="label" placeholder="Libellé">
             <div class="ui pointing red label" ng-if="error.label">{{error.label.message}}</div>
           </div>
-          <div class="field ng-class:{'error' : error.code}">
+          <div class="field ng-class:{'error' : error.nom}">
             <input type="text" ng-model="guestToSave.code" name="code" placeholder="Code">
-            <div class="ui pointing red label" ng-if="error.nom">{{error.code.message}}</div>
+            <div class="ui pointing red label" ng-if="error.nom">{{error.nom.message}}</div>
           </div>
         </div>
         <div class="extra content">
