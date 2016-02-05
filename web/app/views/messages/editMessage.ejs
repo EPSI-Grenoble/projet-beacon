@@ -89,9 +89,9 @@
           <div class="seven wide field">
             <label>Guest</label>
             <select type="text" class="ui fluid search dropdown" multiple ng-model="guestSelected"
-                    ng-dropdown="{key:'label'}"
+                    ng-dropdown="{'key': '_id', 'value' : 'label'}"
                     ng-dropdown-values="guests" ng-options="guest._id as guest.label for guest in guests"
-                    ng-change="selectUsers()">
+                    ng-change="selectGuest()">
               <option value="">Liste des guests</option>
             </select>
           </div>

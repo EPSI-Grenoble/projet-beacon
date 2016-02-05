@@ -1,15 +1,19 @@
 'use strict';
 var app = angular.module("beacon", ["ckeditor", "ngSanitize", "ngSemantic", "checklist-model", "ngResource", 'ngDialog']);
 
-app.controller('AddMessageController', function ($scope, $http, GroupeAPI, BeaconAPI, UserAPI, ngDialog) {
+app.controller('AddMessageController', function ($scope, $http, GroupeAPI, BeaconAPI, UserAPI, GuestAPI, ngDialog) {
 
   $scope.beaconList = BeaconAPI.get();
 
   $scope.groupes = UserAPI.getGroupes();
 
+  $scope.guests = GuestAPI.get();
+  console.log($scope.guests);
+
   $scope.users = UserAPI.get();
 
   $scope.sauvegarder = function () {
+    console.log($scope.message);
     $http.post("/api/messages", $scope.message).success(function (message) {
       $scope.message = message;
       $scope.error = null;
@@ -33,6 +37,12 @@ app.controller('AddMessageController', function ($scope, $http, GroupeAPI, Beaco
           $scope.message.destinataires.push(user._id);
         });
       }
+    });
+  };
+
+  $scope.selectGuest = function(){
+    angular.forEach($scope.guestSelected, function (guest) {
+      $scope.message.destinataires.push(guest);
     });
   };
 
