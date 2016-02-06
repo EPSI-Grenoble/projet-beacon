@@ -21,6 +21,15 @@ var config = {
     db: 'mongodb://localhost/beacon'
   },
 
+  preproduction: {
+    root: rootPath,
+    app: {
+      name: 'web'
+    },
+    port: 3002,
+    db: 'mongodb://epsi:epsi@martin-choraine.fr:10443/beacon'
+  },
+
   production: {
     root: rootPath,
     app: {
