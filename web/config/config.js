@@ -18,7 +18,7 @@ var config = {
       name: 'web'
     },
     port: 3010,
-    db: 'mongodb://localhost/beacon'
+    db: 'mongodb://localhost:27017/test-beacon'
   },
 
   preproduction: {
