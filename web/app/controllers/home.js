@@ -12,7 +12,7 @@ var express = require('express'),
   UserRepository = require("../repository/UserRepository"),
   GuestRepository = require("../repository/GuestRepository"),
   md5 = require('md5'),
-  var upload = multer({ dest: 'uploads/' });
+  upload = multer({ dest: 'uploads/' });
 
 module.exports = function (app) {
   app.use('/', router);
@@ -135,7 +135,7 @@ router.post('/users/sendXls', upload.single('usersXls'), function (req, res, nex
               }
             });
           }
-            
+
         });
       });
 })

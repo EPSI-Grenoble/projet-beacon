@@ -49,7 +49,6 @@ module.exports = {
           var index = user.groupes.indexOf(groupName);
           user.groupes.splice(index, 1);
           user.save(function () {
-            console.log(user)
             callback()
           });
         });

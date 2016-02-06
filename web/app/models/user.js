@@ -26,6 +26,10 @@ var UserSchema = new Schema({
     required: false,
     sparse: true
   },
+  isAdmin: {
+    type: Boolean,
+    required: false,
+  },
   date_token: {
     type: Date
   },

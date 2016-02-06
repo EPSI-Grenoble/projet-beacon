@@ -59,6 +59,6 @@ router.delete("/:id", Utils.isAuth, function (req, res, next) {
     if (err) {
       res.status(406).send(err);
     }
-    res.send(200);
+    res.sendStatus(200);
   })
 });
