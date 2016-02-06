@@ -46,7 +46,6 @@ app.directive("ngDropdown", [ "$timeout",
         scope.$watch("ngDropdownChoice", function(value) {
           scope.tagsList = value;
           if(scope.tagsList != undefined && scope.tagsList)
-          console.log(scope.tagsList);
             $timeout(function () {
               $(elem).dropdown(scope['ngDropdown']);
             }, 150);

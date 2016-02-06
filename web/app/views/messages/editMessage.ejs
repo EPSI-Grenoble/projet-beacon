@@ -27,17 +27,15 @@
           <div class="ui pointing red label" ng-if="error.titre">{{error.titre.message}}</div>
         </div>
 
-        <div class="field ng-class:{'error' : error.type}">
+        <div class="field ng-class:{'error' : error.typeMessage}">
           <label>Type de message</label>
-          <%= type %>
           <select name="type" ng-model="message.type" class="ui fluid dropdown" ng-init="message.type= '<%= type %>'">
-
             <option value="">-- Choisir un type de message --</option>
             <option value="beacon">Beacon</option>
             <option value="push">Push</option>
           </select>
 
-          <div class="ui pointing red label" ng-if="error.type">{{error.type.message}}</div>
+          <div class="ui pointing red label" ng-if="error.typeMessage">{{error.typeMessage.message}}</div>
         </div>
         <div class="two fields">
           <div class="field" ng-if="message.type == 'beacon'">
@@ -60,13 +58,13 @@
         <div class="two fields">
           <div class="field ng-class:{'error' : error.fromDate}">
             <label>A partir du</label>
-            <input ng-model="message.fromdate" name="fromdate" class="datepicker">
+            <input ng-model="message.fromdate" name="fromdate" class="datepicker" placeholder="dd/mm/yyyy">
 
             <div class="ui pointing red label" ng-if="error.fromDate">{{error.fromDate.message}}</div>
           </div>
           <div class="field ng-class:{'error' : error.toDate}">
             <label>jusqu'au</label>
-            <input ng-model="message.todate" name="todate" class="datepicker">
+            <input ng-model="message.todate" name="todate" class="datepicker" placeholder="dd/mm/yyyy">
 
             <div class="ui pointing red label" ng-if="error.toDate">{{error.toDate.message}}</div>
           </div>

@@ -1,66 +1,66 @@
-
 var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
   moment = require('moment');
 
 var MessageSchema = new Schema({
 
-  dateCreation : {
-  type : Date
+  dateCreation: {
+    type: Date
   },
 
   titre: {
-  type : String,
-  required: 'Le titre est requis'
+    type: String,
+    required: 'Le titre est requis'
   },
 
   message: {
-  type : String,
-  required: 'Le message est requis'
+    type: String,
+    required: 'Le message est requis'
   },
 
   sender: {
-  type : String
+    type: String
   },
 
   fromDate: {
-  type : Date,
+    type: Date,
   },
 
   toDate: {
-  type : Date,
+    type: Date
   },
 
   destinataires: {
-  type : Array,
-  required: 'Au moins un destinataire ou un invité'
+    type: Array,
+    required: 'Au moins un destinataire ou un invité'
   },
 
-  typeMessage :  {
-  type : String
+  typeMessage: {
+    type: String,
+    required: 'Le type est requis'
   },
 
-  beacons : {
-  type : Array
+  beacons: {
+    type: Array
   },
 
-  beaconsProximity : {
-  type : String
+  beaconsProximity: {
+    type: String
   },
 
-  receiveBy : Array
+  receiveBy: Array
 
 });
 
-MessageSchema.virtual('getPeriod').get(function() {
-  if(this.fromDate == null && this.toDate == null){
+MessageSchema.virtual('getPeriod').get(function () {
+  if (this.fromDate == null && this.toDate == null) {
     return "Sans période"
-  } else if(this.fromDate == null){
-    return "Jusqu'au "+moment(this.toDate).format("DD/MM/YYYY");
-  } else if(this.toDate == null){
-    return "A partir du "+moment(this.fromDate).format("DD/MM/YYYY");
+  } else if (this.fromDate == null) {
+    return "Jusqu'au " + moment(this.toDate).format("DD/MM/YYYY");
+  } else if (this.toDate == null) {
+    return "A partir du " + moment(this.fromDate).format("DD/MM/YYYY");
   } else {
-    return "Du "+moment(this.fromDate).format("DD/MM/YYYY")+" au "+moment(this.toDate).format("DD/MM/YYYY");
+    return "Du " + moment(this.fromDate).format("DD/MM/YYYY") + " au " + moment(this.toDate).format("DD/MM/YYYY");
   }
 });
 

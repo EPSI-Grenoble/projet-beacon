@@ -5,20 +5,20 @@ var UserSchema = new Schema({
   email: {
     type: String,
     unique: true,
-    required: true,
-    validate: [/.+\@.+\..+/, 'Email n\'est pas valide']
+    required: "L'email est obligatoire et unique.",
+    validate: [/.+\@.+\..+/, 'L\'email n\'est pas valide']
   },
   password: {
     type: String,
-    required: true
+    required: "Le mot de passe est obligatoire."
   },
   lastName: {
     type: String,
-    required: true
+    required: "Le nom est obligatoire."
   },
   firstName: {
     type: String,
-    required: true
+    required: "Le prenom est obligatoire."
   },
   token: {
     type: String,
@@ -28,7 +28,7 @@ var UserSchema = new Schema({
   },
   isAdmin: {
     type: Boolean,
-    required: false,
+    required: false
   },
   date_token: {
     type: Date

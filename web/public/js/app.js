@@ -13,11 +13,11 @@ app.controller('AddMessageController', function ($scope, $http, GroupeAPI, Beaco
   $scope.users = UserAPI.get();
 
   $scope.sauvegarder = function () {
-    console.log($scope.message);
     $http.post("/api/messages", $scope.message).success(function (message) {
       $scope.message = message;
       $scope.error = null;
       notie.alert(1, 'Success!', 1.5);
+      setTimeout(function() { window.location = "/users";}, 1500);
     }).error(function (err) {
       $scope.error = err.errors;
       notie.alert(3, 'Erreur', 1.5);
@@ -63,9 +63,10 @@ app.controller('AddMessageController', function ($scope, $http, GroupeAPI, Beaco
 app.controller('AddUserController', function ($scope, GroupeAPI, UserAPI) {
 
   $scope.groupes = GroupeAPI.get();
+  $scope.user = {};
 
   $scope.sauvegarder = function () {
-    if ($scope.user.password == $scope.user.passwordRepeat || !$scope.editPassword) {
+    if ($scope.user && ($scope.user.password == $scope.user.passwordRepeat || !$scope.editPassword)) {
       if (!$scope.editPassword) {
         delete $scope.user.password;
         delete $scope.user.passwordRepeat;
@@ -73,7 +74,9 @@ app.controller('AddUserController', function ($scope, GroupeAPI, UserAPI) {
       UserAPI.save($scope.user, function (user) {
         $scope.user = user;
         $scope.error = null;
+        $scope.editPassword = false;
         notie.alert(1, 'Sauvegardé !', 1.5);
+        setTimeout(function() { window.location = "/users";}, 1500);
       }, function (err) {
         $scope.error = err.data;
         notie.alert(3, 'Erreur', 1.5);
