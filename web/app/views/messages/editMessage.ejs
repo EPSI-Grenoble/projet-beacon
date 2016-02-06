@@ -40,7 +40,7 @@
         <div class="two fields">
           <div class="field" ng-if="message.type == 'beacon'">
             <label>Beacons concerné</label>
-            <select type="text" class="ui fluid search dropdown" multiple ng-model="message.beacons" ng-dropdown
+            <select type="text" class="ui fluid search dropdown" multiple ng-model="message.beacons" ng-dropdown="{}" ng-dropdown-choice="beaconList"
                     ng-dropdown-values="beaconList" ng-options="beacon.UUID as beacon.nom for beacon in beaconList">
               <option value="">Choisir un ou plusieurs beacons</option>
             </select>
@@ -77,7 +77,7 @@
           <div class="seven wide field ng-class:{'error' : error.destinataires}">
             <label>Liste de diffusion</label>
             <select type="text" class="ui fluid search dropdown" multiple ng-model="groupeSelected" ng-dropdown="{}"
-                    ng-dropdown-values="groupes" ng-options="groupe._id as groupe._id for groupe in groupes"
+                    ng-dropdown-values="groupes" ng-options="groupe._id as groupe._id for groupe in groupes"  ng-dropdown-choice="groupes"
                     ng-change="selectUsers()">
               <option value="">Liste de diffusion</option>
             </select>
@@ -87,6 +87,7 @@
           <div class="seven wide field ng-class:{'error' : error.destinataires}">
             <label>Guest</label>
             <select type="text" class="ui fluid search dropdown" multiple ng-model="guestSelected"
+                    ng-dropdown-choice="guests"
                     ng-dropdown="{'key': '_id', 'value' : 'label'}"
                     ng-dropdown-values="guests" ng-options="guest._id as guest.label for guest in guests"
                     ng-change="selectGuest()">

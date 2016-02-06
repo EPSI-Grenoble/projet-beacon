@@ -7,5 +7,9 @@ a {
   color: #00B7FF;
 }
 .menu{
-  
+
+}
+
+.ui.link.event:hover {
+  cursor: pointer;
 }

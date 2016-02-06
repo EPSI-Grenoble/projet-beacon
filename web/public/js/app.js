@@ -17,7 +17,7 @@ app.controller('AddMessageController', function ($scope, $http, GroupeAPI, Beaco
       $scope.message = message;
       $scope.error = null;
       notie.alert(1, 'Success!', 1.5);
-      setTimeout(function() { window.location = "/users";}, 1500);
+      setTimeout(function() { window.location = "/messages";}, 1500);
     }).error(function (err) {
       $scope.error = err.errors;
       notie.alert(3, 'Erreur', 1.5);
@@ -72,7 +72,6 @@ app.controller('AddUserController', function ($scope, GroupeAPI, UserAPI) {
         delete $scope.user.password;
         delete $scope.user.passwordRepeat;
       }
-      console.log($scope.user);
       UserAPI.save($scope.user, function (user) {
         $scope.user = user;
         $scope.error = null;
@@ -92,6 +91,17 @@ app.controller('AddUserController', function ($scope, GroupeAPI, UserAPI) {
     }
   };
   $scope.user = {};
+});
+
+app.controller('ListeMessageController', function ($scope, ngDialog) {
+  $scope.openMessage = function (message) {
+    $scope.message = message;
+    ngDialog.open({
+      template: 'messageTemplate',
+      scope: $scope,
+      id: "message-detail"
+    });
+  };
 });
 
 app.controller('ListeUserController', function ($scope, UserAPI) {

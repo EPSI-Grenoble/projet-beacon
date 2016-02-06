@@ -1,10 +1,10 @@
 angular.module('starter.controllers', [])
 
-.controller('LoginCtrl', function($scope, $state, RequestsService, BeaconService,$ionicPopup) {
+.controller('LoginCtrl', function($scope, $state, RequestsService, BeaconService,$ionicPopup, $rootScope) {
 
   $scope.user = {};
-  //$scope.user.username = window.localStorage['login'];
-  //$scope.user.password = window.localStorage['password'];
+  $scope.user.username = window.localStorage['login'];
+  $scope.user.password = window.localStorage['password'];
 
   //$state.go('tab.dash');
   $scope.signIn = function(user) {
@@ -12,9 +12,10 @@ angular.module('starter.controllers', [])
 
     RequestsService.logIn(user.username, user.password).then(function(response){
       if(response.success){
-        $state.go('messages');
         window.localStorage["api_token"] = response.token;
         BeaconService.init();
+        $state.go('messages', {}, {reload : true});
+        $rootScope.refresh();
       } else {
         $scope.messageError = response.msg
       }
@@ -25,9 +26,7 @@ angular.module('starter.controllers', [])
 
   $scope.showPopup = function() {
     $scope.data = {};
-
-    // An elaborate, custom popup
-    var myPopup = $ionicPopup.show({
+    $ionicPopup.show({
       template: '<input type="text" ng-model="data.guest">',
       title: 'Entrer le code invité',
       scope: $scope,
@@ -40,10 +39,11 @@ angular.module('starter.controllers', [])
             RequestsService.logGuest($scope.data.guest).then(function(response){
               if(response.success){
                 e.preventDefault();
-                $state.go('messages');
                 window.localStorage["api_token"] = response.token;
-                window.localStorage["guest"] = true;
+                $rootScope.guest = true;
                 BeaconService.init();
+                $state.go('messages', {}, {reload : true});
+                $rootScope.refresh();
               } else {
                 $scope.messageError = response.msg
               }
@@ -54,11 +54,6 @@ angular.module('starter.controllers', [])
         }
       ]
   });
-
-  myPopup.then(function(res) {
-    console.log('Tapped!', res);
-  });
-
  };
 })
 
@@ -68,22 +63,22 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('ListMessageCtrl', function($scope, Messages, $state, $ionicSideMenuDelegate) {
+.controller('ListMessageCtrl', function($scope, Messages, $state, $ionicSideMenuDelegate, $rootScope) {
   $scope.displayMessages = $scope.allMessages = [];
 
   $scope.showMenu = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };
 
-  $scope.refresh = function() {
+  $rootScope.refresh = function() {
+    console.log("Get all message");
     Messages.all().then(function(response){
       $scope.allMessages = response;
       $scope.search()
     });
   };
 
-  $scope.refresh();
-
+  $rootScope.refresh();
 
   $scope.remove = function(message) {
     Messages.remove(message);

@@ -1,18 +1,21 @@
-//var base_url = 'https://beacon.martin-choraine.fr';
-var base_url = 'http://192.168.0.24:3000';
+var base_url = 'https://beacon.martin-choraine.fr';
+//var base_url = 'http://192.168.0.24:3000';
 
 angular.module('starter.services', [])
 
-  .factory('Messages', function ($http, $q) {
+  .factory('Messages', function ($http, $q, $rootScope) {
     function getAll() {
       var deferred = $q.defer();
 
-      $http.get(base_url + "/api/messages/user?token=" + window.localStorage["api_token"]+"&guest="+window.localStorage["guest"])
+      $http.get(base_url + "/api/messages/user?token=" + window.localStorage["api_token"]+"&guest="+$rootScope.guest)
         .success(function (response) {
           deferred.resolve(response);
           console.log(response);
         })
-        .error(function (data) {
+        .error(function (data, status) {
+          if(status == 401){
+            $rootScope.logout();
+          }
           deferred.reject();
         });
 
@@ -22,11 +25,14 @@ angular.module('starter.services', [])
     function get(id) {
       var deferred = $q.defer();
 
-      $http.get(base_url + "/api/messages/user/" + id + "?token=" + window.localStorage["api_token"]+"&guest="+window.localStorage["guest"])
+      $http.get(base_url + "/api/messages/user/" + id + "?token=" + window.localStorage["api_token"]+"&guest="+$rootScope.guest)
         .success(function (response) {
           deferred.resolve(response);
         })
-        .error(function (data) {
+        .error(function (data, status) {
+          if(status == 401){
+            $rootScope.logout();
+          }
           deferred.reject();
         });
 
@@ -58,7 +64,7 @@ angular.module('starter.services', [])
         })
         .success(function (response) {
           if(window.localStorage['device_token']){
-            $http.post(base_url + "/api/auth/gcm-token?token=" + window.localStorage["api_token"]+"&guest="+window.localStorage["guest"], {"gcm-token":window.localStorage['device_token']})
+            $http.post(base_url + "/api/auth/gcm-token?token=" + window.localStorage["api_token"]+"&guest="+$rootScope.guest, {"gcm-token":window.localStorage['device_token']})
           }
           window.localStorage['login'] = login;
           window.localStorage['password'] = password;
@@ -152,7 +158,7 @@ angular.module('starter.services', [])
 
   }])
 
-  .factory('BeaconService', ['$http', '$q', '$rootScope', '$cordovaBeacon', '$interval', function ($http, $q, $ionicLoading, $cordovaBeacon, $interval) {
+  .factory('BeaconService', ['$http', '$q', '$rootScope', '$cordovaBeacon', '$interval', '$rootScope', function ($http, $q, $ionicLoading, $cordovaBeacon, $interval, $rootScope) {
 
     var intervalBeaconRequest;
 
@@ -162,7 +168,7 @@ angular.module('starter.services', [])
         intervalBeaconRequest = undefined;
       }
       intervalBeaconRequest = $interval(function () {
-        $http.get(base_url + "/api/beacons/user/?token=" + window.localStorage["api_token"]+"&guest="+window.localStorage["guest"]).success(function (beaconsToListen) {
+        $http.get(base_url + "/api/beacons/user/?token=" + window.localStorage["api_token"]+"&guest="+$rootScope.guest).success(function (beaconsToListen) {
           angular.forEach(beaconsToListen, function (beacon) {
             console.log(beacon);
             $cordovaBeacon.startRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("ibeacon", beacon.beacons));
@@ -172,7 +178,7 @@ angular.module('starter.services', [])
     };
 
     var isMessageExist = function (beaconUUID, proximity) {
-      $http.get(base_url + "/api/messages/user/beacon/" + beaconUUID + "?proximity=" + proximity + "&token=" + window.localStorage["api_token"]+"&guest="+window.localStorage["guest"]).success(function (result) {
+      $http.get(base_url + "/api/messages/user/beacon/" + beaconUUID + "?proximity=" + proximity + "&token=" + window.localStorage["api_token"]+"&guest="+$rootScope.guest).success(function (result) {
         $cordovaBeacon.stopRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("ibeacon", beaconUUID));
       })
     };

@@ -12,6 +12,14 @@ module.exports = {
       })
   },
 
+  findById : function(id, callback){
+    GuestModel
+      .findById(id)
+      .exec(function (err, guest) {
+        callback(err, guest)
+      })
+  },
+
   createGuest: function (form, callback) {
     var guest = new GuestModel({
       label: form.label,

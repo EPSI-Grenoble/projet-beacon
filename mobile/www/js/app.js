@@ -1,6 +1,6 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "ngCordovaBeacon", "ngSanitize"])
 
-.run(function($ionicPlatform, NotificationService, $ionicLoading, $cordovaBeacon, $rootScope, BeaconService) {
+.run(function($ionicPlatform, NotificationService, $ionicLoading, $cordovaBeacon, $rootScope, BeaconService, $state) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
@@ -22,10 +22,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "
       }
     });
   });
+
+
+  $rootScope.logout = function(){
+    $state.go('login', {}, {reload : true});
+  }
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
-
 
   $stateProvider
     .state('login', {
