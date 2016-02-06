@@ -67,8 +67,9 @@ describe("Test controllers", function () {
   });
 
   after(function (done) {
-    server.shutdown();
-    done()
+    server.shutdown(function(){
+      done()
+    });
   })
 
 });

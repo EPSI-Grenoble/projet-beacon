@@ -46,8 +46,10 @@ module.exports = {
       callback(app)
     });
   },
-  shutdown: function() {
+  shutdown: function(callback) {
     mongoose.connection.db.dropDatabase();
-    server.close()
+    server.close(function(){
+      callback()
+    })
   }
 };
