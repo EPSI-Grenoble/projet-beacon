@@ -5,6 +5,15 @@ var mongoose = require('mongoose'),
 
 module.exports = {
 
+
+  tokenValid: function (token, callback) {
+    UserModel
+      .findOne({token: token})
+      .exec(function (err, userConnected) {
+        callback(err, userConnected)
+      })
+  },
+
   updateGroupe: function (oldName, newName) {
     UserModel
       .find({groupes: oldName})

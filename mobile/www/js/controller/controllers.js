@@ -3,8 +3,8 @@ angular.module('starter.controllers', [])
 .controller('LoginCtrl', function($scope, $state, RequestsService, BeaconService,$ionicPopup) {
 
   $scope.user = {};
-  $scope.user.username = window.localStorage['login'];
-  $scope.user.password = window.localStorage['password'];
+  //$scope.user.username = window.localStorage['login'];
+  //$scope.user.password = window.localStorage['password'];
 
   //$state.go('tab.dash');
   $scope.signIn = function(user) {
@@ -42,6 +42,7 @@ angular.module('starter.controllers', [])
                 e.preventDefault();
                 $state.go('messages');
                 window.localStorage["api_token"] = response.token;
+                window.localStorage["guest"] = true;
                 BeaconService.init();
               } else {
                 $scope.messageError = response.msg
@@ -75,11 +76,9 @@ angular.module('starter.controllers', [])
   };
 
   $scope.refresh = function() {
-    $scope.displayMessages = $scope.allMessages = [];
     Messages.all().then(function(response){
-      $scope.displayMessages = $scope.allMessages = response;
-    }, function(){
-      $state.go('login');
+      $scope.allMessages = response;
+      $scope.search()
     });
   };
 
@@ -91,11 +90,14 @@ angular.module('starter.controllers', [])
   };
 
   $scope.search = function() {
-
-    $scope.displayMessages = $scope.allMessages.filter(function (message) {
-      var titre = message.titre.toLowerCase();
-      return titre.indexOf($scope.search.query.toLowerCase()) > -1;
-    });
+    if($scope.search.query){
+      $scope.displayMessages = $scope.allMessages.filter(function (message) {
+        var titre = message.titre.toLowerCase();
+        return titre.indexOf($scope.search.query.toLowerCase()) > -1;
+      });
+    } else {
+      $scope.displayMessages = $scope.allMessages;
+    }
   };
 })
 

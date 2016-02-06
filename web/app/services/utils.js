@@ -1,5 +1,7 @@
 // isUserLogIn permet de vérifier que l'utilisateur est connecté sinon on le redirige vers la page d'authentification
 var env = process.env.NODE_ENV || 'development';
+var UserRepository = require("../repository/UserRepository");
+var GuestRepository = require("../repository/GuestRepository");
 
 module.exports =  {
   isAuth : function(req, res, next){
@@ -19,10 +21,24 @@ module.exports =  {
     }
   },
   isTokenValid : function(req, res, next){
-    if(req.session[req.query.token]){
-      return next()
+    if(req.query.guest){
+      GuestRepository.tokenValid(req.query.token, function(err, user){
+        if(user){
+          req.user = user;
+          return next()
+        } else {
+          res.sendStatus(401);
+        }
+      });
     } else {
-      res.sendStatus(401);
+      UserRepository.tokenValid(req.query.token, function(err, user){
+        if(user){
+          req.user = user;
+          return next()
+        } else {
+          res.sendStatus(401);
+        }
+      });
     }
   },
   getProximity : function (proximity) {

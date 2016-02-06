@@ -48,7 +48,7 @@ router.delete('/:id', Utils.isAuth, function (req, res) {
  * API pour récupèrer la liste des beacon à écouter pour recevoir des messages pour un user
  */
 router.get('/user/', Utils.isTokenValid, function (req, res) {
-  MessageRepository.findBeaconToListenForUser(req.session[req.query.token].user, function (err, beacons) {
+  MessageRepository.findBeaconToListenForUser(req.user, function (err, beacons) {
     if (err) {
       res.status(500).send(err);
     } else {

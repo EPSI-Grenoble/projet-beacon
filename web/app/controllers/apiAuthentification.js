@@ -16,14 +16,11 @@ module.exports = function (app) {
 router.post('/auth', function (req, res) {
   UserRepository.connexion(req.body.login, req.body.password, function (err, user) {
       if (!user || err) {
-        res.json({success: false, msg: "Erreur d'identifiant ou de mot de passe"});
+        res.status(401).json({success: false, msg: "Erreur d'identifiant ou de mot de passe"});
       }
       else {
         var tokenGenerated = uuid.v4();
-        req.session[tokenGenerated] = {
-          user: user._id,
-          expire: moment().add(10, 'days')
-        };
+        user.token = tokenGenerated;
         user.device_token = req.body.device_token;
         user.save();
         res.json({success: true, token: tokenGenerated, user:user});
@@ -40,18 +37,35 @@ router.post('/auth-guest', function (req, res) {
       }
       else {
       var tokenGenerated = uuid.v4();
-        req.session[tokenGenerated] = {
-          guest: guest._id,
-          expire: moment().add(10, 'days')
-        };
         if(guest.device_token.indexOf(req.body.device_token) < 0 && req.body.device_token != null){
           guest.device_token.push(req.body.device_token);
-          guest.save();
         }
+        guest.token = tokenGenerated;
+        guest.save();
         res.json({success: true, token: tokenGenerated, user:{
           firstName : guest.label,
           lastName : ""
         }});
+      }
+    }
+  );
+});
+
+
+router.post('/auth/gcm-token', function (req, res) {
+  UserRepository.connexion(req.body.login, req.body.password, function (err, user) {
+      if (!user || err) {
+        res.json({success: false, msg: "Erreur d'identifiant ou de mot de passe"});
+      }
+      else {
+        var tokenGenerated = uuid.v4();
+        req.session[tokenGenerated] = {
+          user: user._id,
+          expire: moment().add(10, 'days')
+        };
+        user.device_token = req.body.device_token;
+        user.save();
+        res.json({success: true, token: tokenGenerated, user:user});
       }
     }
   );

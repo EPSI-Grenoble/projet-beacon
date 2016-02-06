@@ -24,7 +24,7 @@
     <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="message in displayMessages" type="item-text-wrap" href="#/messages/{{message._id}}">
 
-        <img  class="typeMessage" ng-src="img/{{message.typeMessage}}.png">
+        <img class="typeMessage" ng-src="img/{{message.typeMessage}}.png">
         <h2>{{message.titre}}</h2>
         <p ng-if="message.fromDate!=null || message.toDate!=null">
           <span ng-if="message.fromDate!=null">

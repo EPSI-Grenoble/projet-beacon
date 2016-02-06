@@ -17,10 +17,7 @@
     </h2>
 
     <div class="ui segment">
-      <form ng-submit="sauvegarder()" class="ui form"
-        <% if(newUser == null) { %>
-            ng-init="editPassword = true"
-        <% } %>
+      <form ng-submit="sauvegarder()" class="ui form" <% if(newUser == null) { %> ng-init="editPassword = true" <% } %>
       >
         <div class="field ng-class:{'error' : error.email}">
           <label>Email</label>

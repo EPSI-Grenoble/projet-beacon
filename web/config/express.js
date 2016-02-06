@@ -36,7 +36,15 @@ module.exports = function(app, config) {
 
   // Le module qui nous permet de gérer l'authentification et la session
   require('./passport')(passport);
-  app.use(session({ secret: 'MartinIsAwesome' }));
+  app.use(session({
+    secret: 'Sessionfuck',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+      secure: false, // Secure is Recommeneded, However it requires an HTTPS enabled website (SSL Certificate)
+      maxAge: 864000000 // 10 Days in miliseconds
+    }
+  }));
   app.use(passport.initialize());
   app.use(passport.session());
   app.use(flash());

@@ -20,6 +20,9 @@ var GuestSchema = new Schema({
   },
   device_token : {
     type: Array
+  },
+  token : {
+    type : String
   }
 });
 

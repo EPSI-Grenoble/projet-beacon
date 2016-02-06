@@ -4,6 +4,14 @@ var mongoose = require('mongoose'),
 
 module.exports = {
 
+  tokenValid: function (token, callback) {
+    GuestModel
+      .findOne({token: token})
+      .exec(function (err, userConnected) {
+        callback(err, userConnected)
+      })
+  },
+
   createGuest: function (form, callback) {
     var guest = new GuestModel({
       label: form.label,

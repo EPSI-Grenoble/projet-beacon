@@ -27,7 +27,8 @@ router.get('/', Utils.isAuth , function (req, res, next) {
         users : usersList
       })
     }
-  )
+  );
+  console.log(req.session);
 });
 
 // Page des messages

@@ -17,6 +17,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "
 
     $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function(event, pluginResult) {
       for(var i = 0; i < pluginResult.beacons.length; i++) {
+        console.log(pluginResult.beacons[i]);
         BeaconService.isMessageExist(pluginResult.beacons[i].uuid, pluginResult.beacons[i].proximity)
       }
     });

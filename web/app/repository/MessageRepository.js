@@ -44,8 +44,9 @@ module.exports = {
   },
 
   findMessageForThisUser: function (idUser, callback) {
+    console.log(idUser);
     MessageModel
-      .find({"destinataires": idUser})
+      .find({"destinataires": idUser.toString()})
       .sort({"dateCreation": -1})
       .exec(function (err, messages) {
         callback(err, messages)
@@ -56,11 +57,11 @@ module.exports = {
     MessageModel
       .aggregate({
           $match: {
-            destinataires: idUser,
+            destinataires: idUser._id.toString(),
             typeMessage: "beacon",
             receiveBy: {
               $not: {
-                $in: [idUser]
+                $in: [idUser._id.toString()]
               }
             }
           }

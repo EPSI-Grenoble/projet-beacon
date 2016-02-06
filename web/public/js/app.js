@@ -67,10 +67,12 @@ app.controller('AddUserController', function ($scope, GroupeAPI, UserAPI) {
 
   $scope.sauvegarder = function () {
     if ($scope.user && ($scope.user.password == $scope.user.passwordRepeat || !$scope.editPassword)) {
+      console.log($scope.editPassword);
       if (!$scope.editPassword) {
         delete $scope.user.password;
         delete $scope.user.passwordRepeat;
       }
+      console.log($scope.user);
       UserAPI.save($scope.user, function (user) {
         $scope.user = user;
         $scope.error = null;
