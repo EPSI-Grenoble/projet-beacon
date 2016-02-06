@@ -7,6 +7,7 @@ describe("Test Users API", function () {
   var request;
 
   before(function (done) {
+    this.timeout(5000);
     server.app(function(app) {
       request = supertest.agent(app);
       done();
@@ -14,6 +15,7 @@ describe("Test Users API", function () {
   });
 
   it("log user", function (done) {
+    this.timeout(5000);
     request
       .post('/login')
       .send({
@@ -24,6 +26,7 @@ describe("Test Users API", function () {
   });
 
   it("Create user", function (done) {
+    this.timeout(5000);
     request
       .post('/api/users')
       .send({
@@ -41,6 +44,7 @@ describe("Test Users API", function () {
   });
 
   it("Create user incomplet", function (done) {
+    this.timeout(5000);
     request
       .post('/api/users')
       .send({
@@ -55,6 +59,7 @@ describe("Test Users API", function () {
   });
 
   it("Get all user", function (done) {
+    this.timeout(5000);
     request
       .get('/api/users')
       .end(function (err, res) {
