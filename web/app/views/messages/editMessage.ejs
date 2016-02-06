@@ -86,7 +86,7 @@
             <div class="ui pointing red label" ng-if="error.destinataires">{{error.destinataires.message}}</div>
           </div>
 
-          <div class="seven wide field">
+          <div class="seven wide field ng-class:{'error' : error.destinataires}">
             <label>Guest</label>
             <select type="text" class="ui fluid search dropdown" multiple ng-model="guestSelected"
                     ng-dropdown="{'key': '_id', 'value' : 'label'}"

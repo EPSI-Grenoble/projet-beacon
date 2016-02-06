@@ -29,7 +29,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "
   $stateProvider
     .state('login', {
       url: '/login',
-      templateUrl: 'templates/login.html',
+      templateUrl: 'templates/testLogin.html',
       controller: 'LoginCtrl'
     })
     .state('messages', {
