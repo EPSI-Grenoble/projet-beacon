@@ -10,7 +10,6 @@ process.env.NODE_ENV = "test";
 var express = require('express'),
   config = require('../config/config'),
   glob = require('glob'),
-  md5 = require('md5'),
   mongoose = require('mongoose');
 
 mongoose.connect(config.db);
@@ -28,23 +27,12 @@ var app = express();
 
 require('../config/express')(app, config);
 
-var server = app.listen(config.port, function () {
-});
+ app.listen(config.port);
 
 module.exports = {
   app: function (callback) {
     mongoose.connection.db.dropDatabase();
-    var UserModel = mongoose.model('users');
-    var user = new UserModel({
-      email : "test@testeur.com",
-      password : md5("test"),
-      lastName : "Test",
-      firstName : "App",
-      isAdmin : true
-    });
-    user.save(function(){
-      callback(app)
-    });
+    callback(app)
   },
   shutdown: function(callback) {
     mongoose.connection.db.dropDatabase();

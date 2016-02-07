@@ -22,6 +22,7 @@ module.exports =  {
   },
   isTokenValid : function(req, res, next){
     var isGuest = (req.query.guest === 'true');
+    console.log(isGuest);
     if(isGuest && isGuest != undefined){
       GuestRepository.tokenValid(req.query.token, function(err, user){
         if(user){

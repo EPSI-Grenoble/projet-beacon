@@ -1,5 +1,7 @@
 var expect = require("chai").expect;
 var server = require("./serverMock"),
+  mongoose = require('mongoose'),
+  md5 = require('md5'),
   supertest = require("supertest");
 
 
@@ -8,9 +10,19 @@ describe("Test Users API", function () {
 
   before(function (done) {
     this.timeout(5000);
-    server.app(function(app) {
+    server.app(function (app) {
       request = supertest.agent(app);
-      done();
+      var UserModel = mongoose.model('users');
+      var user = new UserModel({
+        email: "test@testeur.com",
+        password: md5("test"),
+        lastName: "Test",
+        firstName: "App",
+        isAdmin: true
+      });
+      user.save(function () {
+        done()
+      });
     });
   });
 
@@ -70,7 +82,7 @@ describe("Test Users API", function () {
   });
 
   after(function (done) {
-    server.shutdown(function(){
+    server.shutdown(function () {
       done()
     });
   })

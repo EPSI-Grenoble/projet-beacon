@@ -11,105 +11,129 @@
       <h1 class="ui header">
         <img src="/img/epsi-logo.png" class="ui bordered circular image" style="background-color: white">
         <div class="content">
-        <%= title %>
-        <div class="sub header">Plateforme de contact de l'EPSI</div>
+          <%= title %>
+          <div class="sub header">Plateforme de contact de l'EPSI</div>
         </div>
       </h1>
     </div>
 
     <div class="ui four stackable cards">
-          <a class="card" href="/monCompte">
-            <div class="content">
-              <div class="header">Mon compte</div>
-              <div class="meta">
-                <span class="category">Information du compte de l'utilisateur</span>
-              </div>
-            </div>
-          </a>
-          <a class="card" href="/messages">
-            <div class="content">
-              <div class="header">Les messages</div>
-              <div class="meta">
-                <span class="category">Liste des messages envoyés</span>
-              </div>
-            </div>
-          </a>
-          <a class="card" href="/messages/edit">
-            <div class="content">
-              <div class="header">Envoyer un message</div>
-              <div class="meta">
-                <span class="category">Envoyer un message flash ou beacon</span>
-              </div>
-            </div>
-          </a>
-
-
-      <a class="card" href="/users">
+      <a class="blue card" href="/monCompte">
         <div class="content">
-          <div class="header">Les utilisateurs</div>
+          <div class="header"><i class="user icon"></i> Mon compte</div>
+          <div class="meta">
+            <span class="category">Information du compte de l'utilisateur</span>
+          </div>
+        </div>
+          <div class="extra content">
+            <div class="right floated author">
+              <i class="sign in circular blue inverted icon"></i>
+            </div>
+          </div>
+      </a>
+      <a class="blue card" href="/messages">
+        <div class="content">
+          <div class="header"><i class="comment icon"></i> Les messages</div>
+          <div class="meta">
+            <span class="category">Liste des messages envoyés</span>
+          </div>
+        </div>
+        <div class="extra content">
+          <div class="right floated author">
+            <i class="sign in circular blue inverted icon"></i>
+          </div>
+        </div>
+      </a>
+      <a class="blue card" href="/messages/edit">
+        <div class="content">
+          <div class="header"><i class="comment icon"></i> Envoyer un message</div>
+          <div class="meta">
+            <span class="category">Envoyer un message flash ou beacon</span>
+          </div>
+        </div>
+        <div class="extra content">
+          <div class="right floated author">
+            <i class="sign in circular blue inverted icon"></i>
+          </div>
+        </div>
+      </a>
+
+
+      <a class="blue card" href="/users">
+        <div class="content">
+          <div class="header"><i class="users icon"></i> Les utilisateurs</div>
           <div class="meta">
             <span class="category">Modifier/Supprimer des utilisateurs</span>
           </div>
         </div>
       </a>
-      <a class="card" href="/admin">
-         <div class="content">
-            <div class="header">Les administrateurs</div>
-            <div class="meta">
-              <span class="category">Modifier/Supprimer des administrateurs</span>
-            </div>
-         </div>
-      </a>
-      <a class="card" href="/guest">
-         <div class="content">
-            <div class="header">Les guests</div>
-            <div class="meta">
-              <span class="category">Désactiver/Modifier/supprimer les guests</span>
-            </div>
-         </div>
-      </a>
-      <a class="card" href="/users/edit">
+      <a class="blue card" href="/admin">
         <div class="content">
-          <div class="header">Créer un utilisateur</div>
+          <div class="header"><i class="users icon"></i> Les administrateurs</div>
+          <div class="meta">
+            <span class="category">Modifier/Supprimer des administrateurs</span>
+          </div>
+        </div>
+      </a>
+      <a class="blue card" href="/guest">
+        <div class="content">
+          <div class="header"><i class="users icon"></i> Les guests</div>
+          <div class="meta">
+            <span class="category">Désactiver/Modifier/supprimer les guests</span>
+          </div>
+        </div>
+      </a>
+      <a class="blue card" href="/users/edit">
+        <div class="content">
+          <div class="header"><i class="users icon"></i> Créer un utilisateur</div>
           <div class="meta">
             <span class="category">Créer un utilisateur</span>
           </div>
         </div>
       </a>
-      <a class="card" href="/groupes">
+      <a class="blue card" href="/groupes">
         <div class="content">
-          <div class="header">Gérer les listes de diffusion</div>
+          <div class="header"><i class="users icon"></i> Gérer les listes de diffusion</div>
           <div class="meta">
             <span class="category">Créer/Modifier/Supprimer les listes de difusion</span>
           </div>
         </div>
       </a>
 
-          <a class="card" href="/beacons">
-            <div class="content">
-              <div class="header">Gerer les beacons</div>
-              <div class="meta">
-                <span class="category">Créer/Supprimer les beacons</span>
-              </div>
-            </div>
-          </a>
+      <a class="blue card" href="/users/import">
+        <div class="content">
+          <div class="header"><i class="users icon"></i> Importer des utilisateurs</div>
+          <div class="meta">
+            <span class="category">Importer à partir d'un fichier xls</span>
+          </div>
+        </div>
+      </a>
 
-           <a class="card" href="/messages/edit?type=push">
-              <div class="content">
-              <div class="header">Créer un message Push</div>
-                <div class="meta">
-                    <span class="category">Créer un message en mode Push</span>
-                 </div>
-              </div>
-           </a>
-           <a class="card" href="/messages/edit?type=beacon">
-               <div class="content">
-               <div class="header">Créer un message Beacon</div>
-                  <div class="meta">
-                    <span class="category">Créer un message en mode Beacon</span>
-                  </div>
-               </div>
-           </a>
+      <a class="blue card" href="/beacons">
+        <div class="content">
+          <div class="header">Gerer les beacons</div>
+          <div class="meta">
+            <span class="category">Créer/Supprimer les beacons</span>
+          </div>
+        </div>
+      </a>
+
+      <a class="blue card" href="/messages/edit?type=push">
+        <div class="content">
+          <div class="header">Créer un message Push</div>
+          <div class="meta">
+            <span class="category">Créer un message en mode Push</span>
+          </div>
+        </div>
+      </a>
+      <a class="blue card" href="/messages/edit?type=beacon">
+        <div class="content">
+          <div class="header">Créer un message Beacon</div>
+          <div class="meta">
+            <span class="category">Créer un message en mode Beacon</span>
+          </div>
+        </div>
+      </a>
     </div>
   </div>
 

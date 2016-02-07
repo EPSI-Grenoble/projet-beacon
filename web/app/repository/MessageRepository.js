@@ -68,9 +68,11 @@ module.exports = {
           }
         },
         { $unwind: "$beacons"},
-        { $project: {"beacons": 1} }
+        { $project: {"beacons": 1, "titre": 1} }
       )
       .exec(function (err, messages) {
+        console.log("message found for user "+idUser._id.toString());
+        console.log(messages);
         callback(err, messages);
       })
   },

@@ -54,11 +54,12 @@ router.get('/user/:idMessage', Utils.isTokenValid, function (req, res, next) {
 router.get('/user/beacon/:idBeacon', Utils.isTokenValid, function (req, res, next) {
   var proximity = req.query.proximity;
   var idBeacon = req.params.idBeacon;
-  var idUser = req.user._id.toString()
+  var idUser = req.user._id.toString();
   MessageRepository.findMessageForThisUserAndThisBeacon(idUser, idBeacon, proximity, function (err, messages) {
     messages.forEach(function (message) {
       message.receiveBy.push(idUser);
       message.save();
+      console.log(message);
       var sender = new SendBeacon(message, idUser);
       sender.sendNow();
     });
