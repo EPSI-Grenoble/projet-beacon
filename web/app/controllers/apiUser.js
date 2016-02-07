@@ -30,7 +30,7 @@ router.get("/groupes", Utils.isAuth, function (req, res, next) {
 /**
  * API pour créer un user ou pour modifier si un ID existe
  */
-router.post('/', Utils.isAuth, function (req, res, next) {
+router.post('/', function (req, res, next) {
   if (!req.body.isAdmin) {
     req.body.isAdmin = false;
   }

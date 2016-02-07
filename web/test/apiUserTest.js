@@ -12,18 +12,22 @@ describe("Test Users API", function () {
     this.timeout(10000);
     server.app(function (app) {
       request = supertest.agent(app);
-      var UserModel = mongoose.model('users');
-      var user = new UserModel({
+      done();
+    });
+  });
+
+  it("should create user", function (done) {
+    this.timeout(10000);
+    request
+      .post('/api/users')
+      .send({
         email: "test@testeur.com",
-        password: md5("test"),
+        password: "test",
         lastName: "Test",
         firstName: "App",
         isAdmin: true
-      });
-      user.save(function () {
-        done()
-      });
-    });
+      })
+      .expect(200, done)
   });
 
   it("log user", function (done) {
