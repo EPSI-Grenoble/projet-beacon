@@ -43,7 +43,29 @@
               </div>
             </div>
           </div>
+      <div class="card">
+        <div class="content">
+          <i style="float:right;" class="large floated mini ui download middle aligned icon"></i>
+          <div class="header">
+            Importer des utilisateurs
+          </div><br>
+          <div class="meta">
+            Pour réaliser un import, la liste des utilisateurs doit être au format XLS.
+          </div>
+          <div class="description">
+            <span class="ui label" ng-repeat="groupe in user.groupes">{{groupe}}</span>
+          </div>
+        </div>
+        <div class="extra content">
+          <div class="ui two buttons">
+            <a class="ui basic green button" href="/users/import">Se rendre sur la page d'import</a>
+          </div>
+        </div>
       </div>
+
+    </div>
+
+
   </div>
 
   <div class="one wide column"><p></p></div>
