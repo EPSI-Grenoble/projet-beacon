@@ -1,5 +1,5 @@
-//var base_url = 'https://beacon.martin-choraine.fr';
-var base_url = 'http://192.168.0.24:3000';
+var base_url = 'https://beacon.martin-choraine.fr';
+//var base_url = 'http://192.168.0.24:3000';
 
 angular.module('starter.services', [])
 
