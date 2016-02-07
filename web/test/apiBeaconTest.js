@@ -28,7 +28,7 @@ describe("Test Beacon API", function () {
   });
 
   it("log user", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .post('/login')
       .send({
@@ -39,7 +39,7 @@ describe("Test Beacon API", function () {
   });
 
   it("Create invalid beacon", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .post('/api/beacons')
       .send({
@@ -54,7 +54,7 @@ describe("Test Beacon API", function () {
   });
 
   it("Create beacon", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .post('/api/beacons')
       .send({
@@ -68,7 +68,7 @@ describe("Test Beacon API", function () {
   });
 
   it("Get all beacon", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .get('/api/beacons')
       .end(function (err, res) {

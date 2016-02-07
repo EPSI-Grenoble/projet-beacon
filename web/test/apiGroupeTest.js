@@ -9,7 +9,7 @@ describe("Test Groupe API", function () {
   var request;
 
   before(function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     server.app(function (app) {
       request = supertest.agent(app);
       var UserModel = mongoose.model('users');
@@ -28,7 +28,7 @@ describe("Test Groupe API", function () {
 
 
   it("log user", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .post('/login')
       .send({
@@ -39,7 +39,7 @@ describe("Test Groupe API", function () {
   });
 
   it("Create a groupe", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .post('/api/groupes')
       .send({
@@ -52,7 +52,7 @@ describe("Test Groupe API", function () {
   });
 
   it("Create user with a groupe", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .post('/api/users')
       .send({
@@ -71,7 +71,7 @@ describe("Test Groupe API", function () {
   });
 
   it("Get users groupes", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .get('/api/users/groupes')
       .end(function (err, res) {
@@ -85,7 +85,7 @@ describe("Test Groupe API", function () {
 
   var idGroupe;
   it("Get all groupes", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .get('/api/groupes')
       .end(function (err, res) {
@@ -97,7 +97,7 @@ describe("Test Groupe API", function () {
   });
 
   it("Update a groupe", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .post('/api/groupes/' + idGroupe)
       .send({
@@ -110,7 +110,7 @@ describe("Test Groupe API", function () {
   });
 
   it("Should update users groupes", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .get('/api/users/groupes')
       .end(function (err, res) {
@@ -123,7 +123,7 @@ describe("Test Groupe API", function () {
   });
 
   it("Delete groupe", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .delete('/api/groupes/' + idGroupe)
       .end(function (err, res) {
@@ -133,7 +133,7 @@ describe("Test Groupe API", function () {
   });
 
   it("Get all groupes", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .get('/api/groupes')
       .end(function (err, res) {
@@ -144,7 +144,7 @@ describe("Test Groupe API", function () {
   });
 
   it("Get users groupes", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .get('/api/users/groupes')
       .end(function (err, res) {

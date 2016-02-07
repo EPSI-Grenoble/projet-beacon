@@ -1,5 +1,5 @@
-var base_url = 'https://beacon.martin-choraine.fr';
-//var base_url = 'http://192.168.0.24:3000';
+//var base_url = 'https://beacon.martin-choraine.fr';
+var base_url = 'http://192.168.0.24:3000';
 
 angular.module('starter.services', [])
 
@@ -63,6 +63,7 @@ angular.module('starter.services', [])
           'device_token': window.localStorage['device_token']
         })
         .success(function (response) {
+          window.localStorage["api_token"] = response.token;
           if(window.localStorage['device_token']){
             $http.post(base_url + "/api/auth/gcm-token?token=" + window.localStorage["api_token"]+"&guest="+$rootScope.guest, {"gcm-token":window.localStorage['device_token']})
           }

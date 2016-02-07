@@ -13,6 +13,7 @@ angular.module('starter.controllers', [])
     RequestsService.logIn(user.username, user.password).then(function(response){
       if(response.success){
         window.localStorage["api_token"] = response.token;
+        $rootScope.guest = false;
         BeaconService.init();
         $state.go('messages', {}, {reload : true});
         $rootScope.refresh();
