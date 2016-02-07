@@ -18,7 +18,7 @@
         <% messages.forEach(function(message){ %>
         <div class="ui link event">
           <div class="ui link content">
-            <div class="ui link segment" ng-click="openMessage(<%=JSON.stringify(message)%>)">
+            <div class="ui link segment" ng-click="openMessage(<%=JSON.stringify(message)%>, $event)">
               <a class="ui blue left ribbon label">
                 <% if(message.typeMessage == "beacon") { %>
                 <i class="bullseye icon"></i>
@@ -55,9 +55,11 @@
   <br>
   <section class="ui grid">
       <div class="eight wide column">
-        <div class="ui padding list segment">
-          <div class="item" ng-repeat="destinataire in message.destinataires">
-            {{destinataire}}
+        <div class="ui relaxed list segment">
+          <h4 class="item ui sub header" style="padding: 20px 5px 5px">Destinataires</h4>
+          <div class="item" ng-repeat="destinataire in destinataires">
+            <i class="checkmark middle aligned icon" ng-if="message.receiveBy.indexOf(destinataire._id) != -1"></i>
+            <div class="content">{{destinataire.firstName}} {{destinataire.lastName}}</div>
           </div>
         </div>
       </div>

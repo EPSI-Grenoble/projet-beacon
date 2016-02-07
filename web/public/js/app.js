@@ -93,13 +93,16 @@ app.controller('AddUserController', function ($scope, GroupeAPI, UserAPI) {
   $scope.user = {};
 });
 
-app.controller('ListeMessageController', function ($scope, ngDialog) {
-  $scope.openMessage = function (message) {
+app.controller('ListeMessageController', function ($scope, UserAPI, ngDialog) {
+  $scope.openMessage = function (message, event) {
+    event.preventDefault();
     $scope.message = message;
+    $scope.destinataires = UserAPI.getUsersFromMessage({id: message._id});
+    console.log($scope.destinataires);
     ngDialog.open({
       template: 'messageTemplate',
       scope: $scope,
-      id: "message-detail"
+      className: "ngdialog-theme-default message-detail"
     });
   };
 });

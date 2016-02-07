@@ -13,3 +13,8 @@ a {
 .ui.link.event:hover {
   cursor: pointer;
 }
+
+
+.message-detail .ngdialog-content {
+  width: 800px !important;
+}

@@ -1,6 +1,7 @@
 'use strict';
 var mongoose = require('mongoose'),
   Utils = require("../services/utils"),
+  UserRepository = require("../repository/UserRepository"),
   MessageModel = mongoose.model("messages");
 
 module.exports = {
@@ -71,6 +72,15 @@ module.exports = {
       )
       .exec(function (err, messages) {
         callback(err, messages);
+      })
+  },
+
+  getUsers : function(messageID, callback){
+    MessageModel
+      .distinct("destinataires", {"_id": messageID})
+      .exec(function (err, users) {
+        console.log(users);
+        UserRepository.getUsersFromIds(users, callback);
       })
   }
 };

@@ -196,5 +196,16 @@ module.exports = {
       .exec(function (err, user) {
         callback(err, user);
       })
+  },
+
+  getUsersFromIds(userId, callback){
+    UserModel
+      .find({
+        _id : { $in : userId}
+      })
+      .exec(function(err, users){
+        callback(err, users);
+      })
   }
+
 };

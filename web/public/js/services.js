@@ -59,7 +59,7 @@ app.service('BeaconAPI', function($resource, $location) {
 
 app.service('UserAPI', function($resource, $location) {
   var resource;
-  resource = $resource($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/users/:id', {}, {
+  resource = $resource($location.protocol() + '://' + $location.host() + ':' + $location.port() + '/api/users/:action/:id', {}, {
     'get': {
       method: "GET",
       isArray: true
@@ -78,6 +78,13 @@ app.service('UserAPI', function($resource, $location) {
     'delete': {
       method: "DELETE",
       isArray: false
+    },
+    'getUsersFromMessage': {
+      method: "GET",
+      isArray: true,
+      params : {
+        action : "message"
+      }
     }
   });
   return resource;

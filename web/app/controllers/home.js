@@ -60,7 +60,7 @@ router.get('/messages/edit', Utils.isAuth, function (req, res, next) {
 // Page du compte
 router.get('/myaccount', Utils.isAuth, function (req, res, next) {
     res.render('users/myAccount', {
-      subtitle: 'Vous êtes ici chez vous , bienvenue',
+      subtitle: 'Vous êtes ici chez vous, bienvenue',
       title: 'Afficher mon compte',
       user : req.user
     });
