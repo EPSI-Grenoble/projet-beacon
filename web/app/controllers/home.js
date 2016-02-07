@@ -95,6 +95,7 @@ router.get('/users/edit', Utils.isAuth, function (req, res, next) {
 router.get('/users/import', Utils.isAuth, function (req, res, next) {
     res.render('users/importUsers', {
       title: 'Importer des utilisateurs',
+      subtitle: 'Format XLS demandé',
       user : req.user
     });
 });
@@ -230,4 +231,3 @@ router.get("/monCompte", Utils.isAuth, function (req, res, next) {
       user : req.user
     });
 });
-

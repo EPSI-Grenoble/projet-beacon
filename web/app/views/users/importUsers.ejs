@@ -1,21 +1,39 @@
 <% include ../inc/header %>
 
+
 <div class="ui grid">
-<div class="three wide column"><p></p></div>
-<form id        =  "uploadForm"
-     enctype   =  "multipart/form-data"
-     action    =  "/users/sendXls"
-     method    =  "post"
->
-<input type="file" name="usersXls" style="margin-right:50px;"/>
-<div class="ui vertical animated button" tabindex="0">
-  <div class="hidden content"><input type="submit" value="Upload XLS" name="submit"></div>
-  <div class="visible content">
-    <i class="download icon"></i>
+
+  <div class="three wide column"><p></p></div>
+
+  <div class="twelve wide column">
+    <h2 class="ui header inverted blue  segment">
+      <i class="download icon"></i>
+      <div class="content">
+        <%= title %>
+        <div class="sub header"><%= subtitle %></div>
+      </div>
+    </h2>
+    <br>
+    <h2 class="ui dividing header">Utilisation</h2>
+    <div>
+      <p>L'import d'utilisateurs sur la plateforme doit être réalisé a partir d'un fichier XLS formalisé. </p>
+      <p>Veuillez vous référer à la documentation avant d'utiliser l'outil d'import.</p>
+      <p>Ne lancez pas un import sans être sur du format et de la structure de votre fichier XLS.</p>
+    </div>
+    <br>
+    <h2 class="ui dividing header">Formulaire d'importation</h2><br>
+    <div class="ui grid">
+      <form id="uploadForm" enctype="multipart/form-data"action="/users/sendXls" method="post">
+        <div class="ui small buttons">
+          <input type="file" class="ui button" name="usersXls"/>
+          <div class="or" data-text='et'></div>
+          <input type="submit" class="ui button green"  value="Lancer l'import d'utilisateurs (Format XLS requis)" name="submit">
+      </div>
+      </form>
+    </div>
   </div>
+
+  <div class="one wide column"><p></p></div>
 </div>
 
-</form>
-
-</div>
 <% include ../inc//footer %>
