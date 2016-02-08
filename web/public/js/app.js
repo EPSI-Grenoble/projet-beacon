@@ -246,19 +246,19 @@ app.controller('ListeGuestController', function ($scope, GuestAPI) {
   $scope.modifier = function (guest) {
     $scope.editMode[guest._id] = false;
     GuestAPI.save({"id": guest._id}, guest);
-    notie.alert(1, 'Success!', 1.5);
+    notie.alert(1, 'Sauvegardé !', 1.5);
   };
 
   $scope.activate = function (guest) {
     guest.activate = true;
-    GuestAPI.save({"id": guest._id}, guest)
-          notie.alert(1, 'Succes!', 1.5);
+    GuestAPI.save({"id": guest._id}, guest);
+          notie.alert(1, 'Activé !', 1.5);
   };
 
   $scope.desactivate = function (guest) {
     guest.activate = false;
-    GuestAPI.save({"id": guest._id}, guest)
-          notie.alert(1, 'Succes!', 1.5);
+    GuestAPI.save({"id": guest._id}, guest);
+          notie.alert(1, 'Désactivé !', 1.5);
   };
 
   $scope.sauvegarder = function () {

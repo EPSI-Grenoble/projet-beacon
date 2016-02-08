@@ -62,7 +62,7 @@ module.exports = {
 
   checkCode: function (code, callback) {
     GuestModel
-      .findOne({"code": code})
+      .findOne({"code": code, "activate": true})
       .exec(function (err, guest) {
         callback(err, guest)
       });

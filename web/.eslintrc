@@ -1,0 +1,13 @@
+{
+  "env": {
+    "node": 1
+  },
+  "rules": {
+    "eqeqeq": 0,
+    "strict": 0,
+    "semi": 1,
+    "curly": [1, "multi-line"],
+    "complexity": [2, 3],
+    "camelcase": [1, {"properties": "always"}]
+  }
+}

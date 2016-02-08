@@ -5,24 +5,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
+      $cordovaBeacon.requestWhenInUseAuthorization();
+      $cordovaBeacon.requestAlwaysAuthorization();
+      NotificationService.init();
     }
     if (window.StatusBar) {
       StatusBar.styleDefault();
     }
-
-    NotificationService.init();
-
-    $cordovaBeacon.enableBluetooth();
-    $cordovaBeacon.requestWhenInUseAuthorization();
-
-    $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function(event, pluginResult) {
-      for(var i = 0; i < pluginResult.beacons.length; i++) {
-        console.log(pluginResult.beacons[i]);
-        BeaconService.isMessageExist(pluginResult.beacons[i].uuid, pluginResult.beacons[i].proximity)
-      }
-    });
   });
-
 
   $rootScope.logout = function(){
     $state.go('login', {}, {reload : true});

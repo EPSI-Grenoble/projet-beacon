@@ -1,4 +1,4 @@
-var base_url = 'https://beacon.martin-choraine.fr';
+var base_url = 'http://51.255.50.20';
 //var base_url = 'http://192.168.0.24:3000';
 
 angular.module('starter.services', [])
@@ -7,13 +7,13 @@ angular.module('starter.services', [])
     function getAll() {
       var deferred = $q.defer();
 
-      $http.get(base_url + "/api/messages/user?token=" + window.localStorage["api_token"]+"&guest="+$rootScope.guest)
+      $http.get(base_url + "/api/messages/user?token=" + window.localStorage["api_token"] + "&guest=" + $rootScope.guest)
         .success(function (response) {
           deferred.resolve(response);
           console.log(response);
         })
         .error(function (data, status) {
-          if(status == 401){
+          if (status == 401) {
             $rootScope.logout();
           }
           deferred.reject();
@@ -25,12 +25,12 @@ angular.module('starter.services', [])
     function get(id) {
       var deferred = $q.defer();
 
-      $http.get(base_url + "/api/messages/user/" + id + "?token=" + window.localStorage["api_token"]+"&guest="+$rootScope.guest)
+      $http.get(base_url + "/api/messages/user/" + id + "?token=" + window.localStorage["api_token"] + "&guest=" + $rootScope.guest)
         .success(function (response) {
           deferred.resolve(response);
         })
         .error(function (data, status) {
-          if(status == 401){
+          if (status == 401) {
             $rootScope.logout();
           }
           deferred.reject();
@@ -51,7 +51,7 @@ angular.module('starter.services', [])
   })
 
 
-  .factory('RequestsService', ['$http', '$q', '$ionicLoading', '$rootScope', function ($http, $q, $ionicLoading,$rootScope) {
+  .factory('RequestsService', ['$http', '$q', '$ionicLoading', '$rootScope', function ($http, $q, $ionicLoading, $rootScope) {
 
     function logIn(login, password) {
       var deferred = $q.defer();
@@ -64,14 +64,14 @@ angular.module('starter.services', [])
         })
         .success(function (response) {
           window.localStorage["api_token"] = response.token;
-          if(window.localStorage['device_token']){
-            $http.post(base_url + "/api/auth/gcm-token?token=" + window.localStorage["api_token"]+"&guest="+$rootScope.guest, {"gcm-token":window.localStorage['device_token']})
+          if (window.localStorage['device_token']) {
+            $http.post(base_url + "/api/auth/gcm-token?token=" + window.localStorage["api_token"] + "&guest=" + $rootScope.guest, {"gcm-token": window.localStorage['device_token']})
           }
           window.localStorage['login'] = login;
           window.localStorage['password'] = password;
           console.log(response.token);
           $rootScope.user = response.user;
-          $rootScope.user.username = response.user.firstName +" "+response.user.lastName;
+          $rootScope.user.username = response.user.firstName + " " + response.user.lastName;
           $ionicLoading.hide();
           deferred.resolve(response);
         })
@@ -87,8 +87,8 @@ angular.module('starter.services', [])
       $ionicLoading.show();
 
       $http({
-        url : base_url + '/api/auth-guest',
-        method : "POST",
+        url: base_url + '/api/auth-guest',
+        method: "POST",
         data: {
           'code': codeGuest,
           'device_token': window.localStorage['device_token']
@@ -128,16 +128,10 @@ angular.module('starter.services', [])
         "windows": {}
       });
 
-      //if (!window.localStorage['device_token']) {
-      //  push.unregister(function (ok) {});
-      //} else {
-      //  console.log(window.localStorage['device_token']);
-      //}
-
       push.on('registration', function (data) {
         window.localStorage['device_token'] = data.registrationId;
-        if($rootScope.username){
-          $http.post(base_url + "/api/auth/gcm-token?token=" + window.localStorage["api_token"], {"gcm-token":data.registrationId})
+        if ($rootScope.username) {
+          $http.post(base_url + "/api/auth/gcm-token?token=" + window.localStorage["api_token"], {"gcm-token": data.registrationId})
         }
       });
 
@@ -159,30 +153,49 @@ angular.module('starter.services', [])
 
   }])
 
-  .factory('BeaconService', ['$http', '$q', '$rootScope', '$cordovaBeacon', '$interval', '$rootScope', function ($http, $q, $ionicLoading, $cordovaBeacon, $interval, $rootScope) {
+  .factory('BeaconService', ['$http', '$q', '$ionicLoading', '$cordovaBeacon', '$interval', '$rootScope', function ($http, $q, $ionicLoading, $cordovaBeacon, $interval, $rootScope) {
 
     var intervalBeaconRequest;
 
+    /**
+     * Get a beacon list to ranging
+     */
     var beaconToListen = function () {
       if (angular.isDefined(intervalBeaconRequest)) {
         $interval.cancel(intervalBeaconRequest);
         intervalBeaconRequest = undefined;
       }
       intervalBeaconRequest = $interval(function () {
-        $http.get(base_url + "/api/beacons/user/?token=" + window.localStorage["api_token"]+"&guest="+$rootScope.guest).success(function (beaconsToListen) {
+        $http.get(base_url + "/api/beacons/user/?token=" + window.localStorage["api_token"] + "&guest=" + $rootScope.guest).success(function (beaconsToListen) {
           angular.forEach(beaconsToListen, function (beacon) {
-            console.log(beacon);
-            $cordovaBeacon.startRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("ibeacon", beacon.beacons));
+            var beaconRegion = $cordovaBeacon.createBeaconRegion("ibeacon", beacon.beacons);
+            $cordovaBeacon.startMonitoringForRegion(beaconRegion);
+            $cordovaBeacon.startRangingBeaconsInRegion(beaconRegion);
           })
         });
       }, 10000);
     };
 
+    /**
+     * To send a message for the beacon monitored
+     * @param beaconUUID
+     * @param proximity
+     */
     var isMessageExist = function (beaconUUID, proximity) {
-      $http.get(base_url + "/api/messages/user/beacon/" + beaconUUID + "?proximity=" + proximity + "&token=" + window.localStorage["api_token"]+"&guest="+$rootScope.guest).success(function (result) {
+      $http.get(base_url + "/api/messages/user/beacon/" + beaconUUID + "?proximity=" + proximity + "&token=" + window.localStorage["api_token"] + "&guest=" + $rootScope.guest).success(function (result) {
+        $cordovaBeacon.stopMonitoringForRegion($cordovaBeacon.createBeaconRegion("ibeacon", beaconUUID));
         $cordovaBeacon.stopRangingBeaconsInRegion($cordovaBeacon.createBeaconRegion("ibeacon", beaconUUID));
       })
     };
+
+    /**
+     * Listen for beacon
+     */
+    $rootScope.$on("$cordovaBeacon:didRangeBeaconsInRegion", function (event, pluginResult) {
+      for (var i = 0; i < pluginResult.beacons.length; i++) {
+        isMessageExist(pluginResult.beacons[i].uuid, pluginResult.beacons[i].proximity)
+      }
+    });
 
     return {
       init: beaconToListen,

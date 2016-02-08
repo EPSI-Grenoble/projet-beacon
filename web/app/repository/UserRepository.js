@@ -198,7 +198,7 @@ module.exports = {
       })
   },
 
-  getUsersFromIds(userId, callback){
+  getUsersFromIds : function(userId, callback){
     UserModel
       .find({
         _id : { $in : userId}
