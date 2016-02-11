@@ -24,7 +24,7 @@ router.get('/', Utils.isAuth, function (req, res) {
 router.post('/', Utils.isAuth, function (req, res) {
   BeaconRepository.createBeacon(req.body, function (err, beacon) {
     if (err) {
-      res.status(400).send(err.errors);
+      res.status(406).send(err.errors);
     } else {
       res.send(beacon);
     }
@@ -37,7 +37,7 @@ router.post('/', Utils.isAuth, function (req, res) {
 router.delete('/:id', Utils.isAuth, function (req, res) {
   BeaconRepository.deleteBeaconById(req.params.id, function (err) {
     if (err) {
-      res.status(400).send(err);
+      res.status(406).send(err);
     } else {
       res.send(200);
     }

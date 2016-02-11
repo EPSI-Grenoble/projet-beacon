@@ -62,6 +62,8 @@ router.post('/auth/gcm-token', function (req, res) {
         req.session[tokenGenerated] = {
           user: user._id,
           expire: moment().add(10, 'days')
+          // avis perso (PL des B3) 10 jours de session c'est beacoup trop, je m'arréterais à 22h ou un truc du genre meme 10h suffisent :
+          // genre tu arrive le matin et tu te co pour toute la journée, puis re belote chaques jours mais pas 10 ...
         };
         user.device_token = req.body.device_token;
         user.save();

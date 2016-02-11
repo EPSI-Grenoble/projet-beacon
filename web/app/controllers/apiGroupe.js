@@ -17,7 +17,7 @@ router.get("/", Utils.isAuth, function (req, res, next) {
 router.post("/", Utils.isAuth, function (req, res, next) {
   GroupeRepository.createGroupe(req.body, function (err, groupeSaved) {
     if (err) {
-      res.status(400).send(err);
+      res.status(406).send(err);
     }
     else {
       res.send(groupeSaved);
@@ -28,7 +28,7 @@ router.post("/", Utils.isAuth, function (req, res, next) {
 router.post("/:id", Utils.isAuth, function (req, res, next) {
   GroupeRepository.updateGroupe(req.params.id, req.body.nom, function (err, groupeSaved) {
     if (err) {
-      res.status(400).send(err);
+      res.status(406).send(err);
     }
     else {
       res.send(groupeSaved);
@@ -57,7 +57,7 @@ router.post("/:id/add", Utils.isAuth, function (req, res, next) {
 router.delete("/:id", Utils.isAuth, function (req, res, next) {
   GroupeRepository.removeGroupe(req.params.id, function (err) {
     if (err) {
-      res.status(406).send(err);
+      res.status(500).send(err);
     }
     res.sendStatus(200);
   })

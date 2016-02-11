@@ -101,12 +101,12 @@ app.controller('ListeUserController', function ($scope, UserAPI) {
           UserAPI.delete({"id": id}, function () {
             $scope.users = UserAPI.get();
           });
-          notie.alert(3, 'Supprimé', 1.5);
+          notie.alert(1, 'Supprimé', 1.5);
         });
       };
 
 });
-
+// ca c'est du code d'exemple pour les B3 puisque fonctionnel
 /*$scope.remove = function (id) {
       notie.confirm('Etes vous sur de vouloir supprimer ce guest ?', 'Oui', 'Non', function () {
         GuestAPI.delete({"id": id}, function () {
@@ -200,6 +200,7 @@ app.controller('AddBeaconController', function ($scope, BeaconAPI) {
       notie.alert(1, 'Sauvegardé !', 1.5);
     }, function (err) {
       $scope.error = err.data;
+      notie.alert(3, 'Erreur', 1.5);
     });
   };
 
@@ -207,7 +208,7 @@ app.controller('AddBeaconController', function ($scope, BeaconAPI) {
     notie.confirm('Etes vous sur de vouloir supprimer ce beacon ?', 'Oui', 'Non', function () {
       BeaconAPI.delete({"id": beacon._id});
       $scope.beacons = BeaconAPI.get();
-      notie.alert(3, 'Supprimé', 1.5);
+      notie.alert(1, 'Supprimé', 1.5);
     });
   }
 });
@@ -222,7 +223,7 @@ app.controller('ListeGuestController', function ($scope, GuestAPI) {
       GuestAPI.delete({"id": id}, function () {
         $scope.guests = GuestAPI.get();
       });
-      notie.alert(3, 'Supprimé', 1.5);
+      notie.alert(1, 'Supprimé', 1.5);
     });
   };
 
@@ -233,7 +234,7 @@ app.controller('ListeGuestController', function ($scope, GuestAPI) {
   $scope.modifier = function (guest) {
     $scope.editMode[guest._id] = false;
     GuestAPI.save({"id": guest._id}, guest);
-    notie.alert(1, 'Success!', 1.5);
+    notie.alert(1, 'Succes!', 1.5);
   };
 
   $scope.activate = function (guest) {
