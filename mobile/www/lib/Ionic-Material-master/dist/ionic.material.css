@@ -755,8 +755,7 @@
   line-height: 136px;
   width: 150px; }
 
-.hero.no-header {
-  height: 244px; }
+.hero.no-header { }
 
 .hero > .content {
   bottom: 0;
@@ -903,8 +902,6 @@
   text-shadow: 0 0 4px rgba(0, 0, 0, 0.95);
   z-index: 1; }
 
-.item-avatar, .item-avatar .item-content, .item-avatar-left, .item-avatar-left .item-content {
-  min-height: 80px; }
 
 /* List: Thumbnails
 ==================================*/
@@ -2857,8 +2854,7 @@ a {
 .item-avatar .item-content,
 .item-avatar-left,
 .item-avatar-left .item-content,
-.card > .item-avatar {
-  padding-left: 95px; }
+.card > .item-avatar { }
 
 .item,
 .item-complex .item-content,
