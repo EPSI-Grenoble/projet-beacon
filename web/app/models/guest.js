@@ -5,11 +5,11 @@ var mongoose = require('mongoose'),
 var GuestSchema = new Schema({
   label: {
     type: String,
-    required: true
+    required: "Le label est obligatoire"
   },
   code: {
     type: String,
-    required: true,
+    required: "Le code est obligatoire",
     unique: true,
     lowercase : true
   },
@@ -25,6 +25,5 @@ var GuestSchema = new Schema({
     type : String
   }
 });
-
 
 mongoose.model('guests', GuestSchema);
