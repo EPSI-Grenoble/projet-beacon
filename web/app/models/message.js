@@ -64,5 +64,9 @@ MessageSchema.virtual('getPeriod').get(function () {
   }
 });
 
+MessageSchema.virtual('getDateCreation').get(function () {
+  return moment(this.dateCreation).format("DD-MM-YYYY | hh : mm");
+});
+
 
 mongoose.model('messages', MessageSchema);

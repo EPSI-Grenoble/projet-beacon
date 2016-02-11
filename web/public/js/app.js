@@ -66,7 +66,13 @@ app.controller('AddUserController', function ($scope, GroupeAPI, UserAPI) {
   $scope.user = {};
 
   $scope.sauvegarder = function () {
-    if ($scope.user && ($scope.user.password == $scope.user.passwordRepeat || !$scope.editPassword)) {
+    if ($scope.user && ($scope.user.password == "" || $scope.user.password == null)) {
+      $scope.error = {
+        "password": {
+          "message": "Le mot de passe est obligatoire"
+        }
+      };
+    } else if ($scope.user && ($scope.user.password == $scope.user.passwordRepeat || !$scope.editPassword)) {
       if (!$scope.editPassword) {
         delete $scope.user.password;
         delete $scope.user.passwordRepeat;
@@ -81,7 +87,7 @@ app.controller('AddUserController', function ($scope, GroupeAPI, UserAPI) {
         $scope.error = err.data;
         notie.alert(3, 'Erreur', 1.5);
       });
-    } else {
+    } else if ($scope.user) {
       $scope.error = {
         "password": {
           "message": "Les mots de passe ne correspondent pas"
@@ -202,14 +208,19 @@ app.controller('ListeMembresGroupesController', function ($scope, $filter, Group
   }
 });
 
-app.controller('AddBeaconController', function ($scope, BeaconAPI) {
+app.controller('AddBeaconController', function ($scope, BeaconAPI, $timeout) {
 
   $scope.beacons = BeaconAPI.get();
 
   $scope.sauvegarder = function () {
     BeaconAPI.save($scope.beacon, function () {
-      $scope.beacons = BeaconAPI.get();
+      $scope.error = [];
       notie.alert(1, 'Sauvegardé !', 1.5);
+      $timeout(function(){
+        BeaconAPI.get(function(res){
+          $scope.beacons = res;
+        });
+      }, 150)
     }, function (err) {
       $scope.error = err.data;
     });
@@ -218,7 +229,11 @@ app.controller('AddBeaconController', function ($scope, BeaconAPI) {
   $scope.remove = function (beacon) {
     notie.confirm('Etes vous sur de vouloir supprimer ce beacon ?', 'Oui', 'Non', function () {
       BeaconAPI.delete({"id": beacon._id});
-      $scope.beacons = BeaconAPI.get();
+      $timeout(function(){
+        BeaconAPI.get(function(res){
+          $scope.beacons = res;
+        });
+      }, 150);
       notie.alert(1, 'Supprimé', 1.5);
     });
   }

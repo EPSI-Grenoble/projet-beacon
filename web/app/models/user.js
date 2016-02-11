@@ -1,10 +1,11 @@
 var mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
+  Schema = mongoose.Schema,
+  uniqueValidator = require('mongoose-unique-validator');
 
 var UserSchema = new Schema({
   email: {
     type: String,
-    unique: true,
+    unique: "L'email doit être unique",
     required: "L'email est obligatoire et unique.",
     validate: [/.+\@.+\..+/, 'L\'email n\'est pas valide']
   },
@@ -48,6 +49,9 @@ var UserSchema = new Schema({
     virtuals: true
   }
 });
+
+UserSchema.plugin(uniqueValidator);
+
 
 UserSchema
   .virtual('fullName')
