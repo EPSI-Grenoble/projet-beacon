@@ -17,7 +17,7 @@ router.get("/", Utils.isAuth, function(req, res ,next){
 router.post("/", Utils.isAuth, function(req, res ,next){
   GuestRepository.createGuest(req.body, function (err, groupeSaved) {
     if(err){
-      res.status(406).json(err);
+      res.status(400).json(err);
     }
     res.json(groupeSaved);
   })
@@ -26,7 +26,7 @@ router.post("/", Utils.isAuth, function(req, res ,next){
 router.post("/:id", Utils.isAuth, function(req, res ,next){
   GuestRepository.updateGuest(req.params.id, req.body, function(err, groupeSaved){
     if(err){
-      res.status(406).json(err);
+      res.status(400).json(err);
     }
     res.json(groupeSaved);
   });

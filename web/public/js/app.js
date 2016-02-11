@@ -113,7 +113,7 @@ app.controller('ListeUserController', function ($scope, UserAPI) {
           UserAPI.delete({"id": id}, function () {
             $scope.users = UserAPI.get();
           });
-          notie.alert(3, 'Supprimé', 1.5);
+          notie.alert(1, 'Supprimé', 1.5);
         });
       };
 
@@ -219,7 +219,7 @@ app.controller('AddBeaconController', function ($scope, BeaconAPI) {
     notie.confirm('Etes vous sur de vouloir supprimer ce beacon ?', 'Oui', 'Non', function () {
       BeaconAPI.delete({"id": beacon._id});
       $scope.beacons = BeaconAPI.get();
-      notie.alert(3, 'Supprimé', 1.5);
+      notie.alert(1, 'Supprimé', 1.5);
     });
   }
 });
@@ -234,7 +234,7 @@ app.controller('ListeGuestController', function ($scope, GuestAPI) {
       GuestAPI.delete({"id": id}, function () {
         $scope.guests = GuestAPI.get();
       });
-      notie.alert(3, 'Supprimé', 1.5);
+      notie.alert(1, 'Supprimé', 1.5);
     });
   };
 
