@@ -17,7 +17,7 @@ app.controller('AddMessageController', function ($scope, $http, GroupeAPI, Beaco
       $scope.message = message;
       $scope.error = null;
       notie.alert(1, 'Success!', 1.5);
-      setTimeout(function() { window.location = "/users";}, 1500);
+      setTimeout(function() { window.location = "/messages";}, 1500);
     }).error(function (err) {
       $scope.error = err.errors;
       notie.alert(3, 'Erreur', 1.5);
@@ -67,12 +67,10 @@ app.controller('AddUserController', function ($scope, GroupeAPI, UserAPI) {
 
   $scope.sauvegarder = function () {
     if ($scope.user && ($scope.user.password == $scope.user.passwordRepeat || !$scope.editPassword)) {
-      console.log($scope.editPassword);
       if (!$scope.editPassword) {
         delete $scope.user.password;
         delete $scope.user.passwordRepeat;
       }
-      console.log($scope.user);
       UserAPI.save($scope.user, function (user) {
         $scope.user = user;
         $scope.error = null;
@@ -94,6 +92,20 @@ app.controller('AddUserController', function ($scope, GroupeAPI, UserAPI) {
   $scope.user = {};
 });
 
+app.controller('ListeMessageController', function ($scope, UserAPI, ngDialog) {
+  $scope.openMessage = function (message, event) {
+    event.preventDefault();
+    $scope.message = message;
+    $scope.destinataires = UserAPI.getUsersFromMessage({id: message._id});
+    console.log($scope.destinataires);
+    ngDialog.open({
+      template: 'messageTemplate',
+      scope: $scope,
+      className: "ngdialog-theme-default message-detail"
+    });
+  };
+});
+
 app.controller('ListeUserController', function ($scope, UserAPI) {
 
   $scope.remove = function (id) {
@@ -101,12 +113,12 @@ app.controller('ListeUserController', function ($scope, UserAPI) {
           UserAPI.delete({"id": id}, function () {
             $scope.users = UserAPI.get();
           });
-          notie.alert(1, 'Supprimé', 1.5);
+          notie.alert(3, 'Supprimé', 1.5);
         });
       };
 
 });
-// ca c'est du code d'exemple pour les B3 puisque fonctionnel
+
 /*$scope.remove = function (id) {
       notie.confirm('Etes vous sur de vouloir supprimer ce guest ?', 'Oui', 'Non', function () {
         GuestAPI.delete({"id": id}, function () {
@@ -200,7 +212,6 @@ app.controller('AddBeaconController', function ($scope, BeaconAPI) {
       notie.alert(1, 'Sauvegardé !', 1.5);
     }, function (err) {
       $scope.error = err.data;
-      notie.alert(3, 'Erreur', 1.5);
     });
   };
 
@@ -208,7 +219,7 @@ app.controller('AddBeaconController', function ($scope, BeaconAPI) {
     notie.confirm('Etes vous sur de vouloir supprimer ce beacon ?', 'Oui', 'Non', function () {
       BeaconAPI.delete({"id": beacon._id});
       $scope.beacons = BeaconAPI.get();
-      notie.alert(1, 'Supprimé', 1.5);
+      notie.alert(3, 'Supprimé', 1.5);
     });
   }
 });
@@ -223,7 +234,7 @@ app.controller('ListeGuestController', function ($scope, GuestAPI) {
       GuestAPI.delete({"id": id}, function () {
         $scope.guests = GuestAPI.get();
       });
-      notie.alert(1, 'Supprimé', 1.5);
+      notie.alert(3, 'Supprimé', 1.5);
     });
   };
 
@@ -234,19 +245,19 @@ app.controller('ListeGuestController', function ($scope, GuestAPI) {
   $scope.modifier = function (guest) {
     $scope.editMode[guest._id] = false;
     GuestAPI.save({"id": guest._id}, guest);
-    notie.alert(1, 'Succes!', 1.5);
+    notie.alert(1, 'Sauvegardé !', 1.5);
   };
 
   $scope.activate = function (guest) {
     guest.activate = true;
-    GuestAPI.save({"id": guest._id}, guest)
-          notie.alert(1, 'Succes!', 1.5);
+    GuestAPI.save({"id": guest._id}, guest);
+          notie.alert(1, 'Activé !', 1.5);
   };
 
   $scope.desactivate = function (guest) {
     guest.activate = false;
-    GuestAPI.save({"id": guest._id}, guest)
-          notie.alert(1, 'Succes!', 1.5);
+    GuestAPI.save({"id": guest._id}, guest);
+          notie.alert(1, 'Désactivé !', 1.5);
   };
 
   $scope.sauvegarder = function () {

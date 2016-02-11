@@ -27,6 +27,7 @@ app.directive("ngDropdown", [ "$timeout",
       template : '<option value="{{tag[tagKey]}}" ng-repeat="tag in tagsList">{{tag[tagValue]}}</option>',
       link: function(scope, elem, attr) {
 
+        console.log("dropdown");
         scope.tagKey = "_id";
         scope.tagValue = "_id";
 

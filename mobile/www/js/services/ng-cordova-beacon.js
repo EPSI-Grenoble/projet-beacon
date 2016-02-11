@@ -14,6 +14,13 @@ angular.module("ngCordovaBeacon", [])
 
       var delegate = new cordova.plugins.locationManager.Delegate();
 
+      var createLocalNotification = function (message) {
+        window.plugin.notification.local.add({
+          title:   'iBeaconSpike1',
+          message: message
+        });
+      };
+
       /*
        * Tells the delegate that one or more beacons are in range
        */
@@ -82,7 +89,9 @@ angular.module("ngCordovaBeacon", [])
        * @return
        */
       startRangingBeaconsInRegion: function(beaconRegion) {
-        cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion);
+        cordova.plugins.locationManager.startRangingBeaconsInRegion(beaconRegion)
+          .fail(console.error)
+          .done();
       },
 
       /*
@@ -92,7 +101,9 @@ angular.module("ngCordovaBeacon", [])
        * @return
        */
       startMonitoringForRegion: function(beaconRegion) {
-        cordova.plugins.locationManager.startMonitoringForRegion(beaconRegion);
+        cordova.plugins.locationManager.startMonitoringForRegion(beaconRegion)
+          .fail(console.error)
+          .done();
       },
 
       /*

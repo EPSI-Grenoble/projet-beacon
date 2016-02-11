@@ -1,13 +1,13 @@
 <% include ../inc/header %>
 
 
-<div class="ui grid">
+<div class="ui grid" ng-controller="ListeMessageController">
 
   <div class="three wide column"><p></p></div>
 
   <div class="twelve wide column">
 
-    <h2 class="ui header inverted blue  segment">
+    <h2 class="ui header inverted blue segment">
       <i class="conversation icon"></i>
       <div class="content">
         <%= title %>
@@ -16,10 +16,20 @@
 
       <div class="ui feed">
         <% messages.forEach(function(message){ %>
-        <div class="ui event">
-          <div class="content">
-            <div class="ui segment">
-              <h4 class="ui header"><%= message.titre %></h4>
+        <div class="ui link event">
+          <div class="ui link content">
+            <div class="ui link segment" ng-click="openMessage(<%=JSON.stringify(message)%>, $event)">
+              <a class="ui blue left ribbon label">
+                <% if(message.typeMessage == "beacon") { %>
+                <i class="bullseye icon"></i>
+                <% } else { %>
+                <i class="bell icon"></i>
+                <% } %>
+                <%=message.dateCreation%>
+              </a>
+              <h4 class="ui header">
+                <%= message.titre %>
+              </h4>
               <div class="date"><%= message.getPeriod %></div>
               <div class="meta">
                 <i class="user icon"></i> <%= message.destinataires.length %> personnes contactées
@@ -34,5 +44,27 @@
 
   <div class="one wide column"><p></p></div>
 </div>
+
+<script type="text/ng-template" id="messageTemplate">
+  <h1 class="ui sub header compact padded segment">{{message.titre}}</h1>
+  <br>
+  <section>
+    <div class="ui segment" ng-bind-html="message.message">
+    </div>
+  </section>
+  <br>
+  <section class="ui grid">
+      <div class="eight wide column">
+        <div class="ui relaxed list segment">
+          <h4 class="item ui sub header" style="padding: 20px 5px 5px">Destinataires</h4>
+          <div class="item" ng-repeat="destinataire in destinataires">
+            <i class="checkmark middle aligned icon" ng-if="message.receiveBy.indexOf(destinataire._id) != -1"></i>
+            <div class="content">{{destinataire.firstName}} {{destinataire.lastName}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="six wide column"></div>
+  </section>
+</script>
 
 <% include ../inc//footer %>

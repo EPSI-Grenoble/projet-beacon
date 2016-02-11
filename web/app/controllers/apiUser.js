@@ -2,6 +2,7 @@ var express = require('express'),
   router = express.Router(),
   passport = require('passport'),
   UserRepository = require("../repository/UserRepository"),
+  MessageRepository = require("../repository/MessageRepository"),
   Utils = require("../services/utils");
 
 module.exports = function (app) {
@@ -29,7 +30,7 @@ router.get("/groupes", Utils.isAuth, function (req, res, next) {
 /**
  * API pour créer un user ou pour modifier si un ID existe
  */
-router.post('/', Utils.isAuth, function (req, res, next) {
+router.post('/', function (req, res, next) {
   if (!req.body.isAdmin) {
     req.body.isAdmin = false;
   }
@@ -64,4 +65,11 @@ router.delete("/:id", Utils.isAuth, function (req, res, next) {
   })
 });
 
-
+/**
+ * API pour récupèrer tous les utilisateurs d'un message
+ */
+router.get("/message/:id", Utils.isAuth, function (req, res, next) {
+  MessageRepository.getUsers(req.params.id, function (err, users) {
+    res.json(users);
+  })
+});

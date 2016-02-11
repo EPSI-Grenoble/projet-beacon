@@ -8,15 +8,29 @@ describe("Test Beacon API", function () {
   var request;
 
   before(function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     server.app(function (app) {
       request = supertest.agent(app);
-      done()
+      done();
     });
   });
 
+  it("should create user", function (done) {
+    this.timeout(10000);
+    request
+      .post('/api/users')
+      .send({
+        email: "test@testeur.com",
+        password: "test",
+        lastName: "Test",
+        firstName: "App",
+        isAdmin: true
+      })
+      .expect(200, done)
+  });
+
   it("log user", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .post('/login')
       .send({
@@ -27,7 +41,7 @@ describe("Test Beacon API", function () {
   });
 
   it("Create invalid beacon", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .post('/api/beacons')
       .send({
@@ -42,7 +56,7 @@ describe("Test Beacon API", function () {
   });
 
   it("Create beacon", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .post('/api/beacons')
       .send({
@@ -56,7 +70,7 @@ describe("Test Beacon API", function () {
   });
 
   it("Get all beacon", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .get('/api/beacons')
       .end(function (err, res) {
@@ -68,7 +82,7 @@ describe("Test Beacon API", function () {
 
 
   after(function (done) {
-    server.shutdown(function(){
+    server.shutdown(function () {
       done()
     });
   })

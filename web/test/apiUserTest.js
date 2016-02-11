@@ -1,5 +1,7 @@
 var expect = require("chai").expect;
 var server = require("./serverMock"),
+  mongoose = require('mongoose'),
+  md5 = require('md5'),
   supertest = require("supertest");
 
 
@@ -7,15 +9,29 @@ describe("Test Users API", function () {
   var request;
 
   before(function (done) {
-    this.timeout(5000);
-    server.app(function(app) {
+    this.timeout(10000);
+    server.app(function (app) {
       request = supertest.agent(app);
       done();
     });
   });
 
+  it("should create user", function (done) {
+    this.timeout(10000);
+    request
+      .post('/api/users')
+      .send({
+        email: "test@testeur.com",
+        password: "test",
+        lastName: "Test",
+        firstName: "App",
+        isAdmin: true
+      })
+      .expect(200, done)
+  });
+
   it("log user", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .post('/login')
       .send({
@@ -26,7 +42,7 @@ describe("Test Users API", function () {
   });
 
   it("Create user", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .post('/api/users')
       .send({
@@ -44,7 +60,7 @@ describe("Test Users API", function () {
   });
 
   it("Create user incomplet", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .post('/api/users')
       .send({
@@ -59,7 +75,7 @@ describe("Test Users API", function () {
   });
 
   it("Get all user", function (done) {
-    this.timeout(5000);
+    this.timeout(10000);
     request
       .get('/api/users')
       .end(function (err, res) {
@@ -70,7 +86,7 @@ describe("Test Users API", function () {
   });
 
   after(function (done) {
-    server.shutdown(function(){
+    server.shutdown(function () {
       done()
     });
   })

@@ -26,7 +26,16 @@
       "locator": "https://github.com/petermetz/cordova-plugin-ibeacon.git",
       "id": "com.unarin.cordova.beacon"
     },
-    "phonegap-plugin-push"
+    "phonegap-plugin-push",
+    "cordova-plugin-local-notifications",
+    {
+      "locator": "https://github.com/Red-Folder/bgs-core.git",
+      "id": "com.red_folder.phonegap.plugin.backgroundservice"
+    },
+    {
+      "locator": "https://github.com/chocho01/beacon-cordova-plugin",
+      "id": "com.chocho.beacon.service"
+    }
   ],
   "cordovaPlatforms": [
     "ios",

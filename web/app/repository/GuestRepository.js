@@ -12,6 +12,14 @@ module.exports = {
       })
   },
 
+  findById : function(id, callback){
+    GuestModel
+      .findById(id)
+      .exec(function (err, guest) {
+        callback(err, guest)
+      })
+  },
+
   createGuest: function (form, callback) {
     var guest = new GuestModel({
       label: form.label,
@@ -54,7 +62,7 @@ module.exports = {
 
   checkCode: function (code, callback) {
     GuestModel
-      .findOne({"code": code})
+      .findOne({"code": code, "activate": true})
       .exec(function (err, guest) {
         callback(err, guest)
       });

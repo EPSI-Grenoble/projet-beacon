@@ -2,15 +2,15 @@
   <ion-nav-bar class="bar-positive">
   </ion-nav-bar>
   <ion-content>
-    <div class="ionic login " style="background-image: url('img/background-wallpapers-35.jpg');" ng-app="login">
+    <div class="ionic login " style="background-image: url('img/background-wallpapers-35.jpg'); background-size: cover;" ng-app="login">
       <div class="hero no-header flat">
           <div class="content">
               <img src="img/EPSI.png">
           </div>
       </div>
       <div class="list">
-          <label class="item item-input item-md-label" highlight-color="light" type="text"><input type="text"  ng-model="user.username"><span class="input-label">Username</span><div class="highlight highlight-balanced"></div></label>
-          <label class="item item-input item-md-label" highlight-color="energized" type="password"><input type="password" ng-model="user.password"><span class="input-label">Password</span><div class="highlight highlight-energized"></div></label>
+          <label class="item item-input item-md-label" highlight-color="light" type="text"><input type="text"  ng-model="user.username"><span class="input-label  ng-class:{'focus' : user.username != null && user.username != ''}">Username</span><div class="highlight highlight-balanced"></div></label>
+          <label class="item item-input item-md-label" highlight-color="energized" type="password"><input type="password" ng-model="user.password"><span class="input-label  ng-class:{'focus' : user.password != null && user.username != ''}">Password</span><div class="highlight highlight-energized"></div></label>
       </div>
       <div class="padding">
           <button class="button button-block button-positive waves-effect waves-button waves-light" ng-click="signIn(user)">

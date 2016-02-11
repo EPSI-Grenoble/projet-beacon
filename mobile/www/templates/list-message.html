@@ -21,7 +21,7 @@
       Cancel
     </button>
   </div>
-    <ion-list>
+    <ion-list ng-init="refresh()">
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="message in displayMessages" type="item-text-wrap" href="#/messages/{{message._id}}">
 
         <img class="typeMessage" ng-src="img/{{message.typeMessage}}.png">

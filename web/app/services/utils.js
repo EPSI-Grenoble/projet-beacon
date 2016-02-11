@@ -21,7 +21,9 @@ module.exports =  {
     }
   },
   isTokenValid : function(req, res, next){
-    if(req.query.guest){
+    var isGuest = (req.query.guest === 'true');
+    console.log(isGuest);
+    if(isGuest && isGuest != undefined){
       GuestRepository.tokenValid(req.query.token, function(err, user){
         if(user){
           req.user = user;
@@ -36,7 +38,7 @@ module.exports =  {
           req.user = user;
           return next()
         } else {
-          res.sendStatus(401);
+          res.status(401).send(err);
         }
       });
     }
