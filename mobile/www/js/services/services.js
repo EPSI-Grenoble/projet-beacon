@@ -10,7 +10,6 @@ angular.module('starter.services', [])
       $http.get(base_url + "/api/messages/user?token=" + window.localStorage["api_token"] + "&guest=" + $rootScope.guest)
         .success(function (response) {
           deferred.resolve(response);
-          console.log(response);
         })
         .error(function (data, status) {
           if (status == 401) {
@@ -69,8 +68,16 @@ angular.module('starter.services', [])
           }
           window.localStorage['login'] = login;
           window.localStorage['password'] = password;
-          console.log(response.token);
+
           $rootScope.user = response.user;
+          $rootScope.user.groupesLabel = "";
+          for (var i = 0; i < $rootScope.user.groupes.length; i++) {
+            $rootScope.user.groupesLabel = $rootScope.user.groupesLabel + $rootScope.user.groupes[i];
+            if($rootScope.user.groupes[i]!= $rootScope.user.groupes.length +1){
+              $rootScope.user.groupesLabel = $rootScope.user.groupesLabel + ", ";
+            }
+          };
+          $rootScope.user.icon = response.user.firstName.charAt(0) + response.user.lastName.charAt(0);
           $rootScope.user.username = response.user.firstName + " " + response.user.lastName;
           $ionicLoading.hide();
           deferred.resolve(response);

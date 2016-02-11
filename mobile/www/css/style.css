@@ -27,3 +27,120 @@ ion-list.list-bottom div.list .item a.item-content{
   -webkit-transform: translate3d(0, -60px, 0) scale(0.9);
   transform: translate3d(0, -60px, 0) scale(0.9);
 }
+
+.login .placeholder-icon{
+	color: white;
+    vertical-align: middle;
+}
+
+.ionic.login{
+	background-color: #0C3E6B;
+}
+
+.logoContainer{
+	display: inline-block;
+	padding: 40px;
+	border-radius: 100%;
+	background-color: white;
+}
+
+.item-avatar .item-content > i:first-child{
+	position: absolute;
+    top: 0;
+    left: 0px;
+    max-width: 80px;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    vertical-align: middle;
+    padding-top: 30px;
+    color: white;
+    background-color: #ef473a;
+}
+
+.bar .button i.icon {
+	font-size: 35px;
+	line-height: 42px;
+}
+
+ion-side-menu  .list .item.item-assertive{
+	min-height: 45px;
+	height: 45px;
+    text-align: center;
+    font-size: 16px;
+    padding-top: 10px;
+}
+
+.item-content h2{
+	padding-top: 17px;
+    padding-left: 15px;
+    display: inline-block;
+}
+
+.item.item-input.item-md-label{
+	border : 0px;
+}
+
+.item.item-avatar.headerMessage{
+    background: #0C3E6B;
+    height: 150px;
+    overflow: inherit;
+    padding: 0;
+}
+.item.item-avatar.headerMessage p{
+    text-align: right;
+    color: white;
+    padding-right: 15px;
+    padding-top: 15px;
+}
+   
+
+.typeMessageContainer{
+    position: absolute;
+    width: 100%;
+    bottom: -45px;
+    text-align: center;
+}
+
+.nameIconContainer{
+    position: absolute;
+    width: 100%;
+    bottom: -15px;
+    text-align: center;
+}
+
+i.material-icons.typeMessageIcon,span.nameIcon {
+	padding: 25px;
+    background: #ef473a;
+    border-radius: 50%;
+    color:white;
+    font-size: 40px;
+}
+
+
+.item.item-divider.messageTitleContainer{
+	background: #f8f8f8;
+    padding-bottom: 85px;
+    padding-top: 40px;
+    z-index: 0;
+}
+.item.item-divider.messageTitleContainer h2{
+	margin-top: 15px;
+    font-size: 18px;
+}
+
+ion-side-menu .item-icon-left .icon{
+	font-size:24px;
+    color: white;
+}
+
+.menu.menu-left{
+	background: #0C3E6B;
+}
+
+.menu.menu-left .list .item{
+	border : 0;
+	border-bottom: 1px solid #04537F;
+	color : white;
+}
+    
