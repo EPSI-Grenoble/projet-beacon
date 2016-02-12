@@ -35,6 +35,7 @@ ion-list.list-bottom div.list .item a.item-content{
 
 .ionic.login{
 	background-color: #0C3E6B;
+    padding-bottom: 10px;
 }
 
 .logoContainer{
