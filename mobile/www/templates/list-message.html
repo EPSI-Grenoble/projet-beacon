@@ -1,5 +1,5 @@
 <ion-view view-title="Mes Messages" hide-back-button="true">
-  <ion-nav-bar class="bar-positive">
+  <ion-nav-bar class="bar-assertive">
     <ion-nav-buttons side="left">
       <button class="button  button-clear" ng-click="showMenu()">
         <i class="icon ion-navicon"></i>
@@ -7,7 +7,7 @@
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
       <button class="button  button-clear" ng-click="refresh()">
-        <i class="icon ion-ios-reload"></i>
+        <i class="icon material-icons">refresh</i>
       </button>
     </ion-nav-buttons>
   </ion-nav-bar>
@@ -18,26 +18,18 @@
       <input type="text" placeholder="Search" ng-model="search.query" ng-change="search()">
     </label>
     <button class="button button-clear">
-      Cancel
+      Annuler
     </button>
   </div>
     <ion-list ng-init="refresh()">
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="message in displayMessages" type="item-text-wrap" href="#/messages/{{message._id}}">
-
-        <img class="typeMessage" ng-src="img/{{message.typeMessage}}.png">
-        <h2>{{message.titre}}</h2>
-        <p ng-if="message.fromDate!=null || message.toDate!=null">
-          <span ng-if="message.fromDate!=null">
-            À partir de {{message.fromDate | date:'dd/MM/yyyy à HH:mm:ss'}}
-          </span>
-          <span ng-if="message.toDate!=null">
-            Jusqu'au {{message.toDate | date:'dd/MM/yyyy à HH:mm:ss'}}
-          </span>
-        </p>
-
-        <p ng-if="message.fromDate==null && message.toDate==null">
-         Le {{message.dateCreation | date:'dd/MM/yyyy à HH:mm:ss'}}
-        </p>
+        <i class="material-icons typeMessage">{{message.icon}}</i>
+        <span class="item-title">
+        {{message.titre}}
+        </span>
+        <span class="item-note">
+          {{moment(message.dateCreation).fromNow()}}
+        </span>
 
         <i class="icon ion-chevron-right icon-accessory"></i>
 

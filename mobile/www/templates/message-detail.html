@@ -1,29 +1,23 @@
 <ion-view view-title="Détails du message">
-  <ion-nav-bar class="bar-positive">
+  <ion-nav-bar class="bar-assertive">
     <ion-nav-back-button></ion-nav-back-button>
   </ion-nav-bar>
-  <ion-content class="padding">
-    <div class="item item-avatar">
-      <img class="typeMessage" src="img/{{message.typeMessage}}.png">
-      <h2>{{message.nom}}</h2>
-       <p ng-if="message.fromDate!=null || message.toDate!=null">
-          <span ng-if="message.fromDate!=null">
-            À partir de {{message.fromDate | date:'dd/MM/yyyy à HH:mm:ss'}}
-          </span>
-          <span ng-if="message.toDate!=null">
-            Jusqu'au {{message.toDate | date:'dd/MM/yyyy à HH:mm:ss'}}
-          </span>
-      </p>
-
-      <p ng-if="message.fromDate==null && message.toDate==null">
-       Le {{message.dateCreation | date:'dd/MM/yyyy à HH:mm:ss'}}
+  <ion-content>
+    <div class="item item-avatar headerMessage">
+      <div class="typeMessageContainer">
+          <i class="material-icons typeMessageIcon">{{message.icon}}</i>
+      </div>
+      <p>
+       {{moment(message.dateCreation).fromNow()}}
       </p>
     </div>
-    <div class="card">
-      <div class="item item-divider">
-        {{message.titre}}
+    <div>
+      <div class="item item-divider messageTitleContainer">
+        <h2>{{message.titre}}</h2>
       </div>
       <div class="item item-text-wrap" ng-bind-html="message.message"></div>
     </div>
   </ion-content>
 </ion-view>
+
+

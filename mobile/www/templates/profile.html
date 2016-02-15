@@ -1,5 +1,5 @@
 <ion-view view-title="Mon Profil" hide-back-button="true">
-  <ion-nav-bar class="bar-positive">
+  <ion-nav-bar class="bar-assertive">
     <ion-nav-buttons side="left">
       <button class="button  button-clear" ng-click="showMenu()">
         <i class="icon ion-navicon"></i>
@@ -7,18 +7,23 @@
     </ion-nav-buttons>
   </ion-nav-bar>
   <ion-content>
+    <div class="item item-avatar headerMessage">
+      <div class="nameIconContainer">
+          <span class="nameIcon">{{user.icon}}</i>
+      </div>
+    </div>
+    <div class="item item-divider messageTitleContainer">
+      <h2>{{user.username}}</h2>
+    </div>
     <div class="list">
       <span class="item item-icon-left">
-        <i class="icon ion-person"></i>
-        {{user.username}}
-      </span>
-      <span class="item item-icon-left">
-        <i class="icon ion-email"></i>
+        <i class="icon material-icons">email</i>
         {{user.email}}
       </span>
-      <span class="item item-icon-left" ng-repeat="groupe in user.groupes">
-        <i class="icon ion-person-stalker"></i>
-        {{groupe}}
+      
+      <span class="item item-icon-left">
+        <i class="icon material-icons">people</i>
+        {{user.groupesLabel}}
       </span>
     </div>
   </ion-content>

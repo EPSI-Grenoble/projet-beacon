@@ -8,7 +8,7 @@
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="lib/Ionic-Material-master/dist/ionic.material.css" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
     <link href="css/ionic.app.css" rel="stylesheet">
     -->
@@ -21,6 +21,8 @@
 
     <!-- your app's js -->
     <script src="lib/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="lib/moment/moment.js"></script>
+    <script src="lib/moment/locale/fr.js"></script>
     <script src="js/app.js"></script>
     <script src="js/controller/controllers.js"></script>
     <script src="js/services/services.js"></script>
@@ -31,7 +33,7 @@
     <!--
       The nav bar that will be updated as we navigate between views.
     -->
-    <ion-nav-bar class="bar-positive">
+    <ion-nav-bar class="bar-assertive">
       <ion-nav-back-button>
       </ion-nav-back-button>
     </ion-nav-bar>
@@ -44,20 +46,24 @@
       <!-- Left menu -->
       <ion-side-menu side="left">
         <ion-list>
-          <div class="item item-positive item-divider">
+          <div class="item item-assertive">
             {{user.username}}
           </div>
-          <ion-item nav-clear menu-close href="#/messages">
-              Mes Messages
+          <ion-item nav-clear menu-close href="#/messages" class="item item-icon-left">
+             <i class="icon material-icons">chat_bubble_outline</i>
+             Mes Messages
           </ion-item>
-          <ion-item nav-clear menu-close href="#/profile">
+          <ion-item nav-clear menu-close href="#/profile" class="item item-icon-left">
+              <i class="icon material-icons">perm_identity</i>
               Mon Profil
+          </ion-item>
+          <ion-item nav-clear menu-close class="item item-icon-left" href="#/login">
+            <i class="icon material-icons">power_settings_new</i>
+            Deconnexion
           </ion-item>
         </ion-list>
         <ion-list class="list-bottom">
-          <ion-item nav-clear menu-close class="item" href="#/login">
-            <i class="icon ion-power"></i>
-          </ion-item>
+          
         </ion-list>
       </ion-side-menu>
       <ion-side-menu-content>

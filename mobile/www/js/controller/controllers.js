@@ -3,20 +3,26 @@ angular.module('starter.controllers', [])
 .controller('LoginCtrl', function($scope, $state, RequestsService, BeaconService,$ionicPopup, $rootScope) {
 
   $scope.user = {};
-  $scope.user.username = window.localStorage['login'];
-  $scope.user.password = window.localStorage['password'];
+  $scope.user.username = "";
+  $scope.user.password = "";
+  if(window.localStorage['login'] != "undefined"){
+    $scope.user.username = window.localStorage['login'];
+  }
+
+  if(window.localStorage['password'] != "undefined"){
+    $scope.user.password = window.localStorage['password'];
+  }
+  
 
   //$state.go('tab.dash');
   $scope.signIn = function(user) {
-    console.log('Sign-In', user);
-
     RequestsService.logIn(user.username, user.password).then(function(response){
       if(response.success){
         window.localStorage["api_token"] = response.token;
         $rootScope.guest = false;
         BeaconService.init();
         $state.go('messages', {}, {reload : true});
-        $rootScope.refresh();
+        //$rootScope.refresh();
       } else {
         $scope.messageError = response.msg
       }
@@ -65,6 +71,7 @@ angular.module('starter.controllers', [])
 })
 
 .controller('ListMessageCtrl', function($scope, Messages, $state, $ionicSideMenuDelegate, $rootScope) {
+  $scope.moment = moment;
   $scope.displayMessages = $scope.allMessages = [];
 
   $scope.showMenu = function() {
@@ -72,11 +79,20 @@ angular.module('starter.controllers', [])
   };
 
   $rootScope.refresh = function() {
-    console.log("Get all message");
     Messages.all().then(function(response){
       $scope.allMessages = response;
+
+      for (var i = 0; i < $scope.allMessages.length; i++) {
+        if($scope.allMessages[i].typeMessage=="beacon"){
+          $scope.allMessages[i].icon = "radio_button_checked";
+        }else{
+          $scope.allMessages[i].icon = "notifications";
+        }
+      }
       $scope.search()
     });
+
+    
   };
 
   $rootScope.refresh();
@@ -99,9 +115,14 @@ angular.module('starter.controllers', [])
 
 .controller('MessageDetailCtrl', function($scope, $stateParams, Messages) {
   $scope.message = Messages.get($stateParams.messageId);
-
+  $scope.moment = moment;
   Messages.get($stateParams.messageId).then(function(response){
     $scope.message = response;
+    if($scope.message.typeMessage=="beacon"){
+      $scope.message.icon = "radio_button_checked";
+    }else{
+      $scope.message.icon = "notifications";
+    }
   }, function(){
     $state.go('login');
   });
