@@ -66,7 +66,7 @@ app.controller('AddUserController', function ($scope, GroupeAPI, UserAPI) {
   $scope.user = {};
 
   $scope.sauvegarder = function () {
-    if ($scope.user && ($scope.user.password == "" || $scope.user.password == null)) {
+    if ($scope.user && $scope.editPassword && ($scope.user.password == "" || $scope.user.password == null)) {
       $scope.error = {
         "password": {
           "message": "Le mot de passe est obligatoire"
@@ -243,6 +243,7 @@ app.controller('AddBeaconController', function ($scope, BeaconAPI, $timeout) {
 app.controller('ListeGuestController', function ($scope, GuestAPI) {
 
   $scope.editMode = [];
+  $scope.editError = [];
 
   $scope.remove = function (id) {
     notie.confirm('Etes vous sur de vouloir supprimer ce guest ?', 'Oui', 'Non', function () {
@@ -257,10 +258,15 @@ app.controller('ListeGuestController', function ($scope, GuestAPI) {
     $scope.editMode[idGuest] = true;
   };
 
-  $scope.modifier = function (guest) {
-    $scope.editMode[guest._id] = false;
-    GuestAPI.save({"id": guest._id}, guest);
-    notie.alert(1, 'Sauvegardé !', 1.5);
+  $scope.modifier = function (guest, index) {
+    GuestAPI.save({"id": guest._id}, guest, function(){
+      notie.alert(1, 'Sauvegardé !', 1.5);
+      $scope.editMode[guest._id] = false;
+      $scope.guests = GuestAPI.get();
+    }, function (err) {
+      $scope.editError[index] = err.data.errors;
+      notie.alert(3, 'Erreur', 1.5);
+    });
   };
 
   $scope.activate = function (guest) {

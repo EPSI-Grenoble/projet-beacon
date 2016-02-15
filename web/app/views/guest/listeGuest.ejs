@@ -38,22 +38,24 @@
           <i style="float:right;" class="large floated mini ui users middle aligned icon"></i>
           <div class="header">
             <span ng-if="!editMode[guest._id]">{{ guest.label}}</span>
-            <div class="ui small input">
+            <div class="ui small input  ng-class:{'error' : editError[$index].label}">
               <input type="text" class="ui input" ng-model="guest.label" ng-if="editMode[guest._id]">
+              <div class="ui pointing red label" ng-if="editError[$index].label">{{editError[$index].label.message}}</div>
             </div>
           </div>
           <div class="meta" ng-if="!editMode[guest._id]">
             Code : {{guest.code | uppercase }}
           </div>
-          <div class="ui small input meta" ng-if="editMode[guest._id]">
+          <div class="ui small input ng-class:{'error' : editError[$index].code}; meta" ng-if="editMode[guest._id]">
             <input type="text" class="ui input" ng-model="guest.code" ng-if="editMode[guest._id]">
+            <div class="ui pointing red label" ng-if="editError[$index].code">{{editError[$index].code.message}}</div>
           </div>
         </div>
         <div class="extra content">
 
 
             <div class="ui three buttons">
-              <a class="ui green button" ng-click="modifier(guest)" ng-if="editMode[guest._id]" ><i class="write icon"></i></a>
+              <a class="ui green button" ng-click="modifier(guest, $index)" ng-if="editMode[guest._id]" ><i class="write icon"></i></a>
               <a class="ui green button" ng-click="edit(guest._id)" ng-if="!editMode[guest._id]"><i class="write icon"></i></i></a>
               <a class="ui blue button" ng-click="desactivate(guest)" ng-if="guest.activate"><i class="checkmark icon"></i></a>
               <div class="ui blue button" ng-click="activate(guest)" ng-if="!guest.activate"><i class="remove icon"></i></div>

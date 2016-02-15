@@ -17,8 +17,7 @@
     </h2>
 
     <div class="ui segment">
-      <form ng-submit="sauvegarder()" class="ui form" <% if(newUser == null) { %> ng-init="editPassword = true" <% } %>
-      >
+      <form class="ui form" <% if(newUser == null) { %> ng-init="editPassword = true" <% } %> ng-cloak >
         <div class="field ng-class:{'error' : error.email}">
           <label>Email</label>
           <input type="text" ng-model="user.email" name="title" value="" placeholder="Entrer un email">
@@ -73,7 +72,7 @@
         <div class="three fields">
           <div class="field"></div>
           <div class="field">
-            <input class="ui green fluid button" type="submit" value="Enregistrer">
+            <input class="ui green fluid button" type="submit" value="Enregistrer" ng-click="sauvegarder()">
           </div>
           <div class="field"></div>
         </div>
