@@ -68,8 +68,8 @@ describe("Test Users API", function () {
         device_token: "fjkfjkfj" // Obligatoire sinon ça plante...
       })
       .end(function (err, res) {
-        expect(res.statusCode).to.equal(406);
-        expect(Object.keys(res.body).length).to.equal(4);
+        expect(res.statusCode).to.equal(400);
+        expect(Object.keys(res.body).length).to.equal(6);
         done();
       });
   });
