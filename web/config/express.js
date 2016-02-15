@@ -38,7 +38,7 @@ module.exports = function(app, config) {
   require('./passport')(passport);
   app.use(session({
     secret: 'Sessionfuck',
-    resave: false,
+    rolling: true,
     saveUninitialized: true,
     cookie: {
       secure: false, // Secure is Recommeneded, However it requires an HTTPS enabled website (SSL Certificate)
