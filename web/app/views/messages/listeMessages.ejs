@@ -16,7 +16,7 @@
 
       <div class="ui feed">
         <% messages.forEach(function(message){ %>
-        <div class="ui link event">
+        <div class="ui link event" ng-cloak>
           <div class="ui link content">
             <div class="ui link segment" ng-click="openMessage(<%=JSON.stringify(message)%>, $event)">
               <a class="ui blue left ribbon label">

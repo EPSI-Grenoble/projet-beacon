@@ -18,3 +18,7 @@ a {
 .message-detail .ngdialog-content {
   width: 800px !important;
 }
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
