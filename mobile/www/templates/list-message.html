@@ -23,7 +23,13 @@
   </div>
     <ion-list ng-init="refresh()">
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="message in displayMessages" type="item-text-wrap" href="#/messages/{{message._id}}">
-        <i class="material-icons typeMessage">{{message.icon}}</i>
+        
+        <i ng-if="message.typeMessage == 'beacon'" class="{{message.icon}} material-icons typeMessage">
+            
+        </i>
+        <i ng-if="message.typeMessage != 'beacon'" class="{{message.icon}} material-icons typeMessage">
+            {{message.icon}}
+        </i>
         <span class="item-title">
         {{message.titre}}
         </span>

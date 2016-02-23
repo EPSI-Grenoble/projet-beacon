@@ -84,7 +84,7 @@ angular.module('starter.controllers', [])
 
       for (var i = 0; i < $scope.allMessages.length; i++) {
         if($scope.allMessages[i].typeMessage=="beacon"){
-          $scope.allMessages[i].icon = "radio_button_checked";
+          $scope.allMessages[i].icon = "ion-ios-circle-filled";
         }else{
           $scope.allMessages[i].icon = "notifications";
         }
@@ -119,7 +119,7 @@ angular.module('starter.controllers', [])
   Messages.get($stateParams.messageId).then(function(response){
     $scope.message = response;
     if($scope.message.typeMessage=="beacon"){
-      $scope.message.icon = "radio_button_checked";
+      $scope.message.icon = "ion-ios-circle-filled";
     }else{
       $scope.message.icon = "notifications";
     }

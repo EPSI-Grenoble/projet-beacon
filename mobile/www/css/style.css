@@ -18,6 +18,16 @@ ion-list.list-bottom div.list .item a.item-content{
 	padding-right: 0;
 }
 
+.login i.icon.ion-person.placeholder-icon {
+    font-size: 24px;
+    padding-left: 5px;
+}
+
+.menu .item-icon-left .icon:before{
+    width: 20px;
+}
+
+
 .list .item .input-label.focus {
   font-weight: bold;
   opacity: 0.7;
@@ -33,9 +43,8 @@ ion-list.list-bottom div.list .item a.item-content{
     vertical-align: middle;
 }
 
-.ionic.login{
+.loginView{
 	background-color: #0C3E6B;
-    padding-bottom: 10px;
 }
 
 .logoContainer{
@@ -58,7 +67,9 @@ ion-list.list-bottom div.list .item a.item-content{
     color: white;
     background-color: #ef473a;
 }
-
+.item-avatar .item-content > i.ion-ios-circle-filled:first-child{
+    padding-top: 21px;
+}
 .bar .button i.icon {
 	font-size: 35px;
 	line-height: 42px;
@@ -133,6 +144,15 @@ i.material-icons.typeMessageIcon,span.nameIcon {
     color:white;
     font-size: 40px;
 }
+
+i.material-icons.typeMessageIcon.ion-ios-circle-filled{
+    padding: 25px 30px;
+}
+
+span.nameIcon{
+    padding: 20px 15px
+}
+
 
 
 .item.item-divider.messageTitleContainer{

@@ -5,7 +5,12 @@
   <ion-content>
     <div class="item item-avatar headerMessage">
       <div class="typeMessageContainer">
-          <i class="material-icons typeMessageIcon">{{message.icon}}</i>
+        <i ng-if="message.typeMessage == 'beacon'" class="{{message.icon}} material-icons typeMessageIcon">
+            
+        </i>
+        <i ng-if="message.typeMessage != 'beacon'" class="{{message.icon}} material-icons typeMessageIcon">
+            {{message.icon}}
+        </i>
       </div>
       <p>
        {{moment(message.dateCreation).fromNow()}}

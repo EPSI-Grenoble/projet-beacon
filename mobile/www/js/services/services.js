@@ -73,7 +73,7 @@ angular.module('starter.services', [])
           $rootScope.user.groupesLabel = "";
           for (var i = 0; i < $rootScope.user.groupes.length; i++) {
             $rootScope.user.groupesLabel = $rootScope.user.groupesLabel + $rootScope.user.groupes[i];
-            if($rootScope.user.groupes[i]!= $rootScope.user.groupes.length +1){
+            if(i != $rootScope.user.groupes.length-1){
               $rootScope.user.groupesLabel = $rootScope.user.groupesLabel + ", ";
             }
           };
