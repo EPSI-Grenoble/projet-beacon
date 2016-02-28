@@ -5,6 +5,10 @@ var mongoose = require('mongoose'),
 
 module.exports = {
 
+  /**
+   * Recupère tous les groupes
+   * @param callback
+     */
   getAll : function(callback){
     GroupeModel
       .find()
@@ -14,6 +18,11 @@ module.exports = {
       })
   },
 
+  /**
+   * Créer un groupe
+   * @param form
+   * @param callback
+     */
   createGroupe : function(form, callback){
     var groupe = new GroupeModel(form);
     groupe.save(function (err, groupeSaved) {
@@ -21,6 +30,11 @@ module.exports = {
     })
   },
 
+  /**
+   * Supprimer un groupe et supprimer le groupe dans le modèle user
+   * @param idGroupe
+   * @param callback
+     */
   removeGroupe : function(idGroupe, callback){
     GroupeModel
       .findById(idGroupe)
@@ -33,6 +47,12 @@ module.exports = {
       });
   },
 
+  /**
+   * Mettre à jour le nom du groupe
+   * @param idGroupe
+   * @param nomGroupe
+   * @param callback
+     */
   updateGroupe: function (idGroupe, nomGroupe, callback) {
     GroupeModel
       .findById(idGroupe)
@@ -46,6 +66,11 @@ module.exports = {
       })
   },
 
+  /**
+   * Récupèrer les membres d'un groupe
+   * @param idGroupe
+   * @param callback
+     */
   getMembresGroupe: function (idGroupe, callback) {
     GroupeModel
       .findById(idGroupe)
@@ -54,6 +79,12 @@ module.exports = {
       });
   },
 
+  /**
+   * Supprimer un membre d'un groupe
+   * @param idGroupe
+   * @param idUser
+   * @param callback
+     */
   removeMembresGroupe: function (idGroupe, idUser, callback) {
     GroupeModel
       .findById(idGroupe)
@@ -62,6 +93,12 @@ module.exports = {
       });
   },
 
+  /**
+   * Ajouter un membre dans un groupe
+   * @param idGroupe
+   * @param userId
+   * @param callback
+     */
   addUserToGroupe: function (idGroupe, userId, callback) {
     GroupeModel
       .findById(idGroupe)

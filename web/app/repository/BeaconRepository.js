@@ -4,6 +4,10 @@ var mongoose = require('mongoose'),
 
 module.exports = {
 
+  /**
+   * Récupère tous les beacons
+   * @param callback
+     */
   getAll : function(callback){
     BeaconModel
       .find()
@@ -13,6 +17,11 @@ module.exports = {
       })
   },
 
+  /**
+   * Créer un beacon
+   * @param formulaire
+   * @param callback
+     */
   createBeacon : function(form, callback){
     var beacon = new BeaconModel({
       nom: form.nom,
@@ -24,6 +33,11 @@ module.exports = {
     })
   },
 
+  /**
+   * Supprimer un beacon
+   * @param id du beacon
+   * @param callback
+     */
   deleteBeaconById : function(id, callback){
     BeaconModel.remove({_id: id}, function (err) {
       callback(err);

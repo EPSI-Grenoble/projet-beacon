@@ -12,6 +12,7 @@ module.exports = function (app) {
 
 /**
  * API Authentification pour les aplications mobiles
+ * Paramètres : login et password
  */
 router.post('/auth', function (req, res) {
   UserRepository.connexion(req.body.login, req.body.password, function (err, user) {
@@ -29,7 +30,10 @@ router.post('/auth', function (req, res) {
   );
 });
 
-
+/**
+ * API d'authentification pour le mode guest sur les applications mobiles
+ * Paramètres : code invité
+ */
 router.post('/auth-guest', function (req, res) {
   GuestRepository.checkCode(req.body.code, function (err, guest) {
     if (!guest || err) {
@@ -51,7 +55,9 @@ router.post('/auth-guest', function (req, res) {
   );
 });
 
-
+/**
+ * API pour enregistrer le token pour Google Cloud Messaging
+ */
 router.post('/auth/gcm-token', function (req, res) {
   UserRepository.connexion(req.body.login, req.body.password, function (err, user) {
       if (!user || err) {
@@ -61,9 +67,7 @@ router.post('/auth/gcm-token', function (req, res) {
         var tokenGenerated = uuid.v4();
         req.session[tokenGenerated] = {
           user: user._id,
-          expire: moment().add(10, 'days')
-          // avis perso (PL des B3) 10 jours de session c'est beacoup trop, je m'arréterais à 22h ou un truc du genre meme 10h suffisent :
-          // genre tu arrive le matin et tu te co pour toute la journée, puis re belote chaques jours mais pas 10 ...
+          expire: moment().add(5, 'days')
         };
         user.device_token = req.body.device_token;
         user.save();

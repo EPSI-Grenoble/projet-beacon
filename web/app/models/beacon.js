@@ -2,7 +2,12 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
   uniqueValidator = require('mongoose-unique-validator');
 
-
+/**
+ * Model de beacon
+ * Son nom
+ * L'identifiant unique
+ * La date de création
+ */
 var BeaconSchema = new Schema({
   nom: {
     type: String,

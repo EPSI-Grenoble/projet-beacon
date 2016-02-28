@@ -5,7 +5,11 @@ var mongoose = require('mongoose'),
 
 module.exports = {
 
-
+  /**
+   * Vérifie que le token est valide
+   * @param token
+   * @param callback
+     */
   tokenValid: function (token, callback) {
     UserModel
       .findOne({token: token})
@@ -14,6 +18,11 @@ module.exports = {
       })
   },
 
+  /**
+   * Mettre à jour le groupe
+   * @param oldName
+   * @param newName
+     */
   updateGroupe: function (oldName, newName) {
     UserModel
       .find({groupes: oldName})
@@ -26,6 +35,11 @@ module.exports = {
       })
   },
 
+  /**
+   * Récupère les membres du groupe
+   * @param nomGroupe
+   * @param callback
+     */
   getMembresGroupe: function (nomGroupe, callback) {
     UserModel
       .find({groupes: nomGroupe})
@@ -34,6 +48,12 @@ module.exports = {
       })
   },
 
+  /**
+   * Ajoute un groupe au user
+   * @param nomGroupe
+   * @param idUser
+   * @param callback
+     */
   addToGroupe: function (nomGroupe, idUser, callback) {
     UserModel
       .findById(idUser)
@@ -46,6 +66,11 @@ module.exports = {
       })
   },
 
+  /**
+   * Supprime le groupe des users
+   * @param groupName
+   * @param callback
+     */
   deleteGroupe: function (groupName, callback) {
     UserModel
       .find({groupes: groupName})
@@ -64,6 +89,12 @@ module.exports = {
       });
   },
 
+  /**
+   * Supprimer le groupe de l'utilisateur
+   * @param groupe
+   * @param userID
+   * @param callback
+     */
   removeFromGroupe: function (groupe, userID, callback) {
     UserModel
       .findById(userID)
@@ -80,6 +111,11 @@ module.exports = {
       });
   },
 
+  /**
+   * Créer un user
+   * @param form
+   * @param callback
+     */
   createUser: function (form, callback) {
     var user = new UserModel({
       email: form.email,
@@ -97,6 +133,11 @@ module.exports = {
     });
   },
 
+  /**
+   * Modifier un user
+   * @param form
+   * @param callback
+     */
   updateUser: function (form, callback) {
     UserModel
       .findOne({"_id": form._id})
@@ -116,6 +157,10 @@ module.exports = {
       });
   },
 
+  /**
+   * Récupèrer tous les utilisateurs
+   * @param callback
+     */
   getAllUsers: function (callback) {
     UserModel
       .find({})
@@ -130,6 +175,10 @@ module.exports = {
       });
   },
 
+  /**
+   * Récupère tous les utilisateurs non admin
+   * @param callback
+     */
   getAllNoAdmin: function (callback) {
     UserModel
       .find({isAdmin: {$ne: true}})
@@ -144,6 +193,10 @@ module.exports = {
       });
   },
 
+  /**
+   * Récupèrer tous les utilisateurs admins
+   * @param callback
+     */
   getAllAdmins: function (callback) {
     UserModel
       .find({isAdmin: true})
@@ -158,6 +211,11 @@ module.exports = {
       });
   },
 
+  /**
+   * Supprimer l'utilisateur
+   * @param id
+   * @param callback
+     */
   removeUser: function (id, callback) {
     UserModel
       .find({
@@ -169,6 +227,10 @@ module.exports = {
       })
   },
 
+  /**
+   * Retourne une aggréation des groupes
+   * @param callback
+     */
   getGroupes: function (callback) {
     UserModel
       .aggregate([
@@ -187,6 +249,12 @@ module.exports = {
       });
   },
 
+  /**
+   * Retourne un utilisateur pour le couple login/password fourni
+   * @param login
+   * @param password
+   * @param callback
+     */
   connexion: function (login, password, callback) {
     UserModel
       .findOne({
@@ -198,6 +266,11 @@ module.exports = {
       })
   },
 
+  /**
+   * Retourne une liste de user pour la liste d'id fournis
+   * @param userId
+   * @param callback
+     */
   getUsersFromIds : function(userId, callback){
     UserModel
       .find({

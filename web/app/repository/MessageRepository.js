@@ -6,6 +6,11 @@ var mongoose = require('mongoose'),
 
 module.exports = {
 
+  /**
+   * Crer un message
+   * @param body
+   * @param callback
+     */
   createMessage : function(body, callback){
     var message = new MessageModel({
       "titre": body.titre,
@@ -23,6 +28,13 @@ module.exports = {
     });
   },
 
+  /**
+   * Récupèrer un message attaché à un beacon pour un destinateire
+   * @param idUser
+   * @param idBeacon
+   * @param proximity
+   * @param callback
+     */
   findMessageForThisUserAndThisBeacon: function (idUser, idBeacon, proximity, callback) {
     MessageModel
       .find({
@@ -36,6 +48,11 @@ module.exports = {
       });
   },
 
+  /**
+   * Récupère un message par son identifiant
+   * @param idMessage
+   * @param callback
+     */
   findMessageById: function (idMessage, callback) {
     MessageModel
       .findOne({"_id": idMessage})
@@ -44,8 +61,12 @@ module.exports = {
       })
   },
 
+  /**
+   * Récupèrer un liste de message destiné à l'user
+   * @param idUser
+   * @param callback
+     */
   findMessageForThisUser: function (idUser, callback) {
-    console.log(idUser);
     MessageModel
       .find({"destinataires": idUser.toString()})
       .sort({"dateCreation": -1})
@@ -54,6 +75,11 @@ module.exports = {
       });
   },
 
+  /**
+   * Récupère une liste de beacons à surveiller pour un user
+   * @param idUser
+   * @param callback
+     */
   findBeaconToListenForUser: function (idUser, callback) {
     MessageModel
       .aggregate({
@@ -71,17 +97,19 @@ module.exports = {
         { $project: {"beacons": 1} }
       )
       .exec(function (err, messages) {
-        console.log("message found for user "+idUser._id.toString());
-        console.log(messages);
         callback(err, messages);
       })
   },
 
+  /**
+   * Recupère les destinataires du messages
+   * @param messageID
+   * @param callback
+     */
   getUsers : function(messageID, callback){
     MessageModel
       .distinct("destinataires", {"_id": messageID})
       .exec(function (err, users) {
-        console.log(users);
         UserRepository.getUsersFromIds(users, callback);
       })
   }

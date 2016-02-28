@@ -4,6 +4,14 @@ var UserRepository = require("../repository/UserRepository");
 var GuestRepository = require("../repository/GuestRepository");
 
 module.exports =  {
+
+  /**
+   * Middleware pour vérifier que l'user est connecté
+   * @param req
+   * @param res
+   * @param next
+   * @returns {*}
+     */
   isAuth : function(req, res, next){
     if(req.isAuthenticated()){
       return next()
@@ -20,6 +28,13 @@ module.exports =  {
       }
     }
   },
+
+  /**
+   * Middleware pour vérifier que le token est fourni puis existe
+   * @param req
+   * @param res
+   * @param next
+     */
   isTokenValid : function(req, res, next){
     var isGuest = (req.query.guest === 'true');
     console.log(isGuest);
@@ -43,6 +58,12 @@ module.exports =  {
       });
     }
   },
+
+  /**
+   * Retourne une liste de proximity inférieur à celui fourni
+   * @param proximity
+   * @returns {Array}
+     */
   getProximity : function (proximity) {
     var proximityList = [];
     switch (proximity) {

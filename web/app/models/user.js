@@ -2,6 +2,16 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema,
   uniqueValidator = require('mongoose-unique-validator');
 
+/**
+ * Modèle d'utilisateur
+ * Un email
+ * Un mot de passe crypté en md5
+ * Un nom de famille
+ * Un prénom
+ * Admin ou non
+ * Identifiant du device
+ * Liste de diffusion auquel il appartient
+ */
 var UserSchema = new Schema({
   email: {
     type: String,

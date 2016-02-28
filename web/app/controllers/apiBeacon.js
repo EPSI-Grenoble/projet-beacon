@@ -10,7 +10,7 @@ module.exports = function (app) {
 };
 
 /**
- * Récuperer tous les beacons
+ * API pour Récuperer tous les beacons
  */
 router.get('/', Utils.isAuth, function (req, res) {
   BeaconRepository.getAll(function (err, beacons) {
@@ -19,7 +19,7 @@ router.get('/', Utils.isAuth, function (req, res) {
 });
 
 /**
- * Sauvegarder ou modifier un beacon
+ * APi pour Sauvegarder ou modifier un beacon
  */
 router.post('/', Utils.isAuth, function (req, res) {
   BeaconRepository.createBeacon(req.body, function (err, beacon) {
@@ -32,7 +32,7 @@ router.post('/', Utils.isAuth, function (req, res) {
 });
 
 /**
- * Supprimer un beacon
+ * API pour Supprimer un beacon
  */
 router.delete('/:id', Utils.isAuth, function (req, res) {
   BeaconRepository.deleteBeaconById(req.params.id, function (err) {

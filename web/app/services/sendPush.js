@@ -55,6 +55,13 @@ module.exports = class SendPush {
 
   }
 
+  /**
+   * Envoi un message pour chaque user/guest
+   * @param array
+   * @param device_tokens
+   * @param sender
+     * @param GCM
+     */
   sendToEachItem(array, device_tokens, sender, GCM) {
     var device_tokens = [];
     var sender = new gcm.Sender('AIzaSyD93SZYNCzkr_mdTN8A4jwdSGMn5V4Ni1U');

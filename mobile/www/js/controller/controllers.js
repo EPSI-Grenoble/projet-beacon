@@ -1,6 +1,9 @@
-angular.module('starter.controllers', [])
+var app = angular.module('starter.controllers', []);
 
-.controller('LoginCtrl', function($scope, $state, RequestsService, BeaconService,$ionicPopup, $rootScope) {
+/**
+ * Page de connexion
+ */
+app.controller('LoginCtrl', function($scope, $state, RequestsService, BeaconService,$ionicPopup, $rootScope) {
 
   $scope.user = {};
   $scope.user.username = "";
@@ -12,9 +15,11 @@ angular.module('starter.controllers', [])
   if(window.localStorage['password'] != "undefined"){
     $scope.user.password = window.localStorage['password'];
   }
-  
 
-  //$state.go('tab.dash');
+  /**
+   * Envoi les informations à l'API de connexion
+   * @param user
+     */
   $scope.signIn = function(user) {
     RequestsService.logIn(user.username, user.password).then(function(response){
       if(response.success){
@@ -31,6 +36,9 @@ angular.module('starter.controllers', [])
     });
   };
 
+  /**
+   * Affiche une pop pour se connecter en tant que guest
+   */
   $scope.showPopup = function() {
     $scope.data = {};
     $ionicPopup.show({
@@ -62,15 +70,21 @@ angular.module('starter.controllers', [])
       ]
   });
  };
-})
+});
 
-.controller('ProfileCtrl', function($scope,$ionicSideMenuDelegate){
+/**
+ * Page du profil
+ */
+app.controller('ProfileCtrl', function($scope,$ionicSideMenuDelegate){
   $scope.showMenu = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };
-})
+});
 
-.controller('ListMessageCtrl', function($scope, Messages, $state, $ionicSideMenuDelegate, $rootScope) {
+/**
+ * Page de la liste des messages
+ */
+app.controller('ListMessageCtrl', function($scope, Messages, $state, $ionicSideMenuDelegate, $rootScope) {
   $scope.moment = moment;
   $scope.displayMessages = $scope.allMessages = [];
 
@@ -78,6 +92,9 @@ angular.module('starter.controllers', [])
     $ionicSideMenuDelegate.toggleLeft();
   };
 
+  /**
+   * Rafraichi la liste de messages
+   */
   $rootScope.refresh = function() {
     Messages.all().then(function(response){
       $scope.allMessages = response;
@@ -92,7 +109,7 @@ angular.module('starter.controllers', [])
       $scope.search()
     });
 
-    
+
   };
 
   $rootScope.refresh();
@@ -101,6 +118,9 @@ angular.module('starter.controllers', [])
     Messages.remove(message);
   };
 
+  /**
+   * Filtre les messages
+   */
   $scope.search = function() {
     if($scope.search.query){
       $scope.displayMessages = $scope.allMessages.filter(function (message) {
@@ -111,9 +131,12 @@ angular.module('starter.controllers', [])
       $scope.displayMessages = $scope.allMessages;
     }
   };
-})
+});
 
-.controller('MessageDetailCtrl', function($scope, $stateParams, Messages) {
+/**
+ * Page de détail d'un message
+ */
+app.controller('MessageDetailCtrl', function($scope, $stateParams, Messages) {
   $scope.message = Messages.get($stateParams.messageId);
   $scope.moment = moment;
   Messages.get($stateParams.messageId).then(function(response){

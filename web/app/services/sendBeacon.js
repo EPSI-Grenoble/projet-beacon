@@ -43,6 +43,13 @@ module.exports = class SendBeacon {
     });
   }
 
+  /**
+   * Envoi un message pour chaque utilisateur/guest
+   * @param user
+   * @param device_tokens
+   * @param sender
+     * @param GCM
+     */
   sendToEachItem(user, device_tokens, sender, GCM) {
     var device_tokens = [];
     var sender = new gcm.Sender('AIzaSyD93SZYNCzkr_mdTN8A4jwdSGMn5V4Ni1U');

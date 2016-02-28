@@ -1,5 +1,4 @@
 var base_url = 'http://51.255.50.20';
-//var base_url = 'http://192.168.0.24:3000';
 
 angular.module('starter.services', [])
 
@@ -180,7 +179,7 @@ angular.module('starter.services', [])
             $cordovaBeacon.startRangingBeaconsInRegion(beaconRegion);
           })
         });
-      }, 10000);
+      }, 1000);
     };
 
     /**

@@ -4,6 +4,11 @@ var mongoose = require('mongoose'),
 
 module.exports = {
 
+  /**
+   * Vérifie que le token du guest est valide
+   * @param token
+   * @param callback
+     */
   tokenValid: function (token, callback) {
     GuestModel
       .findOne({token: token})
@@ -12,6 +17,11 @@ module.exports = {
       })
   },
 
+  /**
+   * Récupère un guest par son identifiant
+   * @param id
+   * @param callback
+     */
   findById : function(id, callback){
     GuestModel
       .findById(id)
@@ -20,6 +30,11 @@ module.exports = {
       })
   },
 
+  /**
+   * Créer un guest
+   * @param form
+   * @param callback
+     */
   createGuest: function (form, callback) {
     var guest = new GuestModel({
       label: form.label,
@@ -30,6 +45,12 @@ module.exports = {
     });
   },
 
+  /**
+   * Modifier un guest
+   * @param id
+   * @param form
+   * @param callback
+     */
   updateGuest: function (id, form, callback) {
     GuestModel
       .findOne({"_id": id})
@@ -43,6 +64,10 @@ module.exports = {
       });
   },
 
+  /**
+   * Récupèrer tous les guests
+   * @param callback
+     */
   getAllGuest: function (callback) {
     GuestModel
       .find()
@@ -52,6 +77,11 @@ module.exports = {
       });
   },
 
+  /**
+   * Supprimer un guest
+   * @param idGroupe
+   * @param callback
+     */
   removeGroupe: function (idGroupe, callback) {
     GuestModel
       .findById(idGroupe)
@@ -60,6 +90,11 @@ module.exports = {
       });
   },
 
+  /**
+   * Vérifier que le code du guest est valide
+   * @param code
+   * @param callback
+     */
   checkCode: function (code, callback) {
     GuestModel
       .findOne({"code": code, "activate": true})
@@ -68,6 +103,11 @@ module.exports = {
       });
   },
 
+  /**
+   * Récupèrer les guests grâce à la liste d'identifians
+   * @param destinatairesList liste d'identifiants de guest
+   * @param callback
+     */
   findByIdInDestinataireList: function(destinatairesList, callback){
     GuestModel
       .find({"_id": {$in: destinatairesList}})

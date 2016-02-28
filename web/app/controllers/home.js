@@ -18,7 +18,9 @@ module.exports = function (app) {
   app.use('/', router);
 };
 
-// Page d'accueil
+/**
+* Page d'accueil
+ */
 router.get('/', Utils.isAuth , function (req, res, next) {
   UserModel.find( function(err, usersList) {
       res.render('index', {
@@ -31,7 +33,9 @@ router.get('/', Utils.isAuth , function (req, res, next) {
   console.log(req.session);
 });
 
-// Page des messages
+/**
+ * Page des messages
+ */
 router.get('/messages', Utils.isAuth, function (req, res, next) {
     MessageModel.find().sort({"dateCreation" : -1}).exec(function(err, toutLesMessage) {
 
@@ -45,7 +49,9 @@ router.get('/messages', Utils.isAuth, function (req, res, next) {
     })
 });
 
-// Page de l'edition de message
+/**
+ * Page de l'edition de message
+ */
 router.get('/messages/edit', Utils.isAuth, function (req, res, next) {
   UserModel.find( function(err, usersList) {
   var type = req.query.type;
@@ -57,16 +63,9 @@ router.get('/messages/edit', Utils.isAuth, function (req, res, next) {
   });
 });
 
-// Page du compte
-router.get('/myaccount', Utils.isAuth, function (req, res, next) {
-    res.render('users/myAccount', {
-      subtitle: 'Vous êtes ici chez vous, bienvenue',
-      title: 'Afficher mon compte',
-      user : req.user
-    });
-});
-
-// Page des users
+/**
+ * Page des users
+ */
 router.get('/users', Utils.isAuth, function (req, res, next) {
   UserRepository.getAllUsers(function(err, toutLesUser) {
       toutLesUser = toutLesUser.map(function(user){
@@ -82,7 +81,9 @@ router.get('/users', Utils.isAuth, function (req, res, next) {
     })
 });
 
-// Page de l'edition de user
+/**
+ * Page de l'edition de user
+ */
 router.get('/users/edit', Utils.isAuth, function (req, res, next) {
     res.render('users/editUser', {
       title: 'Créer un utilisateur',
@@ -91,7 +92,9 @@ router.get('/users/edit', Utils.isAuth, function (req, res, next) {
     });
 });
 
-// Page d'import des users
+/**
+ * Page d'import des users
+ */
 router.get('/users/import', Utils.isAuth, function (req, res, next) {
     res.render('users/importUsers', {
       title: 'Importer des utilisateurs',
@@ -100,7 +103,9 @@ router.get('/users/import', Utils.isAuth, function (req, res, next) {
     });
 });
 
-// Url import XLS
+/**
+ * Pae d'import d'user en XLS
+ */
 router.post('/users/sendXls', upload.single('usersXls'), function (req, res, next) {
   res.header("Content-Type", "application/json; charset=utf-8");
   var workbook = new Excel.Workbook();
@@ -108,7 +113,7 @@ router.post('/users/sendXls', upload.single('usersXls'), function (req, res, nex
     map: function(value, index) {
         return value;
     }
-  }
+  };
   workbook.csv.readFile(req.file.path, options)
       .then(function(worksheet) {
         var counter = 0;
@@ -140,9 +145,11 @@ router.post('/users/sendXls', upload.single('usersXls'), function (req, res, nex
 
         });
       });
-})
+});
 
-// Page de l'edition de user
+/**
+ * Page de l'edition de user
+ */
 router.get('/users/edit/:idUser', Utils.isAuth, function (req, res, next) {
   UserModel.findOne({"_id" : req.params.idUser}, function(err, user){
     if(user){
@@ -157,7 +164,9 @@ router.get('/users/edit/:idUser', Utils.isAuth, function (req, res, next) {
   });
 });
 
-// Page des groupes
+/**
+ * Page des groupes
+ */
 router.get('/groupes', Utils.isAuth, function (req, res, next) {
   GroupeModel.find().sort({name: 1}).exec(function(err, toutLesGroupes) {
     res.render('groupes/listeGroup', {
@@ -170,7 +179,9 @@ router.get('/groupes', Utils.isAuth, function (req, res, next) {
 });
 
 
-// Page des beacons
+/**
+ * Page des beacons
+ */
 router.get('/guest', Utils.isAuth, function (req, res, next) {
   GuestRepository.getAllGuest(function(err, guests) {
     res.render('guest/listeGuest', {
@@ -182,7 +193,9 @@ router.get('/guest', Utils.isAuth, function (req, res, next) {
   })
 });
 
-// Page admin
+/**
+ * Page admin
+ */
 router.get("/admin", Utils.isAuth, function (req, res, next) {
 
   UserRepository.getAllAdmins(function (err, users) {
@@ -195,7 +208,9 @@ router.get("/admin", Utils.isAuth, function (req, res, next) {
   })
 });
 
-// Page des beacons
+/**
+ * Page des beacons
+ */
 router.get('/beacons', Utils.isAuth, function (req, res, next) {
     BeaconModel.find( function(err, toutlesBeacons) {
       res.render('beacons/addBeacon', {
@@ -206,7 +221,9 @@ router.get('/beacons', Utils.isAuth, function (req, res, next) {
     })
 });
 
-// Page de connexion
+/**
+ * Page de connexion
+ */
 router.get('/login', function (req, res, next) {
   res.render('login', {
     title: 'Login',
@@ -214,16 +231,22 @@ router.get('/login', function (req, res, next) {
   });
 });
 
-// Authentification qu'on délégue au composant passport
+/**
+ * Authentification qu'on délégue au composant passport
+ */
 router.post('/login', passport.authenticate('local-login', { successRedirect: '/', failureRedirect: '/login' }));
 
-// Page de déconnexion
+/**
+ * Page de déconnexion
+ */
 router.get('/logout', function(req, res){
   req.logout();
   res.redirect('/login');
 });
 
-// Pade de compte
+/**
+ * Page de compte
+ */
 router.get("/monCompte", Utils.isAuth, function (req, res, next) {
     res.render('comptes/viewAccount',{
       title: 'Afficher mon compte',

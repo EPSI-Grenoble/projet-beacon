@@ -28,7 +28,6 @@ router.post('/', Utils.isAuth, function (req, res, next) {
   });
 });
 
-
 /**
  * Retourne les messages de l'utilisateur
  */

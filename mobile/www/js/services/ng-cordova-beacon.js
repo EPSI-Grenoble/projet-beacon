@@ -1,9 +1,3 @@
-/*
- * ng-cordova-beacon
- *
- * Author: Nic Raboy - https://blog.nraboy.com
- */
-
 angular.module("ngCordovaBeacon", [])
 
   .factory("$cordovaBeacon", ["$rootScope", function($rootScope) {
@@ -13,13 +7,6 @@ angular.module("ngCordovaBeacon", [])
     function onDeviceReady() {
 
       var delegate = new cordova.plugins.locationManager.Delegate();
-
-      var createLocalNotification = function (message) {
-        window.plugin.notification.local.add({
-          title:   'iBeaconSpike1',
-          message: message
-        });
-      };
 
       /*
        * Tells the delegate that one or more beacons are in range
