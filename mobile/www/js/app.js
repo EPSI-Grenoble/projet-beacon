@@ -1,5 +1,9 @@
 angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "ngCordovaBeacon", "ngSanitize"])
 
+
+/*
+* Initialisation Application
+*/
 .run(function($ionicPlatform, NotificationService, $ionicLoading, $cordovaBeacon, $rootScope, BeaconService, $state) {
   $ionicPlatform.ready(function() {
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
@@ -13,12 +17,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', "
       StatusBar.styleDefault();
     }
   });
-
+  /*
+  * FOnction de déconnexion
+  */
   $rootScope.logout = function(){
     $state.go('login', {}, {reload : true});
   }
 })
 
+/*
+* Initialisation des routes
+* Différentes vuesde l'appli : connexion, liste des messages, detail d'un message, profile
+*/
 .config(function($stateProvider, $urlRouterProvider) {
 
   $stateProvider
